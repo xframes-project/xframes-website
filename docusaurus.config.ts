@@ -90,10 +90,10 @@ const config: Config = {
       style: "dark",
       links: [
         {
-          title: "Docs",
+          title: "Links",
           items: [
             {
-              label: "Tutorial",
+              label: "Docs",
               to: "/docs/intro",
             },
           ],
