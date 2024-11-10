@@ -19,9 +19,7 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            to="/docs/intro">
-            Docusaurus Tutorial - 5min ⏱️
-          </Link>
+            to="/docs/intro">Docs</Link>
         </div>
       </div>
     </header>
@@ -32,8 +30,8 @@ export default function Home(): JSX.Element {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
+      title={`${siteConfig.title} - open source library for GPU-accelerated GUI development`}
+      description="Open source library for GPU-accelerated GUI development for Node.js and the browser">
       <HomepageHeader />
       <main>
         <HomepageFeatures />

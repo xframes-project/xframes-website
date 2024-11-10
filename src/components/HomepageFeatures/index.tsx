@@ -10,32 +10,29 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    title: 'Based on Dear ImGui',
+    Svg: require('@site/static/img/dear-imgui.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Dear ImGui, trusted by AAA game developers, enhances xframes with ultra-responsive, lightweight UIs built for speed. Its immediate-mode rendering delivers smooth, high-performance interfaces without the bulk, perfect for xframes' GPU-accelerated, cross-platform needs.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    title: 'GPU-Accelerated',
+    Svg: require('@site/static/img/webgpu-opengl.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Unlock the full potential of xframes for building fast, GPU-accelerated interfaces. Leverage WebGPU for stunning browser performance or use GLFW3 and OpenGL in Node.js to create native-like applications—without the need for Electron.
       </>
     ),
   },
   {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    title: 'No CSS Required',
+    Svg: require('@site/static/img/g1.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        xframes empowers you to create high-performance UIs using React and Yoga Layouts, without the complexity of the DOM or CSS. Focus on building sleek, efficient applications with a clean and simple development experience.
       </>
     ),
   },
