@@ -14,7 +14,7 @@ const FeatureList: FeatureItem[] = [
     Svg: require('@site/static/img/dear-imgui.svg').default,
     description: (
       <>
-        Dear ImGui, trusted by AAA game developers, enhances xframes with ultra-responsive, lightweight UIs built for speed. Its immediate-mode rendering delivers smooth, high-performance interfaces without the bulk, perfect for xframes' GPU-accelerated, cross-platform needs.
+        <a href="https://github.com/ocornut/imgui" target="_blank">Dear ImGui</a>, trusted by <a href="https://github.com/ocornut/imgui/wiki/Software-using-dear-imgui#games" target="_blank">countless AAA game developers</a> (<a href="https://montreal.ubisoft.com/en/ubisoft-sponsors-user-interface-library-for-c-dear-imgui/" target="_blank">including Ubisoft</a>), enhances XFrames with ultra-responsive, lightweight UIs built for speed. Its immediate-mode rendering delivers smooth, high-performance interfaces without the bulk, perfect for XFrames' GPU-accelerated, cross-platform needs.
       </>
     ),
   },
@@ -23,7 +23,8 @@ const FeatureList: FeatureItem[] = [
     Svg: require('@site/static/img/webgpu-opengl.svg').default,
     description: (
       <>
-        Unlock the full potential of xframes for building fast, GPU-accelerated interfaces. Leverage WebGPU for stunning browser performance or use GLFW3 and OpenGL in Node.js to create native-like applications—without the need for Electron.
+        Unlock the full potential of XFrames for building fast, GPU-accelerated interfaces.
+        Leverage <a href="https://en.wikipedia.org/wiki/WebGPU" target="_blank">WebGPU</a> for stunning browser performance or use <a href="https://www.glfw.org" target="_blank">GLFW3</a> and <a href="https://www.opengl.org" target="_blank">OpenGL</a> in Node.js to create native-like applications—without the need for Electron.
       </>
     ),
   },
@@ -32,7 +33,7 @@ const FeatureList: FeatureItem[] = [
     Svg: require('@site/static/img/g1.svg').default,
     description: (
       <>
-        xframes empowers you to create high-performance UIs using React and Yoga Layouts, without the complexity of the DOM or CSS. Focus on building sleek, efficient applications with a clean and simple development experience.
+        XFrames empowers you to create high-performance UIs using <a href="https://react.dev" target="_blank">React</a> and <a href="https://www.yogalayout.dev" target="_blank">Yoga Layout</a>, without the complexity of the DOM or CSS. Focus on building sleek, efficient applications with a clean and simple development experience.
       </>
     ),
   },
