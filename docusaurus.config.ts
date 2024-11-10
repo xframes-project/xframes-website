@@ -64,7 +64,7 @@ const config: Config = {
 
   themeConfig: {
     // Replace with your project's social card
-    image: "img/DearImGui-Logo-1000x349.jpg",
+    image: "img/Panther.png",
     navbar: {
       title: "XFrames",
       // logo: {
