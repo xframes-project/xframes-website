@@ -67,10 +67,10 @@ const config: Config = {
     image: "img/Panther.png",
     navbar: {
       title: "XFrames",
-      // logo: {
-      //   alt: "XFrames Logo",
-      //   src: "img/logo.svg",
-      // },
+      logo: {
+        alt: "XFrames Logo",
+        src: "img/Panther.png",
+      },
       items: [
         {
           type: "docSidebar",
