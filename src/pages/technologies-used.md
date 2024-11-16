@@ -4,6 +4,8 @@ title: Technologies used
 
 # Technologies used
 
+XFrames leverages a variety of cutting-edge technologies to deliver high-performance, GPU-accelerated, cross-platform applications. Each technology plays a crucial role in ensuring that the library offers seamless integration, native performance, and flexibility for developers. Below is a detailed list of the key tools, frameworks, and libraries that power XFrames, helping developers build fast, modern GUIs without sacrificing performance or cross-platform compatibility.
+
 ## The Star of the Show: Dear ImGui
 
 At the heart of XFrames lies [Dear ImGui](https://github.com/ocornut/imgui), a powerful, battle-tested immediate-mode GUI library. It provides developers with unparalleled control and flexibility to design high-performance user interfaces. 
