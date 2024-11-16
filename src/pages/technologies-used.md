@@ -88,3 +88,7 @@ In XFrames, [nlohmann/json](https://github.com/nlohmann/json) facilitates commun
 ### cmake-js: Building Native Node.js Addons
 
 [cmake-js](https://github.com/cmake-js/cmake-js) is a tool that simplifies the process of building native Node.js addons using CMake. It bridges the gap between the Node.js and C++ worlds, allowing XFrames to compile and link C++ code seamlessly into Node.js modules. By using cmake-js, XFrames can take advantage of CMake’s powerful build system while maintaining compatibility with the Node.js ecosystem, making it easier to develop native extensions for cross-platform desktop applications.
+
+### prebuild & prebuild-install: Streamlined Setup for Developers
+
+[prebuild](https://github.com/prebuild/prebuild) and [prebuild-install](https://github.com/prebuild/prebuild-install) simplify the setup process for XFrames by providing pre-built binaries, allowing developers to start building their applications without needing to compile the library themselves. `prebuild` ensures the binaries are available, while `prebuild-install` automatically fetches them during installation. This eliminates the need for complex build setups, enabling developers to quickly integrate XFrames into their projects and focus on development rather than dealing with dependencies or build configurations.
