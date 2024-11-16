@@ -15,7 +15,7 @@ const config: Config = {
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: "andreamancuso", // Usually your GitHub org/user name.
+  organizationName: "xframes-project", // Usually your GitHub org/user name.
   projectName: "xframes", // Usually your repo name.
 
   onBrokenLinks: "throw",
@@ -81,7 +81,7 @@ const config: Config = {
         { to: "/technologies-used", label: "Technologies", position: "left" },
         { to: "/blog", label: "Blog", position: "left" },
         {
-          href: "https://github.com/andreamancuso/xframes",
+          href: "https://github.com/xframes-project/xframes",
           label: "GitHub",
           position: "right",
         },
@@ -117,7 +117,7 @@ const config: Config = {
             },
             {
               label: "GitHub",
-              href: "https://github.com/andreamancuso/xframes",
+              href: "https://github.com/xframes-project/xframes",
             },
           ],
         },
