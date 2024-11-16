@@ -7,3 +7,8 @@ raspberrypi:
   label: Raspberry Pi
   permalink: /raspberrypi
   description: Raspberry Pi posts
+
+general:
+  label: General
+  permalink: /general
+  description: General posts
