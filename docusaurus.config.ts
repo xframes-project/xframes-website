@@ -78,6 +78,7 @@ const config: Config = {
           position: "left",
           label: "Docs",
         },
+        { to: "/technologies-used", label: "Technologies", position: "left" },
         { to: "/blog", label: "Blog", position: "left" },
         {
           href: "https://github.com/andreamancuso/xframes",
