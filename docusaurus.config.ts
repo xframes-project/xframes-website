@@ -78,6 +78,7 @@ const config: Config = {
           position: "left",
           label: "Docs",
         },
+        { to: "/faq", label: "FAQ", position: "left" },
         { to: "/technologies-used", label: "Technologies", position: "left" },
         { to: "/blog", label: "Blog", position: "left" },
         {
@@ -104,8 +105,8 @@ const config: Config = {
           items: [
             {
               label: "Discord",
-              href: "https://discord.gg/Cbgcajdq"
-            }
+              href: "https://discord.gg/Cbgcajdq",
+            },
           ],
         },
         {
