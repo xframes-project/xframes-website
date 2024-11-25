@@ -30,6 +30,12 @@ The reason you can't use **Material-UI (MUI)** in XFrames, despite React being a
 
 ---
 
+## Is JavaScript the only way to use XFrames?
+
+Currently, XFrames is primarily used with JavaScript and React, leveraging the React Native Fabric Renderer for GPU-accelerated GUIs. However, we are actively working on extending support to Python developers. Using ReactPy and the upcoming Python port of React Native Fabric renderer, developers will be able to build XFrames-based applications in Python. Stay tuned for updates as we finalize these integrations!
+
+---
+
 ## What types of fonts are supported in XFrames?
 
 At the moment, **XFrames only supports TTF (TrueType Fonts)**. You can include TTF fonts in your XFrames applications to render text in your custom layouts. Support for other font formats may be added in future releases, but for now, TTF remains the only supported font format.
