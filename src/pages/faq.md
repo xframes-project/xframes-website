@@ -32,7 +32,7 @@ The reason you can't use **Material-UI (MUI)** in XFrames, despite React being a
 
 ## Is JavaScript the only way to use XFrames?
 
-Currently, XFrames is primarily used with JavaScript and React, leveraging the React Native Fabric Renderer for GPU-accelerated GUIs. However, we are actively working on extending support to Python developers. Using ReactPy and the upcoming Python port of React Native Fabric renderer, developers will be able to build XFrames-based applications in Python. Stay tuned for updates as we finalize these integrations!
+XFrames is primarily used with JavaScript and React, leveraging the React Native Fabric Renderer for GPU-accelerated GUIs. However, we are extending support to Python developers. The native Python module for XFrames is already working very well, and we're actively working on completing the Python port of the React Native Fabric Renderer. Once this is ready, Python developers will be able to build XFrames-based applications with full GPU acceleration and flexibility. Stay tuned for updates!
 
 ---
 
