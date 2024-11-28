@@ -8,9 +8,13 @@ Welcome to the XFrames FAQ! Here, you'll find answers to common questions about 
 
 XFrames is an open-source library designed to build GPU-accelerated, native-like desktop applications using Node.js, React, and WebAssembly (WASM). Unlike traditional frameworks like Electron, XFrames enables DOM-free development, leveraging React Native's Fabric renderer to create fast, cross-platform applications. It eliminates the need for a browser runtime, resulting in lightweight and efficient applications. It is built to support both native desktop environments and WebAssembly for seamless cross-platform execution, making it an ideal choice for performance-driven projects.
 
+---
+
 ## What problem does XFrames solve?
 
 XFrames addresses the performance and resource efficiency challenges commonly associated with desktop application frameworks like Electron. While Electron enables rapid development and easy access to the npm ecosystem, it does so at the cost of significant overhead due to bundling a full browser runtime. XFrames offers a lightweight alternative, allowing developers to build cross-platform, GPU-accelerated applications without the need for a web browser. By focusing on native-like performance and eliminating the DOM, XFrames delivers faster, more resource-efficient applications. However, developers must work within the constraints of React Native's Fabric renderer, which means that many existing React packages that depend on the DOM cannot be used. That said, libraries with a headless architecture (such as [React Admin](https://marmelab.com/react-admin/)), could be [integrated into an XFrames application](https://marmelab.com/blog/2024/05/22/using-react-admin-with-react-native.html).
+
+---
 
 ## How come removing the DOM out of the equation makes GUI applications so much faster?
 
@@ -32,7 +36,7 @@ The reason you can't use **Material-UI (MUI)** in XFrames, despite React being a
 
 ## Is JavaScript the only way to use XFrames?
 
-XFrames is primarily used with JavaScript and React, leveraging the React Native Fabric Renderer for GPU-accelerated GUIs. However, we are extending support to Python developers. The native Python module for XFrames is already working very well, and we're actively working on completing the Python port of the React Native Fabric Renderer. Once this is ready, Python developers will be able to build XFrames-based applications with full GPU acceleration and flexibility. Stay tuned for updates!
+XFrames is primarily used with JavaScript and React, leveraging the React Native Fabric Renderer for GPU-accelerated GUIs. However, we are extending support to [Python](https://github.com/xframes-project/xframes-python), [C#](https://github.com/xframes-project/xframes-csharp/) and [Java](https://github.com/xframes-project/xframes-java) developers. Stay tuned for updates!
 
 ---
 
