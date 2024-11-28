@@ -95,6 +95,8 @@ No, XFrames does not use a browser engine or DOM. Instead, it focuses on GPU-acc
 
 XFrames is fully capable of running standalone. It’s designed to replace Electron in scenarios where the DOM and web standards are unnecessary, providing a leaner, more performant alternative for creating native desktop applications. However, **XFrames currently depends on React** (without `react-dom`) for building UI components, which means that React is required as part of the development process.
 
+---
+
 ## Can I distribute XFrames applications as standalone Windows applications?
 
 Work is well underway to allow developers to create fully portable standalone EXE files. Assets such as font files aren't part of the EXE, however.
