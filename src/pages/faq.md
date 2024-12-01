@@ -36,7 +36,7 @@ The reason you can't use **Material-UI (MUI)** in XFrames, despite React being a
 
 ## Is JavaScript the only way to use XFrames?
 
-XFrames is primarily used with JavaScript and React, leveraging the React Native Fabric Renderer for GPU-accelerated GUIs. However, we are extending support to [Python](https://github.com/xframes-project/xframes-python), [C#](https://github.com/xframes-project/xframes-csharp/) and [Java](https://github.com/xframes-project/xframes-java) developers. Stay tuned for updates!
+XFrames is primarily used with JavaScript and React, leveraging the React Native Fabric Renderer for GPU-accelerated GUIs. However, we are extending support to [Python](https://github.com/xframes-project/xframes-python), [C#](https://github.com/xframes-project/xframes-csharp/), [Java](https://github.com/xframes-project/xframes-java), [Kotlin](https://github.com/xframes-project/xframes-kotlin), [Scala](https://github.com/xframes-project/xframes-scala) developers. Stay tuned for updates!
 
 ---
 
