@@ -1,6 +1,6 @@
 ---
 slug: alternative-to-compose-multiplatform
-title: XFrames: the lightweight alternative to Compose Multiplatform
+title: "XFrames for Kotlin: the lightweight alternative to Compose Multiplatform"
 authors: [andreamancuso]
 tags: [kotlin]
 ---
