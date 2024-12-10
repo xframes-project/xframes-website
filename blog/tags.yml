@@ -8,6 +8,11 @@ raspberrypi:
   permalink: /raspberrypi
   description: Raspberry Pi posts
 
+kotlin:
+  label: Kotlin
+  permalink: /kotnlin
+  description: Kotlin posts
+
 general:
   label: General
   permalink: /general
