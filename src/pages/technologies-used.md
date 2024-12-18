@@ -122,3 +122,9 @@ Scikit-build-core is a build system that integrates with CMake, providing a more
 #### Reactive Extensions
 
 Reactive Extensions (Rx) in F# provide a declarative approach to handling asynchronous and event-based programming through observables. This enables efficient tracking of prop and children changes, ensuring dynamic UI updates in response to state changes. By integrating Rx into XFrames, a clean, reactive flow is maintained, enhancing scalability and responsiveness while simplifying state management.
+
+### Kotlin
+
+#### Jetpack Compose Runtime
+
+The Compose Runtime is a key component of Jetpack Compose, enabling a reactive, declarative UI framework for Kotlin. It manages UI state and recomposition efficiently, allowing for responsive and dynamic UI updates. In the context of XFrames, integrating the Compose Runtime with Kotlin ensures that the UI reacts seamlessly to changes in state and structure, maintaining a clean, efficient flow while simplifying the development of modern, scalable applications. 
