@@ -4,7 +4,7 @@ import type * as Preset from "@docusaurus/preset-classic";
 
 const config: Config = {
   title: "XFrames",
-  tagline: "GPU-accelerated GUI development for Node.js and the browser",
+  tagline: "Revolutionize GUI development with GPU acceleration and DOM-free simplicity for modern ecosystems",
   favicon: "img/favicon.ico",
 
   // Set the production url of your site here
