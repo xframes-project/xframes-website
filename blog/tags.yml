@@ -13,6 +13,11 @@ kotlin:
   permalink: /kotnlin
   description: Kotlin posts
 
+f-sharp:
+  label: F#
+  permalink: /f-sharp
+  description: F# posts
+
 general:
   label: General
   permalink: /general
