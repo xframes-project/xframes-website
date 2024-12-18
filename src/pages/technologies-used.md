@@ -103,7 +103,7 @@ XFrames NPM modules are written in TypeScript to provide strong typing out of th
 
 [Fabric](https://reactnative.dev/architecture/fabric-renderer) is utilized in XFrames to efficiently manage the React tree by tracking changes to elements, attributes, and children. It emits events that XFrames forwards to the C++ layer, which updates the widget tree and handles rendering. This approach allows XFrames to benefit from the efficient tree management of Fabric without requiring the full React Native ecosystem or its associated overhead.
 
-#### RxJS & ReactivePlusPlus: Efficient Event Handling and UI Updates
+#### RxJS: Efficient Event Handling
 
 [RxJS](https://rxjs.dev/) is used in XFrames to manage user interactions, such as clicks, changes, and hover events, asynchronously from the C++ layer. This allows efficient handling of event streams and ensures responsiveness.
 
@@ -115,4 +115,10 @@ Pybind11 is a lightweight header-only library that simplifies creating Python bi
 
 #### Scikit-build-core 
 
-Scikit-build-core is a build system that integrates with CMake, providing a more Pythonic interface for building C++ extensions. It simplifies packaging and distributing Python C++ extensions, making it easier to build cross-platform bindings. 
+Scikit-build-core is a build system that integrates with CMake, providing a more Pythonic interface for building C++ extensions. It simplifies packaging and distributing Python C++ extensions, making it easier to build cross-platform bindings.
+
+### F#
+
+#### Reactive Extensions
+
+Reactive Extensions (Rx) in F# provide a declarative approach to handling asynchronous and event-based programming through observables. This enables efficient tracking of prop and children changes, ensuring dynamic UI updates in response to state changes. By integrating Rx into XFrames, a clean, reactive flow is maintained, enhancing scalability and responsiveness while simplifying state management.
