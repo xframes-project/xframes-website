@@ -21,3 +21,21 @@
   align-items: center;
   justify-content: center;
 }
+
+.techsWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.techAvatar {
+  flex: 25%;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.techAvatarImg {
+  display: inline-block;
+  border-radius: 0;
+}
