@@ -30,10 +30,10 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: 'No CSS Required',
-    Svg: require('@site/static/img/g1.svg').default,
+    Svg: require('@site/static/img/yoga-layouts.svg').default,
     description: (
       <>
-        XFrames empowers you to create high-performance UIs using <a href="https://react.dev" target="_blank">React</a> and <a href="https://www.yogalayout.dev" target="_blank">Yoga Layout</a>, without the complexity of the DOM or CSS. Focus on building sleek, efficient applications with a clean and simple development experience.
+        XFrames empowers you to create high-performance UIs based on the flexibility and scalability of <a href="https://www.yogalayout.dev" target="_blank">Yoga Layout</a>, without the complexity of the DOM or CSS. Focus on building sleek, efficient applications with a clean and simple development experience.
       </>
     ),
   },
