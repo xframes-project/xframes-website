@@ -106,3 +106,13 @@ XFrames NPM modules are written in TypeScript to provide strong typing out of th
 #### RxJS & ReactivePlusPlus: Efficient Event Handling and UI Updates
 
 [RxJS](https://rxjs.dev/) is used in XFrames to manage user interactions, such as clicks, changes, and hover events, asynchronously from the C++ layer. This allows efficient handling of event streams and ensures responsiveness.
+
+### Python
+
+#### Pybind11
+
+Pybind11 is a lightweight header-only library that simplifies creating Python bindings for C++ code. It offers a seamless interface between C++ and Python, allowing native C++ code to be called from Python.
+
+#### Scikit-build-core 
+
+Scikit-build-core is a build system that integrates with CMake, providing a more Pythonic interface for building C++ extensions. It simplifies packaging and distributing Python C++ extensions, making it easier to build cross-platform bindings. 
