@@ -12,15 +12,16 @@ At the heart of XFrames lies [Dear ImGui](https://github.com/ocornut/imgui), a p
 Notably, Dear ImGui supports (among many others) [GLFW](https://www.glfw.org/) + [OpenGL](https://www.opengl.org/) and GLFW + [WebGPU](https://en.wikipedia.org/wiki/WebGPU) rendering out of the box, making it a versatile choice for modern applications.
 Combined with supporting technologies like [Implot](https://github.com/epezent/implot) for data visualization, [IconFontCppHeaders](https://github.com/juliettef/IconFontCppHeaders) for iconography, and [Stb's Image Loader](https://github.com/nothings/stb/blob/master/stb_image.h) for image textures, Dear ImGui empowers XFrames to deliver GPU-accelerated GUI experiences.
 
-## Programming languages
+## Core programming languages
 
 ### C++: Core Performance and Flexibility
 
 C++ is the backbone of XFrames, providing low-level performance and the flexibility needed to build fast, high-performance applications. By leveraging C++, XFrames can offer fine-grained control over memory and system resources, essential for rendering GUIs and handling complex tasks like real-time data processing and map rendering.
 
-### TypeScript: Strong Typing and Developer Productivity
+### C: "lingua franca"
 
-TypeScript is used extensively in the XFrames project to ensure better tooling, strong typing, and safer development, especially within the React layer. It enhances developer productivity by catching errors at compile time and providing rich IDE support. By using TypeScript, XFrames ensures that its JavaScript layer is more maintainable, scalable, and robust while still enjoying the flexibility and dynamics of JavaScript.
+The wrapper library used by other languages such as Go, Rust, Python, and .NET languages (such as C# and F#) has been written in C.
+The Java Native Interface library to enable compatibility with JVM languages such as Java, Kotlin and Scala has also been written in C.
 
 ## Rendering
 
@@ -38,21 +39,12 @@ With WebGPU, XFrames enables GPU-accelerated GUI rendering directly in the brows
 
 ## Main libraries
 
-### React: A Declarative UI Foundation
-
-[React](https://react.dev/) powers the UI layer in XFrames, offering a familiar component-based approach without relying on the DOM. Instead, XFrames uses React with [Fabric](https://reactnative.dev/architecture/fabric-renderer), React Native’s rendering layer, to manage UI components in a DOM-free environment. This enables developers to maintain React's declarative style while rendering directly to GPU-accelerated contexts such as OpenGL and WebGPU. By breaking free of browser constraints, XFrames allows developers to build dynamic, high-performance native applications with React at its core.
-
-### Fabric: Efficient React Tree Management
-
-[Fabric](https://reactnative.dev/architecture/fabric-renderer) is utilized in XFrames to efficiently manage the React tree by tracking changes to elements, attributes, and children. It emits events that XFrames forwards to the C++ layer, which updates the widget tree and handles rendering. This approach allows XFrames to benefit from the efficient tree management of Fabric without requiring the full React Native ecosystem or its associated overhead.
-
 ### Flexbox Without the DOM and CSS: Yoga Layouts
 
 [Yoga](https://www.yogalayout.dev/) provides a Flexbox-based layout system for XFrames, enabling precise and consistent layout management without relying on CSS or the DOM. Developed by Facebook, Yoga is optimized for performance and cross-platform compatibility, making it ideal for native applications.
 
-### RxJS & ReactivePlusPlus: Efficient Event Handling and UI Updates
-
-[RxJS](https://rxjs.dev/) is used in XFrames to manage user interactions, such as clicks, changes, and hover events, asynchronously from the C++ layer. This allows efficient handling of event streams and ensures responsiveness. [ReactivePlusPlus](https://github.com/victimsnino/ReactivePlusPlus) complements this by queuing widget tree and widget state updates, ensuring that the rendering process remains smooth at 60fps. This combination allows XFrames to process complex interactions and UI updates efficiently, maintaining high performance and responsiveness without compromising rendering speed.
+### ReactivePlusPlus: Efficient Event Handling and UI Updates
+ [ReactivePlusPlus](https://github.com/victimsnino/ReactivePlusPlus) helps keeping the rendering layer 'ticking' by queuing widget tree and widget state updates, ensuring that the rendering process remains smooth at 60fps. This ultimately allows XFrames to process complex interactions and UI updates efficiently, maintaining high performance and responsiveness without compromising rendering speed.
 
 ### Implot: Powerful Plotting for C++
 
@@ -94,3 +86,23 @@ In XFrames, [nlohmann/json](https://github.com/nlohmann/json) facilitates commun
 ### prebuild & prebuild-install: Streamlined Setup for Developers
 
 [prebuild](https://github.com/prebuild/prebuild) and [prebuild-install](https://github.com/prebuild/prebuild-install) simplify the setup process for XFrames by providing pre-built binaries, allowing developers to start building their applications without needing to compile the library themselves. `prebuild` ensures the binaries are available, while `prebuild-install` automatically fetches them during installation. This eliminates the need for complex build setups, enabling developers to quickly integrate XFrames into their projects and focus on development rather than dealing with dependencies or build configurations.
+
+## Programming language bindings 
+
+### Node.js and browser support through WebAssembly
+
+#### TypeScript: Strong Typing and Developer Productivity
+
+XFrames NPM modules are written in TypeScript to provide strong typing out of the box. TypeScript enhances developer productivity by catching errors at compile time and providing rich IDE support. By using TypeScript, XFrames ensures that its JavaScript layer is more maintainable, scalable, and robust while still enjoying the flexibility and dynamics of JavaScript.
+
+#### React: A Declarative UI Foundation
+
+[React](https://react.dev/) powers the UI layer in XFrames, offering a familiar component-based approach without relying on the DOM. Instead, XFrames uses React with [Fabric](https://reactnative.dev/architecture/fabric-renderer), React Native’s rendering layer, to manage UI components in a DOM-free environment. This enables developers to maintain React's declarative style while rendering directly to GPU-accelerated contexts such as OpenGL and WebGPU. By breaking free of browser constraints, XFrames allows developers to build dynamic, high-performance native applications with React at its core.
+
+#### Fabric: Efficient React Tree Management
+
+[Fabric](https://reactnative.dev/architecture/fabric-renderer) is utilized in XFrames to efficiently manage the React tree by tracking changes to elements, attributes, and children. It emits events that XFrames forwards to the C++ layer, which updates the widget tree and handles rendering. This approach allows XFrames to benefit from the efficient tree management of Fabric without requiring the full React Native ecosystem or its associated overhead.
+
+#### RxJS & ReactivePlusPlus: Efficient Event Handling and UI Updates
+
+[RxJS](https://rxjs.dev/) is used in XFrames to manage user interactions, such as clicks, changes, and hover events, asynchronously from the C++ layer. This allows efficient handling of event streams and ensures responsiveness.
