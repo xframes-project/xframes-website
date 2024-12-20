@@ -91,6 +91,10 @@ In XFrames, [nlohmann/json](https://github.com/nlohmann/json) facilitates commun
 
 ### Node.js and browser support through WebAssembly
 
+Find out more about [XFrames for Node.js](https://github.com/xframes-project/xframes/tree/main/packages/dear-imgui/npm/node#readme).
+
+Find out more about [XFrames for WebAssembly](https://github.com/xframes-project/xframes/tree/main/packages/dear-imgui/npm/wasm#readme).
+
 #### TypeScript: Strong Typing and Developer Productivity
 
 XFrames NPM modules are written in TypeScript to provide strong typing out of the box. TypeScript enhances developer productivity by catching errors at compile time and providing rich IDE support. By using TypeScript, XFrames ensures that its JavaScript layer is more maintainable, scalable, and robust while still enjoying the flexibility and dynamics of JavaScript.
@@ -109,6 +113,8 @@ XFrames NPM modules are written in TypeScript to provide strong typing out of th
 
 ### Python
 
+Find out more about [XFrames for Python](https://github.com/xframes-project/xframes-python).
+
 #### Pybind11
 
 Pybind11 is a lightweight header-only library that simplifies creating Python bindings for C++ code. It offers a seamless interface between C++ and Python, allowing native C++ code to be called from Python.
@@ -118,6 +124,8 @@ Pybind11 is a lightweight header-only library that simplifies creating Python bi
 Scikit-build-core is a build system that integrates with CMake, providing a more Pythonic interface for building C++ extensions. It simplifies packaging and distributing Python C++ extensions, making it easier to build cross-platform bindings.
 
 ### F#
+
+Find out more about [XFrames for F#](https://github.com/xframes-project/xframes-fsharp).
 
 #### Reactive Extensions
 
