@@ -6,13 +6,13 @@ Welcome to the XFrames FAQ! Here, you'll find answers to common questions about 
 
 ## What is XFrames?
 
-XFrames is an open-source library designed to build GPU-accelerated, native-like desktop applications using Node.js, React, and WebAssembly (WASM). Unlike traditional frameworks like Electron, XFrames enables DOM-free development, leveraging React Native's Fabric renderer to create fast, cross-platform applications. It eliminates the need for a browser runtime, resulting in lightweight and efficient applications. It is built to support both native desktop environments and WebAssembly for seamless cross-platform execution, making it an ideal choice for performance-driven projects.
+XFrames is an open-source library designed to build GPU-accelerated, native-like desktop applications using a variety of programming languages, including JavaScript (Node.js), Kotlin, and F#. Unlike traditional frameworks like Electron, XFrames enables DOM-free development offering fast, cross-platform performance. Over 20 programming languages are supported on the desktop, thanks to custom JNI and C libraries. The WASM version requires JavaScript and currently React as well. XFrames is ideal for performance-driven projects, supporting both native desktop environments and cross-platform execution.
 
 ---
 
 ## What problem does XFrames solve?
 
-XFrames addresses the performance and resource efficiency challenges commonly associated with desktop application frameworks like Electron. While Electron enables rapid development and easy access to the npm ecosystem, it does so at the cost of significant overhead due to bundling a full browser runtime. XFrames offers a lightweight alternative, allowing developers to build cross-platform, GPU-accelerated applications without the need for a web browser. By focusing on native-like performance and eliminating the DOM, XFrames delivers faster, more resource-efficient applications. However, developers must work within the constraints of React Native's Fabric renderer, which means that many existing React packages that depend on the DOM cannot be used. That said, libraries with a headless architecture (such as [React Admin](https://marmelab.com/react-admin/)), could be [integrated into an XFrames application](https://marmelab.com/blog/2024/05/22/using-react-admin-with-react-native.html).
+XFrames addresses the performance and resource efficiency challenges commonly associated with desktop application frameworks like Electron. While Electron enables rapid development and easy access to the npm ecosystem, it does so at the cost of significant overhead due to bundling a full browser runtime. XFrames offers a lightweight alternative, allowing developers to build cross-platform, GPU-accelerated applications without the need for a web browser. By focusing on native-like performance and eliminating the DOM, XFrames delivers faster, more resource-efficient applications.
 
 ---
 
@@ -22,9 +22,13 @@ By removing the DOM (Document Object Model), XFrames avoids the overhead associa
 
 ---
 
-## Does XFrames depend on React?
+## Can you list a few disadvantages?
 
-Yes, currently, XFrames leverages React to build its UI components. However, it's important to note that **in Node.js applications**, only react is required—react-dom is **not needed**. This makes XFrames more lightweight compared to a full web-based React application. React is used solely for managing UI components and layout rendering, while the GPU-accelerated rendering is handled separately through **GLFW** and **OpenGL**. If you're already familiar with React, this makes XFrames a natural fit for React-based workflows. Future versions may explore alternatives, but React is a core part of XFrames for now.
+The verbosity of the code can vary depending on the programming language you choose. Languages with domain-specific language (DSL) support, such as Kotlin and F#, provide a more streamlined and developer-friendly experience.
+
+Since XFrames doesn't rely on the DOM, developers are unable to take advantage of the vast ecosystem of JavaScript libraries.
+
+Additionally, debugging tools for rendering are currently still limited, making it more challenging to troubleshoot and optimize certain aspects of the application.
 
 ---
 
@@ -34,19 +38,13 @@ The reason you can't use **Material-UI (MUI)** in XFrames, despite React being a
 
 ---
 
-## Is JavaScript the only way to use XFrames?
-
-XFrames is primarily used with JavaScript and React, leveraging the React Native Fabric Renderer for GPU-accelerated GUIs. However, we are extending support to [Python](https://github.com/xframes-project/xframes-python), [C#](https://github.com/xframes-project/xframes-csharp/), [Java](https://github.com/xframes-project/xframes-java), [Kotlin](https://github.com/xframes-project/xframes-kotlin), [Scala](https://github.com/xframes-project/xframes-scala) developers. Stay tuned for updates!
-
----
-
 ## What types of fonts are supported in XFrames?
 
 At the moment, **XFrames only supports TTF (TrueType Fonts)**. You can include TTF fonts in your XFrames applications to render text in your custom layouts. Support for other font formats may be added in future releases, but for now, TTF remains the only supported font format.
 
 ---
 
-## Can I use XFrames alongside an Electron application?
+## I am an Electron user and I cannot afford to do a full switch - can I use XFrames alongside an Electron application?
 
 Yes, **XFrames can be integrated with Electron applications**. This hybrid approach allows you to use XFrames for high-performance, GPU-accelerated tasks while retaining Electron's Chromium-based windows for web-focused functionality. This setup is ideal for incrementally adopting XFrames without requiring a full rewrite.
 
@@ -56,48 +54,43 @@ Yes, **XFrames can be integrated with Electron applications**. This hybrid appro
 
 XFrames can replace Electron in scenarios where high performance, low resource usage, or GPU-accelerated rendering is required, and web technologies (e.g., DOM, CSS) are unnecessary. However, for applications relying heavily on web-based workflows, such as HTML and CSS for UI, Electron remains a powerful option.
 
-XFrames is a better fit when:
+XFrames is a better fit when any of the following applies:
 
+- For whatever reason JavaScript (or any other language that compiles to JavaScript) cannot be used
 - Performance is critical (e.g., rendering, simulations, real-time GUIs).
 - You want smaller application binaries without bundling a browser engine.
 
 ---
 
-## What are the benefits of combining XFrames and Electron?
+## Is XFrames truly cross-platform?
 
-Using XFrames and Electron together allows you to:
-
-- Incrementally migrate high-performance parts of your app to XFrames.
-- Optimize GPU-heavy tasks while keeping the flexibility of web technologies for other parts.
-- Explore XFrames' potential without abandoning your existing Electron codebase.
+Yes, XFrames supports cross-platform development - we have tested it across various operating systems and platforms. It allows you to build applications for Windows, macOS, and Linux across various architectures. However, the platforms supported may vary depending on the programming language you choose to work with.
 
 ---
 
-## Can I distribute a hybrid XFrames-Electron application?
+## Can I distribute XFrames applications as standalone applications?
 
-Yes, you can bundle both XFrames and Electron components into a single distribution package. Tools like electron-builder can help manage dependencies and package everything into a standalone executable for end users.
+The short answer is yes! It is best to refer to the docs and/or README file for the corresponding programming language you intend to use. Go ahead and file an issue in the corresponding repo if details are missing.
 
----
+## How large are the standalone applications?
 
-## Is XFrames cross-platform like Electron?
+The size of the distributable package (the executable, its dependencies, and assets) can vary wildly:
 
-Yes, XFrames supports cross-platform development, just like Electron. Both frameworks allow you to build applications for Windows, macOS, and Linux. For best results, ensure that your hybrid application’s XFrames and Electron components are tested on all targeted platforms.
+- 50 MB+ for Node.js (using [Nexe](https://github.com/nexe/nexe) and embedding the native npm module);
+- 25-30 MB for .NET languages (this includes all the .NET dependencies and the XFrames DLL);
+- 40 MB for Kotlin (using Gradle's distZip, includes Compose Runtime and the JNI library);
+- 20-25 MB for Python (using [Briefcase](https://github.com/beeware/briefcase) or [PyInstaller](https://pyinstaller.org/en/stable/) and embedding the native Python module)
 
----
+Please note, this list is not comprehensive, we've yet to try out Go, Rust, Swift - among others.
 
-## Does XFrames provide a browser-based UI like Electron?
+In comparison, Electron applications often exceed 100MB once you factor in Node.js, Chromium and various assets.
 
-No, XFrames does not use a browser engine or DOM. Instead, it focuses on GPU-accelerated rendering using technologies like GLFW, OpenGL (or WebGPU in a browser environment), and Yoga for layout management. This provides much higher performance but requires a different approach to UI development.
+You should use the release version of the JNI or C wrapper libraries as they are substantially smaller.
 
----
+## What about signing my application?
 
-## What if I only want XFrames without Electron?
+On Windows, you can sign your EXE files using a Code Signing Certificate, typically obtained from a trusted Certificate Authority (CA) like DigiCert or Sectigo. Once you have the certificate, you can use tools like SignTool (available with the Windows SDK) to sign your EXE files, which helps to verify the publisher and assures users that the file has not been tampered with.
 
-XFrames is fully capable of running standalone. It’s designed to replace Electron in scenarios where the DOM and web standards are unnecessary, providing a leaner, more performant alternative for creating native desktop applications. However, **XFrames currently depends on React** (without `react-dom`) for building UI components, which means that React is required as part of the development process.
+On Linux, signing is commonly done using tools like GPG (GNU Privacy Guard) to generate and apply a signature to your binaries. Many Linux distributions also support AppImage signing, allowing you to sign packaged applications for distribution.
 
----
-
-## Can I distribute XFrames applications as standalone Windows applications?
-
-Work is well underway to allow developers to create fully portable standalone EXE files. Assets such as font files aren't part of the EXE, however.
-We will update this page accordingly soon.
+On macOS, code signing is mandatory for applications that are distributed outside the App Store. You can sign your application using Apple's codesign utility and an appropriate Apple Developer certificate. This ensures that your app is recognized as trusted by macOS, which is important for smooth installation and execution, particularly for apps distributed via the internet. Additionally, on macOS, you may also need to notarize your application with Apple to prevent warnings during installation.
