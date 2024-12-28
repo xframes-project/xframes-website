@@ -10,8 +10,13 @@ raspberrypi:
 
 kotlin:
   label: Kotlin
-  permalink: /kotnlin
+  permalink: /kotlin
   description: Kotlin posts
+
+ada:
+  label: Ada
+  permalink: /ada
+  description: Ada posts
 
 f-sharp:
   label: F#
