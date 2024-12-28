@@ -11,13 +11,12 @@ import JavaLogoUrl from '@site/static/img/java.png';
 import ScalaLogoUrl from '@site/static/img/scala.png';
 import FSharpLogoUrl from '@site/static/img/fsharp.png';
 import WebAssemblyLogoUrl from '@site/static/img/webassembly.png';
-// import WebGPULogoUrl from '@site/static/img/webgpu.png';
 import CPPLogoUrl from '@site/static/img/cpp.png';
 import CLogoUrl from '@site/static/img/c.png';
 import CSharpLogoUrl from '@site/static/img/csharp.png';
 import AdaLogoUrl from '@site/static/img/ada.png';
 import RustLogoUrl from '@site/static/img/rust.png';
-import GoLogoUrl from '@site/static/img/go.png';
+import OCamlLogoUrl from '@site/static/img/ocaml.png';
 import TSLogoUrl from '@site/static/img/ts.png';
 import SwiftLogoUrl from '@site/static/img/swift.png';
 import LuaLogoUrl from '@site/static/img/lua.png';
@@ -52,7 +51,6 @@ const techs = [
   {name: 'C', logoUrl: CLogoUrl},
   {name: 'C++', logoUrl: CPPLogoUrl},
   {name: 'Rust', logoUrl: RustLogoUrl},
-  {name: 'Go', logoUrl: GoLogoUrl},
   {name: 'Kotlin', logoUrl: KotlinLogoUrl},
   {name: 'Java', logoUrl: JavaLogoUrl},
   {name: 'Scala', logoUrl: ScalaLogoUrl},
@@ -60,6 +58,7 @@ const techs = [
   {name: 'Swift', logoUrl: SwiftLogoUrl},
   {name: 'Lua', logoUrl: LuaLogoUrl},
   {name: 'Ada', logoUrl: AdaLogoUrl},
+  {name: 'OCaml', logoUrl: OCamlLogoUrl},
 ];
 
 export default function Home(): JSX.Element {
