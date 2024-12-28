@@ -18,6 +18,11 @@ ada:
   permalink: /ada
   description: Ada posts
 
+lua:
+  label: Lua
+  permalink: /lua
+  description: Lua posts
+
 f-sharp:
   label: F#
   permalink: /f-sharp
