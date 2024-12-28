@@ -30,7 +30,7 @@ XFrames for Lua maintains the same performance standards as our other implementa
 Thanks to Lua’s portability, XFrames for Lua can be used across various platforms. Developers can build and deploy UIs efficiently on multiple platforms without sacrificing performance.
 
 - **Cross-Platform Compatibility**: Lua is widely supported across different platforms, allowing for easy integration into various projects.
-- **Embedded Systems**: Ideal for embedded applications where resource constraints demand efficiency and speed.
+- **Resource-Constrained Platforms**: While XFrames is still being tested on resource-constrained platforms, it can be optimized for environments like Raspberry Pi and other low-resource setups.
 
 ### Growing with Lua Developers  
 
