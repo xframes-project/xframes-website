@@ -46,19 +46,19 @@ const techs = [
   {name: 'WASM', logoUrl: WebAssemblyLogoUrl},
   {name: 'Node.js', logoUrl: NodejsLogoUrl},
   {name: 'TypeScript', logoUrl: TSLogoUrl},
-  {name: 'F#', logoUrl: FSharpLogoUrl},
+  {name: 'F#', logoUrl: FSharpLogoUrl, githubProjectName: "xframes-fsharp"},
   {name: 'C#', logoUrl: CSharpLogoUrl},
   {name: 'C', logoUrl: CLogoUrl},
   {name: 'C++', logoUrl: CPPLogoUrl},
   {name: 'Rust', logoUrl: RustLogoUrl},
-  {name: 'Kotlin', logoUrl: KotlinLogoUrl},
-  {name: 'Java', logoUrl: JavaLogoUrl},
-  {name: 'Scala', logoUrl: ScalaLogoUrl},
-  {name: 'Python', logoUrl: PythonLogoUrl},
+  {name: 'Kotlin', logoUrl: KotlinLogoUrl, githubProjectName: "xframes-kotlin"},
+  {name: 'Java', logoUrl: JavaLogoUrl, githubProjectName: "xframes-java"},
+  {name: 'Scala', logoUrl: ScalaLogoUrl, githubProjectName: "xframes-scala"},
+  {name: 'Python', logoUrl: PythonLogoUrl, githubProjectName: "xframes-python"},
   {name: 'Swift', logoUrl: SwiftLogoUrl},
-  {name: 'Lua', logoUrl: LuaLogoUrl},
-  {name: 'Ada', logoUrl: AdaLogoUrl},
-  {name: 'OCaml', logoUrl: OCamlLogoUrl},
+  {name: 'Lua', logoUrl: LuaLogoUrl, githubProjectName: "xframes-lua"},
+  {name: 'Ada', logoUrl: AdaLogoUrl, githubProjectName: "xframes-ada"},
+  {name: 'OCaml', logoUrl: OCamlLogoUrl, githubProjectName: "xframes-ocaml"},
 ];
 
 export default function Home(): JSX.Element {
@@ -79,9 +79,21 @@ export default function Home(): JSX.Element {
           </div>
           <div className={clsx(styles.techsWrapper)}>
             {techs.map(tech => (<div key={tech.name} className={clsx(styles.techAvatar)}>
-              <img src={tech.logoUrl} alt={`${tech.name} logo`} className={clsx('avatar__photo', styles.techAvatarImg)}/>
+              {tech.githubProjectName && (
+                <a href={`https://github.com/xframes-project/${tech.githubProjectName}`} title={`Visit XFrames for ${tech.name} project's website`}>
+                  <img src={tech.logoUrl} alt={`${tech.name} logo`} className={clsx('avatar__photo', styles.techAvatarImg)}/>
+                </a>
+              )}
+              {!tech.githubProjectName && (
+                <img src={tech.logoUrl} alt={`${tech.name} logo`} className={clsx('avatar__photo', styles.techAvatarImg)}/>
+              )}
               <div className="avatar__intro">
-                <small className="avatar__subtitle">{tech.name}</small>
+                <small className="avatar__subtitle">
+                  {tech.githubProjectName && (
+                    <a href={`https://github.com/xframes-project/${tech.githubProjectName}`} title={`Visit XFrames for ${tech.name} project's website`}>{tech.name}</a>
+                  )}
+                  {!tech.githubProjectName && tech.name}
+                </small>
               </div>
             </div>))}
           </div>

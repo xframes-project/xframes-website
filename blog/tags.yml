@@ -23,6 +23,11 @@ lua:
   permalink: /lua
   description: Lua posts
 
+ocaml:
+  label: OCaml
+  permalink: /ocaml
+  description: OCaml posts
+
 f-sharp:
   label: F#
   permalink: /f-sharp

@@ -144,3 +144,16 @@ Find out more about [XFrames for Ada](https://github.com/xframes-project/xframes
 #### GNATcoll
 
 [GNATcoll](https://github.com/AdaCore/gnatcoll-core) is a set of open-source Ada libraries providing a wide range of utilities and functionality. XFrames currently uses only the [JSON](https://docs.adacore.com/live/wave/gnatcoll-core/html/gnatcoll-core_ug/json.html) module for handling JSON data.
+
+### OCaml
+
+Find out more about [XFrames for OCaml](https://github.com/xframes-project/xframes-ocaml).
+
+#### ctypes
+
+[Ctypes](https://github.com/yallop/ocaml-ctypes) is an OCaml library that simplifies binding to C libraries without writing C code. It provides combinators for describing C types such as integers, arrays, structs, and functions. With ctypes, you can easily bind to C functions directly in OCaml, making it an ideal tool for interfacing with existing C libraries or creating custom bindings.
+
+#### yojson
+
+[Yojson](https://github.com/ocaml-community/yojson) is a fast and flexible OCaml library for working with JSON data. It provides efficient parsing, pretty printing, and manipulation of JSON, supporting both JSON encoding and decoding with minimal overhead. With its simple API and strong type safety, Yojson is a popular choice for handling JSON in OCaml projects.
+
