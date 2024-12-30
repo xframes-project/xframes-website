@@ -12,7 +12,7 @@ The requirements will depend on which programming language you wish to use with 
 
 So far, XFrames has been tested with the following languages/platforms:
 
-- JavaScript/Node.js
+- [JavaScript/TypeScript](/docs/category/typescript)
 - WebAssembly
 - Python
 - Lua
@@ -26,7 +26,7 @@ So far, XFrames has been tested with the following languages/platforms:
 - Kotlin
 - Scala
 
-### JavaScript / Node.js
+### JavaScript / TypeScript (Node.js)
 
 #### Generate a new Node.js desktop application
 
