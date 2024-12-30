@@ -20,6 +20,7 @@ import OCamlLogoUrl from '@site/static/img/ocaml.png';
 import TSLogoUrl from '@site/static/img/ts.png';
 import SwiftLogoUrl from '@site/static/img/swift.png';
 import LuaLogoUrl from '@site/static/img/lua.png';
+import CrystalLogoUrl from '@site/static/img/crystal.png';
 
 import styles from './index.module.css';
 
@@ -55,10 +56,11 @@ const techs = [
   {name: 'Java', logoUrl: JavaLogoUrl, githubProjectName: "xframes-java"},
   {name: 'Scala', logoUrl: ScalaLogoUrl, githubProjectName: "xframes-scala"},
   {name: 'Python', logoUrl: PythonLogoUrl, githubProjectName: "xframes-python"},
-  {name: 'Swift', logoUrl: SwiftLogoUrl},
+  // {name: 'Swift', logoUrl: SwiftLogoUrl},
   {name: 'Lua', logoUrl: LuaLogoUrl, githubProjectName: "xframes-lua"},
   {name: 'Ada', logoUrl: AdaLogoUrl, githubProjectName: "xframes-ada"},
   {name: 'OCaml', logoUrl: OCamlLogoUrl, githubProjectName: "xframes-ocaml"},
+  {name: 'Crystal', logoUrl: CrystalLogoUrl, githubProjectName: "xframes-crystal"},
 ];
 
 export default function Home(): JSX.Element {
