@@ -8,12 +8,27 @@ Imagine the flexibility and ease of React, without the web’s typical overhead.
 
 ## Getting Started
 
-### What you'll need
+The requirements will depend on which programming language you wish to use with XFrames.
 
-- [Node.js](https://nodejs.org/en/download/) version 16.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+So far, XFrames has been tested with the following languages/platforms:
 
-## Generate a new Node.js desktop application
+- JavaScript/Node.js
+- WebAssembly
+- Python
+- Lua
+- OCaml
+- C#
+- F#
+- Ada
+- D
+- Crystal
+- Java
+- Kotlin
+- Scala
+
+### JavaScript / Node.js
+
+#### Generate a new Node.js desktop application
 
 ```bash
 npx create-xframes-node-app
@@ -29,7 +44,53 @@ Enter a project name, cd into the newly created project folder then run
 npm start
 ```
 
-## Generate a new WASM-enabled, Webpack-based web application
+### WebAssembly
+
+#### Generate a new WASM-enabled, Webpack-based web application
 
 Detailed instructions are coming soon! Meanwhile, please refer to [this example](https://github.com/andreamancuso/xframes/tree/main/packages/dear-imgui/examples/cra-example).
+
+### Python
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-python).
+
+### Lua
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-lua).
+
+### OCaml
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-ocaml).
+
+### C#
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-csharp).
+
+### F#
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-fsharp).
+
+### Ada
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-ada).
+
+### D
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-dlang).
+
+### Crystal
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-crystal).
+
+### Java
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-java).
+
+### Kotlin
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-kotlin).
+
+### Scala
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-scala).
 

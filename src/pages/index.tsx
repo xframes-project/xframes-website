@@ -21,6 +21,7 @@ import TSLogoUrl from '@site/static/img/ts.png';
 import SwiftLogoUrl from '@site/static/img/swift.png';
 import LuaLogoUrl from '@site/static/img/lua.png';
 import CrystalLogoUrl from '@site/static/img/crystal.png';
+import DLangLogoUrl from '@site/static/img/dlang.png';
 
 import styles from './index.module.css';
 
@@ -51,7 +52,7 @@ const techs = [
   {name: 'C#', logoUrl: CSharpLogoUrl},
   {name: 'C', logoUrl: CLogoUrl},
   {name: 'C++', logoUrl: CPPLogoUrl},
-  {name: 'Rust', logoUrl: RustLogoUrl},
+  // {name: 'Rust', logoUrl: RustLogoUrl},
   {name: 'Kotlin', logoUrl: KotlinLogoUrl, githubProjectName: "xframes-kotlin"},
   {name: 'Java', logoUrl: JavaLogoUrl, githubProjectName: "xframes-java"},
   {name: 'Scala', logoUrl: ScalaLogoUrl, githubProjectName: "xframes-scala"},
@@ -61,6 +62,7 @@ const techs = [
   {name: 'Ada', logoUrl: AdaLogoUrl, githubProjectName: "xframes-ada"},
   {name: 'OCaml', logoUrl: OCamlLogoUrl, githubProjectName: "xframes-ocaml"},
   {name: 'Crystal', logoUrl: CrystalLogoUrl, githubProjectName: "xframes-crystal"},
+  {name: 'D', logoUrl: DLangLogoUrl, githubProjectName: "xframes-dlang"},
 ];
 
 export default function Home(): JSX.Element {

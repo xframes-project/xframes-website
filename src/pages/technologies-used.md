@@ -157,3 +157,10 @@ Find out more about [XFrames for OCaml](https://github.com/xframes-project/xfram
 
 [Yojson](https://github.com/ocaml-community/yojson) is a fast and flexible OCaml library for working with JSON data. It provides efficient parsing, pretty printing, and manipulation of JSON, supporting both JSON encoding and decoding with minimal overhead. With its simple API and strong type safety, Yojson is a popular choice for handling JSON in OCaml projects.
 
+### D
+
+Find out more about [XFrames for D](https://github.com/xframes-project/xframes-dlang).
+
+#### ASDF (A Simple Document Format)
+
+[ASDF](https://github.com/libmir/asdf) (A Simple Document Format) is a lightweight, high-speed JSON library for D, built to handle massive data streams with minimal code. Designed for real-world production, it excels in transforming and processing large-scale JSON datasets effortlessly.
