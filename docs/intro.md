@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # What is XFrames?
 
-Imagine the flexibility and ease of React, without the web’s typical overhead. This library is built for developers who want the freedom to create high-performance native desktop applications using JavaScript, but without the resource-intensive DOM, CSS, or Electron. You’ll be working closer to the metal with OpenGL and GLFW3 (or WebAssembly and WebGPU on the browser), giving you unparalleled control over performance and memory usage.
+XFrames is a high-performance framework for building native desktop applications with minimal overhead. Designed for developers who want to leverage the power of languages like JavaScript, Python, Lua, OCaml, and more, XFrames allows you to create applications without the usual resource-intensive web technologies like DOM, CSS, or Electron. By utilizing OpenGL and GLFW3 on native platforms or WebAssembly and WebGPU in the browser, XFrames provides fine-grained control over performance and memory usage.
 
 ## Getting Started
 
