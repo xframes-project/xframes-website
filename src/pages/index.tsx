@@ -24,6 +24,7 @@ import CrystalLogoUrl from '@site/static/img/crystal.png';
 import DLangLogoUrl from '@site/static/img/dlang.png';
 import RubyLogoUrl from '@site/static/img/ruby.png';
 import NimLogoUrl from '@site/static/img/nim.png';
+import RacketLogoUrl from '@site/static/img/racket.png';
 
 import styles from './index.module.css';
 
@@ -67,6 +68,7 @@ const techs = [
   {name: 'D', logoUrl: DLangLogoUrl, githubProjectName: "xframes-dlang"},
   {name: 'Nim', logoUrl: NimLogoUrl, githubProjectName: "xframes-nim"},
   {name: 'Ruby', logoUrl: RubyLogoUrl, githubProjectName: "xframes-ruby"},
+  {name: 'Racket', logoUrl: RacketLogoUrl, githubProjectName: "xframes-racket"},
 ];
 
 export default function Home(): JSX.Element {
