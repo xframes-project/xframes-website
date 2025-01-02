@@ -22,6 +22,8 @@ import SwiftLogoUrl from '@site/static/img/swift.png';
 import LuaLogoUrl from '@site/static/img/lua.png';
 import CrystalLogoUrl from '@site/static/img/crystal.png';
 import DLangLogoUrl from '@site/static/img/dlang.png';
+import RubyLogoUrl from '@site/static/img/ruby.png';
+import NimLogoUrl from '@site/static/img/nim.png';
 
 import styles from './index.module.css';
 
@@ -63,6 +65,8 @@ const techs = [
   {name: 'OCaml', logoUrl: OCamlLogoUrl, githubProjectName: "xframes-ocaml"},
   {name: 'Crystal', logoUrl: CrystalLogoUrl, githubProjectName: "xframes-crystal"},
   {name: 'D', logoUrl: DLangLogoUrl, githubProjectName: "xframes-dlang"},
+  {name: 'Nim', logoUrl: NimLogoUrl, githubProjectName: "xframes-nim"},
+  {name: 'Ruby', logoUrl: RubyLogoUrl, githubProjectName: "xframes-ruby"},
 ];
 
 export default function Home(): JSX.Element {
