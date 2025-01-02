@@ -25,6 +25,7 @@ import DLangLogoUrl from '@site/static/img/dlang.png';
 import RubyLogoUrl from '@site/static/img/ruby.png';
 import NimLogoUrl from '@site/static/img/nim.png';
 import RacketLogoUrl from '@site/static/img/racket.png';
+import HaskellLogoUrl from '@site/static/img/haskell.png';
 
 import styles from './index.module.css';
 
@@ -69,6 +70,7 @@ const techs = [
   {name: 'Nim', logoUrl: NimLogoUrl, githubProjectName: "xframes-nim"},
   {name: 'Ruby', logoUrl: RubyLogoUrl, githubProjectName: "xframes-ruby"},
   {name: 'Racket', logoUrl: RacketLogoUrl, githubProjectName: "xframes-racket"},
+  {name: 'Haskell', logoUrl: HaskellLogoUrl, githubProjectName: "xframes-haskell"},
 ];
 
 export default function Home(): JSX.Element {
