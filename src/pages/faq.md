@@ -68,6 +68,14 @@ Yes, XFrames supports cross-platform development - we have tested it across vari
 
 ---
 
+## How can different programming languages work with XFrames?
+
+XFrames provides support for [Foreign Function Interfaces](https://en.m.wikipedia.org/wiki/Foreign_function_interface) to enable seamless integration with various programming languages. We've focused on making it as straightforward as possible for developers to interoperate with XFrames, whether using C#, Java, Ada, or other languages with FFI capabilities. We're continually seeking feedback to enhance the developer experience, so please reach out with suggestions or issues you encounter.
+
+Would you like any revisions or additions? 
+
+---
+
 ## Can I distribute XFrames applications as standalone applications?
 
 The short answer is yes! This is especially true if you are using compiled languages, because you would just need to include the executable and the library files (.dll, .so or .dynlab).
