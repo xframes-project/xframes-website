@@ -70,7 +70,9 @@ Yes, XFrames supports cross-platform development - we have tested it across vari
 
 ## Can I distribute XFrames applications as standalone applications?
 
-The short answer is yes! It is best to refer to the docs and/or README file for the corresponding programming language you intend to use. Go ahead and file an issue in the corresponding repo if details are missing.
+The short answer is yes! This is especially true if you are using compiled languages, because you would just need to include the executable and the library files (.dll, .so or .dynlab).
+For interpreted languages you may need to also distribute the interpreter, or embed your application into it (this is the case with Node.js and Python).
+That said, it is best to refer to the docs and/or README file for the corresponding programming language you intend to use. Go ahead and file an issue in the corresponding repo if details are missing.
 
 ## How large are the standalone applications?
 
@@ -80,6 +82,7 @@ The size of the distributable package (the executable, its dependencies, and ass
 - 25-30 MB for .NET languages (this includes all the .NET dependencies and the XFrames DLL);
 - 40 MB for Kotlin (using Gradle's distZip, includes Compose Runtime and the JNI library);
 - 20-25 MB for Python (using [Briefcase](https://github.com/beeware/briefcase) or [PyInstaller](https://pyinstaller.org/en/stable/) and embedding the native Python module)
+- 10-15 MB for compiled languages such as Nim, OCaml, Racket, Haskell, Ada, Crystal, D.
 
 Please note, this list is not comprehensive, we've yet to try out Go, Rust, Swift - among others.
 
