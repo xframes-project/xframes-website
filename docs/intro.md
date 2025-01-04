@@ -82,6 +82,14 @@ Instructions coming soon! There might be details in the [project's README file](
 
 Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-dlang).
 
+### Racket
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-racket).
+
+### Haskell
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-haskell).
+
 ### Crystal
 
 Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-crystal).
