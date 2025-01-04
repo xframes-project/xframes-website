@@ -24,6 +24,8 @@ So far, XFrames has been tested with the following languages/platforms:
 - Crystal
 - Ruby
 - Nim
+- Haskell
+- Racket
 - Java
 - Kotlin
 - Scala
