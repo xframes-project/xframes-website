@@ -26,6 +26,8 @@ import RubyLogoUrl from '@site/static/img/ruby.png';
 import NimLogoUrl from '@site/static/img/nim.png';
 import RacketLogoUrl from '@site/static/img/racket.png';
 import HaskellLogoUrl from '@site/static/img/haskell.png';
+import FreePascalLogoUrl from '@site/static/img/freepascal.png';
+import DelphiLogoUrl from '@site/static/img/delphi.png';
 
 import styles from './index.module.css';
 
@@ -50,9 +52,9 @@ function HomepageHeader() {
 
 const techs = [
   {name: 'WASM', logoUrl: WebAssemblyLogoUrl},
-  {name: 'C', logoUrl: CLogoUrl},
+  // {name: 'C', logoUrl: CLogoUrl},
   {name: 'C++', logoUrl: CPPLogoUrl},
-  {name: 'Node.js', logoUrl: NodejsLogoUrl},
+  // {name: 'Node.js', logoUrl: NodejsLogoUrl},
   {name: 'TypeScript', logoUrl: TSLogoUrl},
   {name: 'F#', logoUrl: FSharpLogoUrl, githubProjectName: "xframes-fsharp"},
   {name: 'C#', logoUrl: CSharpLogoUrl, githubProjectName: "xframes-csharp"},
@@ -71,6 +73,8 @@ const techs = [
   {name: 'Ruby', logoUrl: RubyLogoUrl, githubProjectName: "xframes-ruby"},
   {name: 'Racket', logoUrl: RacketLogoUrl, githubProjectName: "xframes-racket"},
   {name: 'Haskell', logoUrl: HaskellLogoUrl, githubProjectName: "xframes-haskell"},
+  {name: 'Free Pascal', logoUrl: FreePascalLogoUrl, githubProjectName: "xframes-freepascal"},
+  {name: 'Delphi', logoUrl: DelphiLogoUrl, githubProjectName: "xframes-delphi"},
 ];
 
 export default function Home(): JSX.Element {

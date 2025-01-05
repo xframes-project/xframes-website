@@ -14,6 +14,8 @@ So far, XFrames has been tested with the following languages/platforms:
 
 - [JavaScript/TypeScript](/docs/category/typescript)
 - WebAssembly
+- Free Pascal
+- Delphi
 - Python
 - Lua
 - OCaml
@@ -61,6 +63,14 @@ Instructions coming soon! There might be details in the [project's README file](
 ### Lua
 
 Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-lua).
+
+### Free Pascal
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-freepascal).
+
+### Delphi
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-delphi).
 
 ### OCaml
 
