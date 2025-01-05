@@ -50,12 +50,12 @@ function HomepageHeader() {
 
 const techs = [
   {name: 'WASM', logoUrl: WebAssemblyLogoUrl},
+  {name: 'C', logoUrl: CLogoUrl},
+  {name: 'C++', logoUrl: CPPLogoUrl},
   {name: 'Node.js', logoUrl: NodejsLogoUrl},
   {name: 'TypeScript', logoUrl: TSLogoUrl},
   {name: 'F#', logoUrl: FSharpLogoUrl, githubProjectName: "xframes-fsharp"},
-  {name: 'C#', logoUrl: CSharpLogoUrl},
-  {name: 'C', logoUrl: CLogoUrl},
-  {name: 'C++', logoUrl: CPPLogoUrl},
+  {name: 'C#', logoUrl: CSharpLogoUrl, githubProjectName: "xframes-csharp"},
   // {name: 'Rust', logoUrl: RustLogoUrl},
   {name: 'Kotlin', logoUrl: KotlinLogoUrl, githubProjectName: "xframes-kotlin"},
   {name: 'Java', logoUrl: JavaLogoUrl, githubProjectName: "xframes-java"},
