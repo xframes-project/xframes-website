@@ -2,7 +2,7 @@
 slug: xframes-for-ocaml-functional-ui-development-with-high-performance
 title: "XFrames for OCaml: Functional UI Development with High Performance"
 authors: [andreamancuso]
-tags: [ocaml]
+tags: [ocaml,ffi]
 ---
 
 At XFrames, we are dedicated to providing developers with powerful tools that deliver exceptional results. We are excited to announce the introduction of [OCaml support](https://github.com/xframes-project/xframes-ocaml), combining the elegance of OCaml with the versatility of XFrames for creating high-performance, functional UIs.

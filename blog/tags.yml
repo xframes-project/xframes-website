@@ -13,6 +13,11 @@ kotlin:
   permalink: /kotlin
   description: Kotlin posts
 
+ffi:
+  label: FFI
+  permalink: /ffi
+  description: Foreign Function Interface (FFI) posts
+
 ada:
   label: Ada
   permalink: /ada

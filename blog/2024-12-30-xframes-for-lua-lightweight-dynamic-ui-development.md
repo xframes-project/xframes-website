@@ -2,7 +2,7 @@
 slug: xframes-for-lua-lightweight-dynamic-ui-development
 title: "XFrames for Lua: Lightweight, Dynamic UI Development"
 authors: [andreamancuso]
-tags: [lua]
+tags: [lua,ffi]
 ---
 
 At XFrames, we’re passionate about empowering developers with high-performance tools that deliver results. Today, we’re excited to introduce (basic, for now) [Lua support](https://github.com/xframes-project/xframes-lua), bringing the flexibility and dynamic nature of Lua to the world of modern UI development.  
