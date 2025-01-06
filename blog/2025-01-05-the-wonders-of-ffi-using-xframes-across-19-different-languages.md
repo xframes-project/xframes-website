@@ -88,7 +88,9 @@ Wheher we like it or not, C is still the lingua franca of programming: almost ev
 
 The following assumes that you are familiar with the basic C concepts described above.
 
-lt's have a look at the first 'foreign' C function:
+##### How to avoid name mangling issues
+
+Let's have a look at the first part of the C library interface definition:
 
 ```c showLineNumbers
 #ifdef _WIN32
@@ -96,47 +98,9 @@ lt's have a look at the first 'foreign' C function:
 #else
 #define EXPORT_API __attribute__((visibility("default")))  // For non-Windows
 #endif
-
-EXPORT_API typedef void (*OnInitCb)();
-EXPORT_API typedef void (*OnTextChangedCb)(int, const char*);
-EXPORT_API typedef void (*OnComboChangedCb)(int, int);
-EXPORT_API typedef void (*OnNumericValueChangedCb)(int, float);
-EXPORT_API typedef void (*OnBooleanValueChangedCb)(int, bool);
-EXPORT_API typedef void (*OnMultipleNumericValuesChangedCb)(int, float*, int numValues);
-EXPORT_API typedef void (*OnClickCb)(int);
-
-EXPORT_API void init(
-    const char* assetsBasePath,
-    const char* rawFontDefinitions,
-    const char* rawStyleOverrideDefinitions,
-    OnInitCb onInit,
-    OnTextChangedCb onTextChanged,
-    OnComboChangedCb onComboChanged,
-    OnNumericValueChangedCb onNumericValueChanged,
-    OnBooleanValueChangedCb onBooleanValueChanged,
-    OnMultipleNumericValuesChangedCb onMultipleNumericValuesChanged,
-    OnClickCb onClick
-);
-
-EXPORT_API void setElement(const char* elementJson);
-EXPORT_API void setChildren(int id, const char* childrenIds);
 ```
 
-A brief description of each parameter:
-
-| Parameter                      | Type                           | Description                                                                                                                                                                                         |
-| ------------------------------ | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| assetsBasePath                 | null-terminated string pointer | tells the engine where to find font files and other assets (images, etc.)                                                                                                                           |
-| rawFontDefinitions             | null-terminated string pointer | JSON-encoded structure containing font definition pairs (font name + size)                                                                                                                          |
-| rawStyleOverrideDefinitions    | null-terminated string pointer | JSON-encoded structure containing theming properties                                                                                                                                                |
-| onInit                         | function pointer               | invoked as soon as the engine has been initialized and is ready to receive messages                                                                                                                 |
-| onTextChanged                  | function pointer               | invoked whenever the value of a text widget changes (`int` identifies the widget ID, `const char*` is the current value)                                                                            |
-| onComboChanged                 | function pointer               | invoked whenever the selected index of a numeric widget changes (`int` identifies the widget ID, `float` is the current value)                                                                      |
-| onBooleanValueChanged          | function pointer               | invoked whenever the state of a checkbox widget changes (`int` identifies the widget ID, bool` indicates the checked/unchecked state)                                                               |
-| onMultipleNumericValuesChanged | function pointer               | invoked whenever any of the values of a multi-value widget changes (the first `int` identifies the widget ID, `float*` points at the float array, the second `int` indicates the size of the array) |
-| onClick                        | function pointer               | invoked whenever the 'clicked' event for a widget is triggered (`int` identifies the widget ID)                                                                                                     |
-
-Also very important is the **preprocessor conditional statement** used to define the `EXPORT_API` **macro** for _symbol visibility_, specifically for controlling how functions or variables are exported from shared libraries (DLLs on Windows or shared objects on other platforms like Linux or macOS). Exporting symbols ensures that functions or variables in a shared library can be used by other programs. In Windows, this is done with `__declspec(dllexport)`, while in Linux and other Unix-like systems, it is done with `__attribute__((visibility("default")))`.
+This is a **preprocessor conditional statement** used to define the `EXPORT_API` **macro** for _symbol visibility_, specifically for controlling how functions or variables are exported from shared libraries (DLLs on Windows or shared objects on other platforms like Linux or macOS). Exporting symbols ensures that functions or variables in a shared library can be used by other programs. In Windows, this is done with `__declspec(dllexport)`, while in Linux and other Unix-like systems, it is done with `__attribute__((visibility("default")))`.
 
 On Windows you can run `dumpbin /exports xframesshared.dll`:
 
@@ -147,7 +111,7 @@ On Windows you can run `dumpbin /exports xframesshared.dll`:
         378  179 00006EBF elementInternalOp
         379  17A 00012C51 getChildren
         380  17B 000119EB getStyle
-        381  17C 00004917 init # Here's the init() function
+        381  17C 00004917 init 
         382  17D 0000EA9D patchElement
         383  17E 00008F3F patchStyle
         384  17F 0000F411 resizeWindow
@@ -184,9 +148,151 @@ On Linux you can run `nm -D libxframesshared.so`:
 # [...]
 ```
 
+Now that we have explained what `EXPORT_API` is, we can have a look at the first function:
+
+```c showLineNumbers
+typedef void (*OnInitCb)();
+typedef void (*OnTextChangedCb)(int, const char*);
+typedef void (*OnComboChangedCb)(int, int);
+typedef void (*OnNumericValueChangedCb)(int, float);
+typedef void (*OnBooleanValueChangedCb)(int, bool);
+typedef void (*OnMultipleNumericValuesChangedCb)(int, float*, int numValues);
+typedef void (*OnClickCb)(int);
+
+EXPORT_API void init(
+    const char* assetsBasePath,
+    const char* rawFontDefinitions,
+    const char* rawStyleOverrideDefinitions,
+    OnInitCb onInit,
+    OnTextChangedCb onTextChanged,
+    OnComboChangedCb onComboChanged,
+    OnNumericValueChangedCb onNumericValueChanged,
+    OnBooleanValueChangedCb onBooleanValueChanged,
+    OnMultipleNumericValuesChangedCb onMultipleNumericValuesChanged,
+    OnClickCb onClick
+);
+```
+
+As you may have guessed, `init()` initialises XFrames.
+
+A brief description of each parameter:
+
+| Parameter                      | Type                           | Description                                                                                                                                                                                         |
+| ------------------------------ | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| assetsBasePath                 | null-terminated string pointer | tells the engine where to find font files and other assets (images, etc.)                                                                                                                           |
+| rawFontDefinitions             | null-terminated string pointer | JSON-encoded structure containing font definition pairs (font name + size)                                                                                                                          |
+| rawStyleOverrideDefinitions    | null-terminated string pointer | JSON-encoded structure containing theming properties                                                                                                                                                |
+| onInit                         | function pointer               | invoked **as soon as the engine has been initialized** and is ready to receive messages                                                                                                                 |
+| onTextChanged                  | function pointer               | invoked whenever the value of a text widget changes (`int` identifies the widget ID, `const char*` is the current value)                                                                            |
+| onComboChanged                 | function pointer               | invoked whenever the selected index of a numeric widget changes (`int` identifies the widget ID, `float` is the current value)                                                                      |
+| onBooleanValueChanged          | function pointer               | invoked whenever the state of a checkbox widget changes (`int` identifies the widget ID, bool` indicates the checked/unchecked state)                                                               |
+| onMultipleNumericValuesChanged | function pointer               | invoked whenever any of the values of a multi-value widget changes (the first `int` identifies the widget ID, `float*` points at the float array, the second `int` indicates the size of the array) |
+| onClick                        | function pointer               | invoked whenever the 'clicked' event for a widget is triggered (`int` identifies the widget ID)                                                                                                     |
+
+
+Time to look at the second function:
+
+```c showLineNumbers
+EXPORT_API void setElement(const char* elementJson);
+```
+
+`elementJson`, as the name of the parameter implies, is a JSON-serialized representation of the UI element being created.
+
+Finally, here is our third function:
+
+```c showLineNumbers
+EXPORT_API void setChildren(int id, const char* childrenIds);
+```
+
+`id` represents the ID of the parent widget, whereas `childrenIds` is a JSON-serialized array of child widget ID. Truth be told, `childrenIds` could be replaced like so:
+
+```c showLineNumbers
+EXPORT_API void setChildren(int id, const int* childrenIds, int num_children);
+```
+
+If you are coming coming from interpreted languages you'll likely find both approaches somewhat cumbersome.
+
 #### .NET (so far C# and F#)
 
+##### C#
+
+In general I have found C#'s FFI support very intuitive and convenient:
+
 ```csharp
+public delegate void OnInitCb();
+public delegate void OnTextChangedCb(int id, string value);
+public delegate void OnComboChangedCb(int id, int index);
+public delegate void OnNumericValueChangedCb(int id, float value);
+public delegate void OnBooleanValueChangedCb(int id, bool value);
+public delegate void OnMultipleNumericValuesChangedCb(int id, IntPtr rawValues, int numValues);
+public delegate void OnClickCb(int id);
+
+[DllImport("xframesshared.dll", CallingConvention = CallingConvention.Cdecl)]
+public static extern void init(
+    string assetsBasePath,
+    string rawFontDefinitions,
+    string rawStyleOverrideDefinitions,
+    OnInitCb onInit,
+    OnTextChangedCb onTextChanged,
+    OnComboChangedCb onComboChanged,
+    OnNumericValueChangedCb onNumericValueChanged,
+    OnBooleanValueChangedCb onBooleanValueChanged,
+    OnMultipleNumericValuesChangedCb onMultipleNumericValuesChanged,
+    OnClickCb onClick
+);
+
+[DllImport("xframesshared.dll", CallingConvention = CallingConvention.Cdecl)]
+public static extern void setElement(string elementJson);
+
+[DllImport("xframesshared.dll", CallingConvention = CallingConvention.Cdecl)]
+public static extern void setChildren(int id, string childrenIds);
+
+public static float[] MarshalFloatArray(IntPtr ptr, int length)
+{
+    float[] array = new float[length];
+    Marshal.Copy(ptr, array, 0, length);
+    return array;
+}
+
+OnInitCb onInit = () => {
+    Console.WriteLine("Initialization callback called!");
+
+    var rootNode = new Dictionary<string, object>
+    {
+        { "id", 0 },
+        { "type", "node" },
+        { "root", true }
+    };
+
+    var textNode = new Dictionary<string, object>
+    {
+        { "id", 1 },
+        { "type", "unformatted-text" },
+        { "text", "Hello, world!" }
+    };
+
+    setElement(JsonConvert.SerializeObject(rootNode));
+    setElement(JsonConvert.SerializeObject(textNode));
+    setChildren(0, JsonConvert.SerializeObject(new List<int> { 1 }));
+};
+
+OnTextChangedCb onTextChanged = (int id, string value) => { };
+OnComboChangedCb onComboChanged = (int id, int index) => { };
+OnNumericValueChangedCb onNumericValueChanged = (int id, float value) => { };
+OnBooleanValueChangedCb onBooleanValueChanged = (int id, bool value) => { };
+OnMultipleNumericValuesChangedCb onMultipleNumericValuesChanged = (int id, IntPtr rawValues, int numValues) => {
+    float[] values = MarshalFloatArray(rawValues, numValues);
+};
+OnClickCb onClick = (int id) => { };
+
+init("./assets", fontDefsJson, theme2Json, onInit, onTextChanged, onComboChanged, onNumericValueChanged, onBooleanValueChanged, onMultipleNumericValuesChanged, onClick);
+```
+
+Whilst C# takes care of converting strings to null-terminated ones that the C layer can handle, `onMultipleNumericValuesChanged` receives a raw pointer (the array of floats). Accessing the values requires marshalling - an example can be found in `MarshalFloatArray`.
+
+##### F#
+
+```fsharp
 type OnInitCb = unit -> unit
 type OnTextChangedCb = delegate of int * string -> unit
 type OnComboChangedCb = delegate of int * int -> unit
