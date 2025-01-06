@@ -117,23 +117,26 @@ EXPORT_API void init(
     OnMultipleNumericValuesChangedCb onMultipleNumericValuesChanged,
     OnClickCb onClick
 );
+
+EXPORT_API void setElement(const char* elementJson);
+EXPORT_API void setChildren(int id, const char* childrenIds);
 ```
 
 A brief description of each parameter:
 
-| Function                       | Type             | Description                                                                                                                                                                                         |
-| ------------------------------ | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| assetsBasePath                 | C-string         | tells the engine where to find font files and other assets (images, etc.)                                                                                                                           |
-| rawFontDefinitions             | C-string         | JSON-encoded structure containing font definition pairs (font name + size)                                                                                                                          |
-| rawStyleOverrideDefinitions    | C-string         | JSON-encoded structure containing theming properties                                                                                                                                                |
-| onInit                         | function pointer | invoked as soon as the engine has been initialized and is ready to receive messages                                                                                                                 |
-| onTextChanged                  | function pointer | invoked whenever the value of a text widget changes (`int` identifies the widget ID, `const char*` is the current value)                                                                            |
-| onComboChanged                 | function pointer | invoked whenever the selected index of a numeric widget changes (`int` identifies the widget ID, `float` is the current value)                                                                      |
-| onBooleanValueChanged          | function pointer | invoked whenever the state of a checkbox widget changes (`int` identifies the widget ID, bool` indicates the checked/unchecked state)                                                               |
-| onMultipleNumericValuesChanged | function pointer | invoked whenever any of the values of a multi-value widget changes (the first `int` identifies the widget ID, `float*` points at the float array, the second `int` indicates the size of the array) |
-| onClick                        | function pointer | invoked whenever the 'clicked' event for a widget is triggered (`int` identifies the widget ID)                                                                                                     |
+| Parameter                      | Type                           | Description                                                                                                                                                                                         |
+| ------------------------------ | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| assetsBasePath                 | null-terminated string pointer | tells the engine where to find font files and other assets (images, etc.)                                                                                                                           |
+| rawFontDefinitions             | null-terminated string pointer | JSON-encoded structure containing font definition pairs (font name + size)                                                                                                                          |
+| rawStyleOverrideDefinitions    | null-terminated string pointer | JSON-encoded structure containing theming properties                                                                                                                                                |
+| onInit                         | function pointer               | invoked as soon as the engine has been initialized and is ready to receive messages                                                                                                                 |
+| onTextChanged                  | function pointer               | invoked whenever the value of a text widget changes (`int` identifies the widget ID, `const char*` is the current value)                                                                            |
+| onComboChanged                 | function pointer               | invoked whenever the selected index of a numeric widget changes (`int` identifies the widget ID, `float` is the current value)                                                                      |
+| onBooleanValueChanged          | function pointer               | invoked whenever the state of a checkbox widget changes (`int` identifies the widget ID, bool` indicates the checked/unchecked state)                                                               |
+| onMultipleNumericValuesChanged | function pointer               | invoked whenever any of the values of a multi-value widget changes (the first `int` identifies the widget ID, `float*` points at the float array, the second `int` indicates the size of the array) |
+| onClick                        | function pointer               | invoked whenever the 'clicked' event for a widget is triggered (`int` identifies the widget ID)                                                                                                     |
 
-Also very important is the preprocessor conditional statement used to define the `EXPORT_API` macro for symbol visibility, specifically for controlling how functions or variables are exported from shared libraries (DLLs on Windows or shared objects on other platforms like Linux or macOS). Exporting symbols ensures that functions or variables in a shared library can be used by other programs. In Windows, this is done with `__declspec(dllexport)`, while in Linux and other Unix-like systems, it is done with `__attribute__((visibility("default")))`.
+Also very important is the **preprocessor conditional statement** used to define the `EXPORT_API` **macro** for _symbol visibility_, specifically for controlling how functions or variables are exported from shared libraries (DLLs on Windows or shared objects on other platforms like Linux or macOS). Exporting symbols ensures that functions or variables in a shared library can be used by other programs. In Windows, this is done with `__declspec(dllexport)`, while in Linux and other Unix-like systems, it is done with `__attribute__((visibility("default")))`.
 
 On Windows you can run `dumpbin /exports xframesshared.dll`:
 
@@ -169,7 +172,16 @@ On Windows you can run `dumpbin /exports xframesshared.dll`:
 On Linux you can run `nm -D libxframesshared.so`:
 
 ```bash
-
+# [...]
+0000000000447a70 T init
+00000000004475b0 T patchElement
+0000000000447940 T patchStyle
+0000000000447370 T resizeWindow
+0000000000448cf0 T setChildren
+0000000000447440 T setDebug
+0000000000447480 T setElement
+0000000000447460 T showDebugWindow
+# [...]
 ```
 
 #### .NET (so far C# and F#)
