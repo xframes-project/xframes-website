@@ -292,6 +292,8 @@ Whilst C# takes care of converting strings to null-terminated ones that the C la
 
 ##### F#
 
+F#'s FFI support is very similar to C#'s.
+
 ```fsharp
 type OnInitCb = unit -> unit
 type OnTextChangedCb = delegate of int * string -> unit
@@ -314,7 +316,37 @@ extern void init(
     IntPtr onMultipleNumericValuesChanged,
     IntPtr onClick
 )
+
+[<DllImport("xframesshared.dll", CallingConvention = CallingConvention.Cdecl)>]
+extern void setElement(string elementJson)
+
+[<DllImport("xframesshared.dll", CallingConvention = CallingConvention.Cdecl)>]
+extern void setChildren(int id, string childrenIds)
+
+let marshalFloatArray (ptr: IntPtr) (length: int) : float[] =
+    let managedArray = Array.zeroCreate<float> length
+    Marshal.Copy(ptr, managedArray, 0, length)
+    managedArray
+
+let onTextChangedDelegate = OnTextChangedCb(fun id value -> printfn "Text changed: %d, %s" id value)
+let onComboChangedDelegate = OnComboChangedCb(fun id value -> printfn "Value changed: %d, %d" id value)
+let onNumericValueChanged = OnNumericValueChangedCb(fun id value -> printfn "Value changed: %d, %f" id value)
+let onBooleanValueChanged = OnBooleanValueChangedCb(fun id value -> printfn "Value changed: %d, %b" id value)
+let onMultipleNumericValuesChanged = OnMultipleNumericValuesChangedCb(fun id rawValues numValues -> 
+    for value in marshalFloatArray rawValues numValues do
+        printfn "Value: %f" value)
+let onClickDelegate = OnClickCb(fun id -> WidgetRegistrationService.dispatchOnClickEvent(id))
+
+let onInit = Marshal.GetFunctionPointerForDelegate(Action(fun () -> onInitLogic()))
+let onTextChangedPtr = Marshal.GetFunctionPointerForDelegate(onTextChangedDelegate)
+let onComboChangedPtr = Marshal.GetFunctionPointerForDelegate(onComboChangedDelegate)
+let onNumericValueChangedPtr = Marshal.GetFunctionPointerForDelegate(onNumericValueChanged)
+let onBooleanValueChangedPtr = Marshal.GetFunctionPointerForDelegate(onBooleanValueChanged)
+let onMultipleNumericValuesChangedPtr = Marshal.GetFunctionPointerForDelegate(onMultipleNumericValuesChanged)
+let onClickPtr = Marshal.GetFunctionPointerForDelegate(onClickDelegate)
 ```
+
+The float array still needs marshalling before values can be accessed. There's some extra work required in order to pass function pointers through `Marshal.GetFunctionPointerForDelegate`, other than that it's rather straightforward.
 
 #### Ada
 
