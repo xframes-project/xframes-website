@@ -346,7 +346,7 @@ let onMultipleNumericValuesChangedPtr = Marshal.GetFunctionPointerForDelegate(on
 let onClickPtr = Marshal.GetFunctionPointerForDelegate(onClickDelegate)
 ```
 
-The float array still needs marshalling before values can be accessed. There's some extra work required in order to pass function pointers through `Marshal.GetFunctionPointerForDelegate`, other than that it's rather straightforward.
+The float array in `onMultipleNumericValuesChanged` still needs marshalling before values can be accessed. There's some extra work required in order to pass function pointers through `Marshal.GetFunctionPointerForDelegate`, other than that it's rather straightforward.
 
 #### Ada
 
