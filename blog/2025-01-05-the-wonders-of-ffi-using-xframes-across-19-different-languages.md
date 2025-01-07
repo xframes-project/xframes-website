@@ -221,11 +221,13 @@ If you are coming coming from interpreted languages you'll likely find both appr
 
 #### .NET (so far C# and F#)
 
+.NET is a cross-platform, open-source runtime and framework that allows you to build applications for web, desktop, mobile, cloud, IoT, and even gaming. .NET provides a runtime for multiple languages, primarily C#, F#, and VB.NET. I have only written a basic demo application for [C#](https://learn.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/overview) and [F#](https://learn.microsoft.com/en-us/dotnet/fsharp/what-is-fsharp), however. I tested both the C# and F# demo applications with .NET 9.
+
 ##### C#
 
-In general I have found C#'s FFI support very intuitive and convenient through [Delegates](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/using-delegates):
+In general I have found C#'s FFI support very intuitive and convenient through [DllImportClass](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.dllimportattribute?view=net-9.0) and [Delegates](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/using-delegates):
 
-```csharp
+```csharp showLineNumbers
 public delegate void OnInitCb();
 public delegate void OnTextChangedCb(int id, string value);
 public delegate void OnComboChangedCb(int id, int index);
@@ -248,12 +250,6 @@ public static extern void init(
     OnClickCb onClick
 );
 
-[DllImport("xframesshared.dll", CallingConvention = CallingConvention.Cdecl)]
-public static extern void setElement(string elementJson);
-
-[DllImport("xframesshared.dll", CallingConvention = CallingConvention.Cdecl)]
-public static extern void setChildren(int id, string childrenIds);
-
 public static float[] MarshalFloatArray(IntPtr ptr, int length)
 {
     float[] array = new float[length];
@@ -263,24 +259,6 @@ public static float[] MarshalFloatArray(IntPtr ptr, int length)
 
 OnInitCb onInit = () => {
     Console.WriteLine("Initialization callback called!");
-
-    var rootNode = new Dictionary<string, object>
-    {
-        { "id", 0 },
-        { "type", "node" },
-        { "root", true }
-    };
-
-    var textNode = new Dictionary<string, object>
-    {
-        { "id", 1 },
-        { "type", "unformatted-text" },
-        { "text", "Hello, world!" }
-    };
-
-    setElement(JsonConvert.SerializeObject(rootNode));
-    setElement(JsonConvert.SerializeObject(textNode));
-    setChildren(0, JsonConvert.SerializeObject(new List<int> { 1 }));
 };
 
 OnTextChangedCb onTextChanged = (int id, string value) => { };
@@ -297,11 +275,18 @@ init("./assets", fontDefsJson, theme2Json, onInit, onTextChanged, onComboChanged
 
 Whilst C# takes care of converting strings to null-terminated ones that the C layer can handle, `onMultipleNumericValuesChanged` receives a raw pointer (the array of floats). Accessing the values requires marshalling - an example can be found in `MarshalFloatArray`.
 
+Resources:
+
+- [Interoperating with unmanaged code](https://learn.microsoft.com/en-us/dotnet/framework/interop/)
+- [Consuming Unmanaged DLL Functions](https://learn.microsoft.com/en-us/dotnet/framework/interop/consuming-unmanaged-dll-functions)
+- [DllImportClass](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.dllimportattribute?view=net-9.0)
+- [Delegates](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/using-delegates)
+
 ##### F#
 
 F#'s FFI support is very similar to C#'s.
 
-```fsharp
+```fsharp showLineNumbers
 type OnInitCb = unit -> unit
 type OnTextChangedCb = delegate of int * string -> unit
 type OnComboChangedCb = delegate of int * int -> unit
@@ -324,11 +309,8 @@ extern void init(
     IntPtr onClick
 )
 
-[<DllImport("xframesshared.dll", CallingConvention = CallingConvention.Cdecl)>]
-extern void setElement(string elementJson)
-
-[<DllImport("xframesshared.dll", CallingConvention = CallingConvention.Cdecl)>]
-extern void setChildren(int id, string childrenIds)
+let onInitLogic () =
+    printfn "Initialized"
 
 let marshalFloatArray (ptr: IntPtr) (length: int) : float[] =
     let managedArray = Array.zeroCreate<float> length
@@ -351,15 +333,23 @@ let onNumericValueChangedPtr = Marshal.GetFunctionPointerForDelegate(onNumericVa
 let onBooleanValueChangedPtr = Marshal.GetFunctionPointerForDelegate(onBooleanValueChanged)
 let onMultipleNumericValuesChangedPtr = Marshal.GetFunctionPointerForDelegate(onMultipleNumericValuesChanged)
 let onClickPtr = Marshal.GetFunctionPointerForDelegate(onClickDelegate)
+
+init(assetsPath, fontDefsJson, themeJson, onInit, onTextChangedPtr, onComboChangedPtr, onNumericValueChangedPtr, onBooleanValueChangedPtr, onMultipleNumericValuesChangedPtr, onClickPtr)
 ```
 
+As `onInit` has no parameters, we can leverage [Action](https://learn.microsoft.com/en-us/dotnet/api/system.action-1?view=net-9.0) to wrap it as a function pointer.
+
 The float array in `onMultipleNumericValuesChanged` still needs marshalling before values can be accessed. There's some extra work required in order to pass function pointers through [Marshal.GetFunctionPointerForDelegate](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.marshal.getfunctionpointerfordelegate?view=net-9.0).
+
+Resources:
+
+- [External Functions](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/functions/external-functions)
 
 ---
 
 #### Ada
 
-As you are about to see for yourself, Ada is notoriously verbose.
+[Ada](https://www.adacore.com/about-ada) is a high-level, strongly-typed, and safety-oriented programming language primarily used in systems where reliability, maintainability, and real-time performance are crucial — think aerospace, defense, transportation, and high-integrity systems. As such, it is also notoriously verbose.
 
 Before diving in, let's analyze briefly how we can map the `init` external C function.
 
@@ -392,6 +382,8 @@ As you can see, most of the parameters of `Init` are either C-style character ar
 This tells the Ada compiler that the Init procedure corresponds to an external C function. The first argument C specifies that the external function is written in C. The second argument `Init` is the name of the Ada procedure being mapped. The third argument `"init"` is the name of the C function to which the Ada procedure Init is bound.
 
 ##### Full solution
+
+I tested this code with Ada [2022](https://learn.adacore.com/courses/whats-new-in-ada-2022/index.html), [Alire](https://alire.ada.dev/) 2.0.2.
 
 ```ada showLineNumbers
 with System;                use System;
@@ -560,11 +552,168 @@ procedure Main is
 end Main;
 ```
 
+Resources:
+
+- [Ada's Interfacing with C](https://learn.adacore.com/courses/intro-to-ada/chapters/interfacing_with_c.html)
+
 ---
 
 #### Lua
 
+[Lua](https://www.lua.org/) is a lightweight, fast, dynamically typed, and embeddable scripting language, perfect for use cases where one needs extensibility or want to add scripting capabilities to an application. It's popular in game development, embedded systems, and tools like Nginx and Redis.
+
+I tested this code with Lua's Just-In-Time (JIT) compiler called [LuaJIT](https://luajit.org/), which significantly boosts performance by compiling Lua code into native machine code at runtime.
+
+I tested this code using LuaJIT 2.1.
+
+```lua showLineNumbers
+local ffi = require("ffi")
+
+ffi.cdef[[
+    typedef void (*OnInitCb)();
+    typedef void (*OnTextChangedCb)(int widgetId, const char* text);
+    typedef void (*OnComboChangedCb)(int widgetId, int selectedIndex);
+    typedef void (*OnNumericValueChangedCb)(int widgetId, double value);
+    typedef void (*OnBooleanValueChangedCb)(int widgetId, bool value);
+    typedef void (*OnMultipleNumericValuesChangedCb)(int widgetId, double* values, int count);
+    typedef void (*OnClickCb)(int widgetId);
+
+    void init(
+        const char* assetsBasePath,
+        const char* rawFontDefinitions,
+        const char* rawStyleOverrideDefinitions,
+        OnInitCb onInit,
+        OnTextChangedCb onTextChanged,
+        OnComboChangedCb onComboChanged,
+        OnNumericValueChangedCb onNumericValueChanged,
+        OnBooleanValueChangedCb onBooleanValueChanged,
+        OnMultipleNumericValuesChangedCb onMultipleNumericValuesChanged,
+        OnClickCb onClick
+    );
+]]
+
+-- Load the shared library
+local xframes = ffi.load("xframesshared")
+
+local function onInit()
+    print("Initialization complete!")
+end
+
+local function onTextChanged(widgetId, value)
+    print("Text changed:", ffi.string(text))
+end
+
+local function onComboChanged(widgetId, selectedIndex)
+    print("Combo selection changed to index:", selectedIndex)
+end
+
+local function onNumericValueChanged(widgetId, value)
+    print("Numeric value changed to:", value)
+end
+
+local function onBooleanValueChanged(widgetId, value)
+    print("Boolean value changed to:", value == 1 and "true" or "false")
+end
+
+local function onMultipleNumericValuesChanged(widgetId, values, count)
+    for i = 0, count - 1 do
+        print("Value", i + 1, ":", values[i])
+    end
+end
+
+local function onClick(widgetId)
+    print("Button clicked!")
+end
+
+xframes.init(
+    "./assets",
+    fontDefsJson,
+    theme2Json,
+    ffi.cast("OnInitCb", onInit),
+    ffi.cast("OnTextChangedCb", onTextChanged),
+    ffi.cast("OnComboChangedCb", onComboChanged),
+    ffi.cast("OnNumericValueChangedCb", onNumericValueChanged),
+    ffi.cast("OnBooleanValueChangedCb", onBooleanValueChanged),
+    ffi.cast("OnMultipleNumericValuesChangedCb", onMultipleNumericValuesChanged),
+    ffi.cast("OnClickCb", onClick)
+)
+
+```
+
+Resources:
+
+- [LuaJIT's FFI semantics](https://luajit.org/ext_ffi_semantics.html).
+
 #### OCaml
+
+[OCaml](https://ocaml.org/) is a functional programming language, but it also supports imperative and object-oriented programming paradigms. It has a strong static type system and focuses on higher-order functions, immutable data, [pattern matching](https://ocaml.org/manual/5.2/patterns.html), and on recursion over loops.
+
+The following has been tested with OCaml 4.14.1 and [Dune](https://dune.build/), both were installed through [Opam](https://opam.ocaml.org/) 2.2.0.
+
+```ocaml showLineNumbers
+open Ctypes
+open Foreign
+
+let on_init_callback = (funptr (void @-> returning void))
+let on_text_changed_callback = (funptr (int @-> string @-> returning void))
+let on_combo_changed_callback = (funptr (int @-> int @-> returning void))
+let on_numeric_value_changed_callback = (funptr (int @-> float @-> returning void))
+let on_boolean_value_changed_callback = (funptr (int @-> bool @-> returning void))
+let on_multiple_numeric_values_changed_callback = (funptr (int @-> ptr float @-> int @-> returning void))
+let on_click_callback = (funptr (int @-> returning void))
+
+let xframeslib = Dl.dlopen ~filename:"xframesshared.dll" ~flags:[Dl.RTLD_NOW]
+
+let init =
+  foreign ~from:xframeslib "init"
+                    (string @->
+                      string @->
+                        string @->
+                          on_init_callback @->
+                            on_text_changed_callback @->
+                              on_combo_changed_callback @->
+                                on_numeric_value_changed_callback @->
+                                  on_boolean_value_changed_callback @->
+                                    on_multiple_numeric_values_changed_callback @->
+                                      on_click_callback @->
+                                        returning void)
+
+let on_init () = Printf.printf "Initialized\n"
+let on_text_changed id value = Printf.printf "Text changed for widget %d: %s\n" id value
+let on_combo_changed id selected_index = Printf.printf "Combo changed for widget %d: %d\n" id selected_index
+let on_numeric_value_changed id value = Printf.printf "Numeric value changed for widget %d: %f\n" id value
+let on_boolean_value_changed id value = Printf.printf "Boolean value changed for widget %d: %b\n" id value
+let on_multiple_numeric_values_changed some_id values_ptr num_values =
+  let values =
+    List.init num_values (fun i ->
+      !@(values_ptr +@ i)
+    )
+  in
+  Printf.printf "ID: %d, Values: [%s]\n"
+    some_id
+    (String.concat ", " (List.map string_of_float values))
+let on_click id =
+  Printf.printf "Clicked event received for widget: %d\n" id
+
+let () =
+  init
+    "./assets"
+    font_defs_json
+    theme_json
+    on_init
+    on_text_changed
+    on_combo_changed
+    on_numeric_value_changed
+    on_boolean_value_changed
+    on_multiple_numeric_values_changed
+    on_click
+```
+
+Conveniently, OCaml takes care of string conversions and function pointers for us.
+
+Resources:
+
+- [Interfacing C with OCaml](https://ocaml.org/manual/4.14/intfc.html)
 
 #### Racket
 

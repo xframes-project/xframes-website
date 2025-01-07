@@ -145,6 +145,7 @@ const config: Config = {
         "julia",
         "kotlin",
         "lisp",
+        "lua",
         "nim",
         "ocaml",
         "pascal",
