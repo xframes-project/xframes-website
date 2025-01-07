@@ -111,7 +111,7 @@ On Windows you can run `dumpbin /exports xframesshared.dll`:
         378  179 00006EBF elementInternalOp
         379  17A 00012C51 getChildren
         380  17B 000119EB getStyle
-        381  17C 00004917 init 
+        381  17C 00004917 init
         382  17D 0000EA9D patchElement
         383  17E 00008F3F patchStyle
         384  17F 0000F411 resizeWindow
@@ -182,13 +182,12 @@ A brief description of each parameter:
 | assetsBasePath                 | null-terminated string pointer | tells the engine where to find font files and other assets (images, etc.)                                                                                                                           |
 | rawFontDefinitions             | null-terminated string pointer | JSON-encoded structure containing font definition pairs (font name + size)                                                                                                                          |
 | rawStyleOverrideDefinitions    | null-terminated string pointer | JSON-encoded structure containing theming properties                                                                                                                                                |
-| onInit                         | function pointer               | invoked **as soon as the engine has been initialized** and is ready to receive messages                                                                                                                 |
+| onInit                         | function pointer               | invoked **as soon as the engine has been initialized** and is ready to receive messages                                                                                                             |
 | onTextChanged                  | function pointer               | invoked whenever the value of a text widget changes (`int` identifies the widget ID, `const char*` is the current value)                                                                            |
 | onComboChanged                 | function pointer               | invoked whenever the selected index of a numeric widget changes (`int` identifies the widget ID, `float` is the current value)                                                                      |
 | onBooleanValueChanged          | function pointer               | invoked whenever the state of a checkbox widget changes (`int` identifies the widget ID, bool` indicates the checked/unchecked state)                                                               |
 | onMultipleNumericValuesChanged | function pointer               | invoked whenever any of the values of a multi-value widget changes (the first `int` identifies the widget ID, `float*` points at the float array, the second `int` indicates the size of the array) |
 | onClick                        | function pointer               | invoked whenever the 'clicked' event for a widget is triggered (`int` identifies the widget ID)                                                                                                     |
-
 
 Time to look at the second function:
 
@@ -200,11 +199,11 @@ EXPORT_API void setElement(const char* elementJson);
 
 Finally, here is our third function:
 
-```c showLineNumbers
+```c
 EXPORT_API void setChildren(int id, const char* childrenIds);
 ```
 
-`id` represents the ID of the parent widget, whereas `childrenIds` is a JSON-serialized array of child widget ID. Truth be told, `childrenIds` could be replaced like so:
+`id` represents the ID of the parent widget, whereas `childrenIds` is a JSON-serialized array of child widget ID. Truth be told, `childrenIds` _could_ be replaced like so:
 
 ```c showLineNumbers
 EXPORT_API void setChildren(int id, const int* childrenIds, int num_children);
@@ -216,7 +215,7 @@ If you are coming coming from interpreted languages you'll likely find both appr
 
 ##### C#
 
-In general I have found C#'s FFI support very intuitive and convenient:
+In general I have found C#'s FFI support very intuitive and convenient through [Delegates](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/using-delegates):
 
 ```csharp
 public delegate void OnInitCb();
@@ -332,7 +331,7 @@ let onTextChangedDelegate = OnTextChangedCb(fun id value -> printfn "Text change
 let onComboChangedDelegate = OnComboChangedCb(fun id value -> printfn "Value changed: %d, %d" id value)
 let onNumericValueChanged = OnNumericValueChangedCb(fun id value -> printfn "Value changed: %d, %f" id value)
 let onBooleanValueChanged = OnBooleanValueChangedCb(fun id value -> printfn "Value changed: %d, %b" id value)
-let onMultipleNumericValuesChanged = OnMultipleNumericValuesChangedCb(fun id rawValues numValues -> 
+let onMultipleNumericValuesChanged = OnMultipleNumericValuesChangedCb(fun id rawValues numValues ->
     for value in marshalFloatArray rawValues numValues do
         printfn "Value: %f" value)
 let onClickDelegate = OnClickCb(fun id -> WidgetRegistrationService.dispatchOnClickEvent(id))
@@ -346,7 +345,7 @@ let onMultipleNumericValuesChangedPtr = Marshal.GetFunctionPointerForDelegate(on
 let onClickPtr = Marshal.GetFunctionPointerForDelegate(onClickDelegate)
 ```
 
-The float array in `onMultipleNumericValuesChanged` still needs marshalling before values can be accessed. There's some extra work required in order to pass function pointers through `Marshal.GetFunctionPointerForDelegate`, other than that it's rather straightforward.
+The float array in `onMultipleNumericValuesChanged` still needs marshalling before values can be accessed. There's some extra work required in order to pass function pointers through [Marshal.GetFunctionPointerForDelegate](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.marshal.getfunctionpointerfordelegate?view=net-9.0).
 
 #### Ada
 
