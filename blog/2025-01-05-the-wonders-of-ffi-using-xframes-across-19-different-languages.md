@@ -933,7 +933,14 @@ contains
         real(c_float), dimension(*), intent(in) :: values
         integer(c_int), value :: numValues
 
+        integer :: i
+
         print *, "Multiple numeric values changed callback. Index:", index, "Num values:", numValues
+
+        ! Loop through and print the values in the array
+        do i = 1, numValues
+            print *, "Value ", i, ": ", values(i)
+        end do
     end subroutine myMultipleNumericValuesChanged
 
     subroutine myClick(index) bind(C)
