@@ -15,11 +15,15 @@ By utilizing FFI, XFrames can interact seamlessly with a wide array of languages
 
 While FFI enables flexibility, it's currently best suited for desktop applications, with future enhancements to expand its versatility across more languages and use cases.
 
+---
+
 ### A note on WebAssembly
 
 I am aware that some of the languages mentioned below support WebAssembly. Whilst still somewhat rough around the edges, [emscripten](https://emscripten.org/) has improved substantially in terms of stability and performance. That said, I am also aware that many developers these days have the option to use their favourite language to build browser-based applications. Notable examples include [Fable](https://fable.io/), [Scala.js](https://www.scala-js.org/), [Nim's JavaScript backend](https://nim-lang.org/docs/backends.html#backends-the-javascript-target).
 
 Here goes the question: wouldn't it be nice to be able to also target WebAssembly using such solutions? Should developers using XFrames have the ability to target both the desktop and the browser? What I can say at this point is: let's improve the developer experience as far as targeting the desktop is concerned and I'll get back to you on this topic.
+
+---
 
 ### A non-comprehensive primer on C data types, pointers, functions.
 
@@ -83,6 +87,8 @@ If you are wondering: "If it is so difficult, how did you do it?", here's the sh
 
 All that being said, unfortunately C++ and FFI do not always get on well, notably due to the notoriously aggressive [name mangling](https://en.wikipedia.org/wiki/Name_mangling).
 Wheher we like it or not, C is still the lingua franca of programming: almost every single respectable programming language has FFI support for C libraries. This prompted me to write a thin C wrapper library to make it as straightforward as possible to interact with XFrames.
+
+---
 
 #### C library interface
 
@@ -210,6 +216,8 @@ EXPORT_API void setChildren(int id, const int* childrenIds, int num_children);
 ```
 
 If you are coming coming from interpreted languages you'll likely find both approaches somewhat cumbersome.
+
+---
 
 #### .NET (so far C# and F#)
 
@@ -347,7 +355,212 @@ let onClickPtr = Marshal.GetFunctionPointerForDelegate(onClickDelegate)
 
 The float array in `onMultipleNumericValuesChanged` still needs marshalling before values can be accessed. There's some extra work required in order to pass function pointers through [Marshal.GetFunctionPointerForDelegate](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.marshal.getfunctionpointerfordelegate?view=net-9.0).
 
+---
+
 #### Ada
+
+As you are about to see for yourself, Ada is notoriously verbose.
+
+Before diving in, let's analyze briefly how we can map the `init` external C function.
+
+```ada showLineNumbers
+procedure Init
+    (Assets_Base_Path              : in Interfaces.C.char_array;
+    Raw_Font_Definitions           : in Interfaces.C.char_array;
+    Raw_Style_Override_Definitions : in Interfaces.C.char_array;
+    OnInit                         : System.Address;
+    OnTextChanged                  : System.Address;
+    OnComboChanged                 : System.Address;
+    OnNumericValueChanged          : System.Address;
+    OnBooleanValueChanged          : System.Address;
+    MultipleNumericValuesChanged   : System.Address;
+    OnClick                        : System.Address);
+pragma Import (C, Init, "init");
+```
+
+As you can see, most of the parameters of `Init` are either C-style character arrays (`Interfaces.C.char_array`) or addresses (`System.Address`), which are typical when interfacing with C functions.
+
+##### Parameter Types
+
+- `Interfaces.C.char_array`:
+  This is a type provided by the `Interfaces.C` package to represent C-style arrays of characters (similar to C strings).
+- `System.Address`:
+  This type represents a generic memory address, commonly used to pass function pointers or callback addresses when interfacing with C.
+
+##### `pragma Import` Directive
+
+This tells the Ada compiler that the Init procedure corresponds to an external C function. The first argument C specifies that the external function is written in C. The second argument `Init` is the name of the Ada procedure being mapped. The third argument `"init"` is the name of the C function to which the Ada procedure Init is bound.
+
+##### Full solution
+
+```ada showLineNumbers
+with System;                use System;
+with Interfaces.C;          use Interfaces.C;
+with Ada.Text_IO;           use Ada.Text_IO;
+with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
+with Ada.Float_Text_IO;     use Ada.Float_Text_IO;
+with Ada.Strings.Hash;
+with GNATCOLL.Strings;      use GNATCOLL.Strings;
+
+procedure Main is
+    -- We need a type alias for the float array
+    type Float_Array is array (Positive range <>) of aliased Float;
+
+    -- OnInit callback, definition and body
+    procedure OnInit;
+    pragma Convention (C, OnInit);
+
+    procedure OnInit is
+    begin
+        Put_Line ("Initialized");
+    end OnInit;
+
+    -- OnTextChanged callback, definition and body
+    procedure OnTextChanged
+        (Id : Integer; Text : in Interfaces.C.char_array);
+    pragma Convention (C, OnTextChanged);
+
+    procedure OnTextChanged
+        (Id : Integer; Text : in Interfaces.C.char_array) is
+    begin
+        Put_Line
+        ("OnTextChanged called with ID: "
+            & Integer'Image (Id)
+            & " and Text: ");
+    end OnTextChanged;
+
+    -- OnComboChanged callback, definition and body
+    procedure OnComboChanged (Id : Integer; Selected_Option_Id : Integer);
+    pragma Convention (C, OnComboChanged);
+
+    procedure OnComboChanged (Id : Integer; Selected_Option_Id : Integer) is
+    begin
+        Put_Line
+        ("OnComboChanged called with ID: " & Integer'Image (Id) & " and: ");
+    end OnComboChanged;
+
+    -- OnNumericValueChanged callback, definition and body
+    procedure OnNumericValueChanged (Id : Integer; Value : Float);
+    pragma Convention (C, OnNumericValueChanged);
+
+    procedure OnNumericValueChanged (Id : Integer; Value : Float) is
+    begin
+        Put_Line
+        ("Callback called with ID: "
+            & Integer'Image (Id)
+            & " and Value: "
+            & Float'Image (Value));
+    end OnNumericValueChanged;
+
+    -- OnBooleanValueChanged callback, definition and body
+    procedure OnBooleanValueChanged (Id : Integer; Value : Boolean);
+    pragma Convention (C, OnBooleanValueChanged);
+
+    procedure OnBooleanValueChanged (Id : Integer; Value : Boolean) is
+    begin
+        Put_Line
+        ("OnBooleanValueChanged called with ID: "
+            & Integer'Image (Id)
+            & " and Value: "
+            & Boolean'Image (Value));
+    end OnBooleanValueChanged;
+
+    -- OnMultipleNumericValuesChanged callback, definition and body
+    procedure OnMultipleNumericValuesChanged
+        (Id : Integer; Values : access Float_Array; NumValues : Integer);
+    pragma Convention (C, OnMultipleNumericValuesChanged);
+
+    procedure OnMultipleNumericValuesChanged
+        (Id : Integer; Values : access Float_Array; NumValues : Integer) is
+    begin
+        Ada.Text_IO.Put_Line
+        ("OnMultipleNumericValuesChanged numeric values changed callback invoked.");
+        Ada.Text_IO.Put_Line ("ID: " & Integer'Image (Id));
+        Ada.Text_IO.Put_Line ("Number of Values: " & Integer'Image (NumValues));
+
+        for I in 1 .. NumValues loop
+            Ada.Text_IO.Put_Line
+            ("Value " & Integer'Image (I) & ": " & Float'Image (Values (I)));
+        end loop;
+    end OnMultipleNumericValuesChanged;
+
+    -- OnClick callback, definition and body
+    procedure OnClick (Id : Integer; Value : Boolean);
+    pragma Convention (C, OnClick);
+
+    procedure OnClick (Id : Integer; Value : Boolean) is
+    begin
+        Put_Line ("OnClick called with ID: " & Integer'Image (Id));
+    end OnClick;
+
+    -- Assets_Base_Path does not change hence it can be defined as a constant
+    Assets_Base_Path               : constant String := "./assets";
+    Assets_Base_Path_C             : Interfaces.C.char_array := To_C (Assets_Base_Path);
+
+    -- Both Raw_Font_Definitions and Raw_Style_Override_Definitions must be declared...
+    Raw_Font_Definitions           : String := "";
+    Raw_Style_Override_Definitions : String := "";
+
+    -- ... and pre-allocated
+    Raw_Font_Definitions_C           : Interfaces.C.char_array (1 .. 1024 * 5);
+    Raw_Style_Override_Definitions_C : Interfaces.C.char_array (1 .. 1024 * 10);
+
+    Raw_Font_Definitions_String_Length           : Size_T;
+    Raw_Style_Override_Definitions_String_Length : Size_T;
+
+    -- Captures function addresses, aka pointers
+    OnInit_Address                         : System.Address := OnInit'Address;
+    OnTextChanged_Address                  : System.Address := OnTextChanged'Address;
+    OnComboChanged_Address                 : System.Address := OnComboChanged'Address;
+    OnNumericValueChanged_Address          : System.Address := OnNumericValueChanged'Address;
+    OnBooleanValueChanged_Address          : System.Address := OnBooleanValueChanged'Address;
+    OnMultipleNumericValuesChanged_Address : System.Address := OnMultipleNumericValuesChanged'Address;
+    OnClick_Address                        : System.Address := OnClick'Address;
+
+    procedure Init
+        (Assets_Base_Path              : in Interfaces.C.char_array;
+        Raw_Font_Definitions           : in Interfaces.C.char_array;
+        Raw_Style_Override_Definitions : in Interfaces.C.char_array;
+        OnInit                         : System.Address;
+        OnTextChanged                  : System.Address;
+        OnComboChanged                 : System.Address;
+        OnNumericValueChanged          : System.Address;
+        OnBooleanValueChanged          : System.Address;
+        MultipleNumericValuesChanged   : System.Address;
+        OnClick                        : System.Address);
+    pragma Import (C, Init, "init");
+
+    begin
+        -- Converts Ada strings to null-terminated C strings
+        To_C
+            (Item      => Font_Definitions_As_JSON_Value.Write,
+            Target     => Raw_Font_Definitions_C,
+            Count      => Raw_Font_Definitions_String_Length,
+            Append_Nul => True);
+
+        To_C
+            (Item       => Theme.Write,
+            Target     => Raw_Style_Override_Definitions_C,
+            Count      => Raw_Style_Override_Definitions_String_Length,
+            Append_Nul => True);
+
+        -- Finally, call `Init`
+        Init
+            (Assets_Base_Path_C,
+            Raw_Font_Definitions_C,
+            Raw_Style_Override_Definitions_C,
+            OnInit_Address,
+            OnTextChanged_Address,
+            OnComboChanged_Address,
+            OnNumericValueChanged_Address,
+            OnBooleanValueChanged_Address,
+            OnMultipleNumericValuesChanged_Address,
+            OnClick_Address);
+
+end Main;
+```
+
+---
 
 #### Lua
 
