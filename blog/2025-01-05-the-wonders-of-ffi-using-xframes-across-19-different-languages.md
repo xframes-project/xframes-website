@@ -47,17 +47,17 @@ In C, there is no native bool type like in some other programming languages (suc
 
 The one thing to know about arrays in C is that passing an array in C typically entails passing a pointer to the array itself plus an integer indicating the size (number of items) within it. To access individual values of an array, one can use **pointer dereferencing** combined with pointer arithmetic.
 
-Unfortunately, in C it's very possible to accidentally access **undefined elements** of an array in C, which can lead to **undefined behavior**. Array bounds are not checked at runtime, so if you access elements beyond the valid range, the program won’t generate an error immediately—it may produce garbage values, crash, or exhibit unexpected behavior.
+Unfortunately, in C it's very possible to accidentally access **undefined elements** of an array in C, which can lead to **undefined behavior**. Array bounds are not checked at runtime, so if you access elements beyond the valid range, the program won't generate an error immediately—it may produce garbage values, crash, or exhibit unexpected behavior.
 
 #### Strings
 
 **Strings** are represented as arrays of characters, with they key distinction that they are **null-terminated**. This means a C string is a sequence of characters followed by a special character '\0' (null character), which indicates the end of the string.
 
-When you want to pass a string without modifying it, you normally use `const char*` as the parameter type. This ensures the function doesn’t accidentally modify the string. If you want the function to modify the string, simply use `char*` as the parameter type.
+When you want to pass a string without modifying it, you normally use `const char*` as the parameter type. This ensures the function doesn't accidentally modify the string. If you want the function to modify the string, simply use `char*` as the parameter type.
 
 #### Functions
 
-A function has a return type, name, optional parameters, and a body. Functions can return a value or be of type void (if they don’t return anything). Parameters are placeholders for values passed when calling the function, known as arguments. Local variables exist only within the function they are defined in. Functions can be recursive, calling themselves to solve problems in smaller steps.
+A function has a return type, name, optional parameters, and a body. Functions can return a value or be of type void (if they don't return anything). Parameters are placeholders for values passed when calling the function, known as arguments. Local variables exist only within the function they are defined in. Functions can be recursive, calling themselves to solve problems in smaller steps.
 
 #### Type aliasing
 
@@ -75,7 +75,7 @@ When I started working on XFrames I originally targeted WebAssembly only. Eventu
 
 #### Python
 
-For Python, I used [Pybind11](https://github.com/pybind/pybind11) to create native bindings that enable seamless integration between XFrames and Python. This allows Python developers to directly access XFrames’ powerful GPU-accelerated UI features without needing to deal with the complexities of C++. The module is designed to be easy to use, ensuring smooth integration and efficient memory management.
+For Python, I used [Pybind11](https://github.com/pybind/pybind11) to create native bindings that enable seamless integration between XFrames and Python. This allows Python developers to directly access XFrames' powerful GPU-accelerated UI features without needing to deal with the complexities of C++. The module is designed to be easy to use, ensuring smooth integration and efficient memory management.
 
 ### FFI support
 
@@ -279,6 +279,7 @@ Whilst C# takes care of converting strings to null-terminated ones that the C la
 
 Resources:
 
+- [Source code](https://github.com/xframes-project/xframes-csharp)
 - [Interoperating with unmanaged code](https://learn.microsoft.com/en-us/dotnet/framework/interop/)
 - [Consuming Unmanaged DLL Functions](https://learn.microsoft.com/en-us/dotnet/framework/interop/consuming-unmanaged-dll-functions)
 - [DllImportClass](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.dllimportattribute?view=net-9.0)
@@ -345,6 +346,7 @@ The float array in `onMultipleNumericValuesChanged` still needs marshalling befo
 
 Resources:
 
+- [Source code](https://github.com/xframes-project/xframes-fsharp)
 - [External Functions](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/functions/external-functions)
 
 ---
@@ -556,6 +558,7 @@ end Main;
 
 Resources:
 
+- [Source code](https://github.com/xframes-project/xframes-ada)
 - [Ada's Interfacing with C](https://learn.adacore.com/courses/intro-to-ada/chapters/interfacing_with_c.html)
 
 ---
@@ -644,6 +647,7 @@ xframes.init(
 
 Resources:
 
+- [Source code](https://github.com/xframes-project/xframes-ada)
 - [LuaJIT's FFI semantics](https://luajit.org/ext_ffi_semantics.html).
 
 #### OCaml
@@ -715,11 +719,12 @@ Conveniently, OCaml takes care of string conversions and function pointers for u
 
 Resources:
 
+- [Source code](https://github.com/xframes-project/xframes-ocaml)
 - [Interfacing C with OCaml](https://ocaml.org/manual/4.14/intfc.html)
 
 #### Racket
 
-[Racket](https://download.racket-lang.org/releases/8.15/doc/quick/index.html) is a Lisp dialect—meaning its syntax is based on parentheses and prefix notation. It uses lots of parentheses to denote function calls. One of Racket’s most powerful features is its ability to manipulate code as data. This is made possible through macros, which allow you to extend the language itself by creating new syntax and abstractions.
+[Racket](https://download.racket-lang.org/releases/8.15/doc/quick/index.html) is a Lisp dialect—meaning its syntax is based on parentheses and prefix notation. It uses lots of parentheses to denote function calls. One of Racket's most powerful features is its ability to manipulate code as data. This is made possible through macros, which allow you to extend the language itself by creating new syntax and abstractions.
 
 I used VS Code to write the code (instead of [DrRacket](https://github.com/racket/drracket)). I tested the code using Racket v8.15 and the [raco](https://docs.racket-lang.org/raco/) CLI tool.
 
@@ -771,7 +776,7 @@ I used VS Code to write the code (instead of [DrRacket](https://github.com/racke
     (displayln (string-append "onTextValueChanged: id = " (number->string id) ", value = " value)))
 
 (define (onComboValueChanged id selected-index)
-    (displayln (string-append "onTextValueChanged: id = " (number->string id) ", value = " (number->string selected-index))))
+    (displayln (string-append "onComboValueChanged: id = " (number->string id) ", value = " (number->string selected-index))))
 
 (define (onNumericValueChanged id value)
     (displayln (format "onNumericValueChanged: id = ~a, value = ~a" id value)))
@@ -783,15 +788,14 @@ I used VS Code to write the code (instead of [DrRacket](https://github.com/racke
 
 (define (onMultipleNumericValuesChanged id values-pointer num-values)
   (define values (pointer->array values-pointer num-values))
-  (displayln "Initialization is running...")
+  (displayln "onMultipleNumericValuesChanged")
   (for-each
    (lambda (value)
      (displayln (format "Value: ~a" value)))
    values))
 
-(define onClick
-  (lambda (id)
-    (displayln "Initialization is running...")))
+(define (onClick id)
+  (displayln (string-append "onClick: id = " (number->string id))))
 
 (init
     "./assets"
@@ -811,9 +815,144 @@ The `#:async-apply` keyword indicates that the function being defined should be 
 
 Resources:
 
+- [Source code](https://github.com/xframes-project/xframes-racket)
 - [The Racket foreign interface](https://download.racket-lang.org/releases/8.15/doc/foreign/index.html)
 
 #### Fortran
+
+Fortran is one of the oldest high-level programming languages and is primarily used for scientific, mathematical, and engineering applications.
+
+```fortran showLineNumbers
+module c_interface
+    use, intrinsic :: iso_c_binding
+    implicit none
+
+    interface
+        subroutine init(assetsBasePath, rawFontDefinitions, rawStyleOverrideDefinitions, onInit, onTextChanged, onComboChanged, onNumericValueChanged, onBooleanValueChanged, onMultipleNumericValuesChanged, onClick) bind(C, name="init")
+            import :: c_char, c_funptr, c_ptr
+            type (c_ptr), value :: assetsBasePath
+            type (c_ptr), value :: rawFontDefinitions
+            type (c_ptr), value :: rawStyleOverrideDefinitions
+            type(c_funptr), intent(in), value :: onInit
+            type(c_funptr), intent(in), value :: onTextChanged
+            type(c_funptr), intent(in), value :: onComboChanged
+            type(c_funptr), intent(in), value :: onNumericValueChanged
+            type(c_funptr), intent(in), value :: onBooleanValueChanged
+            type(c_funptr), intent(in), value :: onMultipleNumericValuesChanged
+            type(c_funptr), intent(in), value :: onClick
+        end subroutine init
+    end interface
+end module c_interface
+
+program main
+    use c_interface
+    use iso_c_binding
+    use, intrinsic :: iso_fortran_env, only: wp => real64
+    implicit none
+
+    type(c_funptr) :: onInitPtr, onTextChangedPtr, onComboChangedPtr
+    type(c_funptr) :: onNumericValueChangedPtr, onBooleanValueChangedPtr, onMultipleNumericValuesChangedPtr, onClickPtr
+
+    character(len=40,kind=c_char), allocatable, target :: assetsBasePath
+    type(c_ptr), allocatable :: assetsBasePath_ptr
+
+    character(len=:,kind=c_char), allocatable, target :: fontDefsJson
+    character(len=:,kind=c_char), allocatable, target :: themeJson
+
+    type(c_ptr), allocatable :: fontDefsJson_ptr
+    type(c_ptr), allocatable :: themeJson_ptr
+
+    allocate(assetsBasePath)
+    assetsBasePath = "./assets"//C_NULL_CHAR
+    assetsBasePath_ptr = c_loc(assetsBasePath)
+
+    fontDefsJson = fontDefsJson // C_NULL_CHAR
+    themeJson = themeJson // C_NULL_CHAR
+
+    onInitPtr = c_funloc(myInit)
+    onTextChangedPtr = c_funloc(myTextChanged)
+    onComboChangedPtr = c_funloc(myComboChanged)
+    onNumericValueChangedPtr = c_funloc(myNumericValueChanged)
+    onBooleanValueChangedPtr = c_funloc(myBooleanValueChanged)
+    onMultipleNumericValuesChangedPtr = c_funloc(myMultipleNumericValuesChanged)
+    onClickPtr = c_funloc(myClick)
+
+    fontDefsJson_ptr = c_loc(fontDefsJson)
+    themeJson_ptr = c_loc(themeJson)
+
+    call init(assetsBasePath_ptr, fontDefsJson_ptr, themeJson_ptr, onInitPtr, onTextChangedPtr, onComboChangedPtr, onNumericValueChangedPtr, onBooleanValueChangedPtr, onMultipleNumericValuesChangedPtr, onClickPtr)
+
+    deallocate(assetsBasePath_ptr)
+    deallocate(fontDefsJson_ptr)
+    deallocate(themeJson_ptr)
+
+contains
+    subroutine myInit() bind(C)
+        print *, "Initialization callback invoked."
+
+        call make_node()
+        call make_unformatted_text()
+        call set_children()
+    end subroutine myInit
+
+    subroutine myTextChanged(index, text) bind(C)
+        use iso_c_binding, only: c_int, c_char
+        integer(c_int), value :: index
+        character(c_char), dimension(*), intent(in) :: text
+
+        print *, "Text changed callback. Index:", index
+    end subroutine myTextChanged
+
+    subroutine myComboChanged(index, value) bind(C)
+        use iso_c_binding, only: c_int
+        integer(c_int), value :: index
+        integer(c_int), value :: value
+
+        print *, "Combo changed callback. Index:", index, "Value:", value
+    end subroutine myComboChanged
+
+    subroutine myNumericValueChanged(index, value) bind(C)
+        use iso_c_binding, only: c_int, c_float
+        integer(c_int), value :: index
+        real(c_float), value :: value
+
+        print *, "Numeric value changed callback. Index:", index, "Value:", value
+    end subroutine myNumericValueChanged
+
+    subroutine myBooleanValueChanged(index, value) bind(C)
+        use iso_c_binding, only: c_int, c_bool
+        integer(c_int), value :: index
+        logical(c_bool), value :: value
+
+        print *, "Boolean value changed callback. Index:", index, "Value:", value
+    end subroutine myBooleanValueChanged
+
+    subroutine myMultipleNumericValuesChanged(index, values, numValues) bind(C)
+        use iso_c_binding, only: c_int, c_float
+        integer(c_int), value :: index
+        real(c_float), dimension(*), intent(in) :: values
+        integer(c_int), value :: numValues
+
+        print *, "Multiple numeric values changed callback. Index:", index, "Num values:", numValues
+    end subroutine myMultipleNumericValuesChanged
+
+    subroutine myClick(index) bind(C)
+        use iso_c_binding, only: c_int
+        integer(c_int), value :: index
+
+        print *, "Click callback. Index:", index
+    end subroutine myClick
+
+end program main
+
+```
+
+Some extra work for the string conversion was necessary, as we had to manually append the NULL character. `AssetsBasePath` is pre-allocated as 40 bytes, whereas the raw JSON definitions are 'allocatable' at run time. Notice also the use of `deallocate`.
+
+Resources:
+
+- [Source code](https://github.com/xframes-project/xframes-fortran)
+- [Interoperability with C](https://gcc.gnu.org/onlinedocs/gfortran/Interoperability-with-C.html)
 
 #### Delphi
 
