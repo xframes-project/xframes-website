@@ -150,6 +150,8 @@ const config: Config = {
         "ocaml",
         "pascal",
         "python",
+        "scheme",
+        "racket", // racket extends scheme, so has to come after scheme
         "ruby",
         "rust",
         "scala",

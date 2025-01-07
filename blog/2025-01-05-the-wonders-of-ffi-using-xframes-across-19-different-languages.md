@@ -179,7 +179,9 @@ EXPORT_API void init(
 );
 ```
 
-As you may have guessed, `init()` initialises XFrames.
+#### A brief but important note on threading
+
+As you may have guessed, `init()` initialises XFrames. There's something important about the this function: this function gets invoked in a **separate thread**. This means that the programming language must be able to define thread-safe callback functions. Neither Perl nor PHP support this, resulting in a segmentation fault as soon as the `onInit` callback is called.
 
 A brief description of each parameter:
 
@@ -716,6 +718,100 @@ Resources:
 - [Interfacing C with OCaml](https://ocaml.org/manual/4.14/intfc.html)
 
 #### Racket
+
+[Racket](https://download.racket-lang.org/releases/8.15/doc/quick/index.html) is a Lisp dialect—meaning its syntax is based on parentheses and prefix notation. It uses lots of parentheses to denote function calls. One of Racket’s most powerful features is its ability to manipulate code as data. This is made possible through macros, which allow you to extend the language itself by creating new syntax and abstractions.
+
+I used VS Code to write the code (instead of [DrRacket](https://github.com/racket/drracket)). I tested the code using Racket v8.15 and the [raco](https://docs.racket-lang.org/raco/) CLI tool.
+
+```racket showLineNumbers
+#lang racket
+(require ffi/unsafe
+         racket/match
+         racket/runtime-path)
+
+(define xframes
+  (match (system-type)
+    ['unix (ffi-lib "./libxframesshared.so")]
+    ['windows (ffi-lib "./xframesshared.dll")]))
+
+
+(define _OnInitCb (_fun #:async-apply (lambda (f) (f)) -> _void))
+(define _OnTextChangedCb (_fun #:async-apply (lambda (f) (f)) _int _string -> _void))
+(define _OnComboChangedCb (_fun #:async-apply (lambda (f) (f)) _int _int -> _void))
+(define _OnNumericValueChangedCb (_fun #:async-apply (lambda (f) (f)) _int _float -> _void))
+(define _OnBooleanValueChangedCb (_fun #:async-apply (lambda (f) (f)) _int _bool -> _void))
+(define _OnMultipleNumericValuesChangedCb (_fun #:async-apply (lambda (f) (f)) _int _pointer _int -> _void))
+(define _OnClickCb (_fun #:async-apply (lambda (f) (f)) _int _bool -> _void))
+
+(define init
+  (get-ffi-obj "init" xframes (
+    _fun
+        _string
+        _string
+        _string
+        _OnInitCb
+        _OnTextChangedCb
+        _OnComboChangedCb
+        _OnNumericValueChangedCb
+        _OnBooleanValueChangedCb
+        _OnMultipleNumericValuesChangedCb
+        _OnClickCb
+         -> _void)))
+
+(define (onInit)
+    (begin
+        (displayln "init")
+    )
+)
+
+(define (onInit)
+    (displayln "init"))
+
+(define (onTextValueChanged id value)
+    (displayln (string-append "onTextValueChanged: id = " (number->string id) ", value = " value)))
+
+(define (onComboValueChanged id selected-index)
+    (displayln (string-append "onTextValueChanged: id = " (number->string id) ", value = " (number->string selected-index))))
+
+(define (onNumericValueChanged id value)
+    (displayln (format "onNumericValueChanged: id = ~a, value = ~a" id value)))
+
+(define (onBooleanValueChanged id value)
+    (displayln (string-append "onBooleanValueChanged: id = "
+                           (number->string id)
+                           ", value = " (if value "true" "false"))))
+
+(define (onMultipleNumericValuesChanged id values-pointer num-values)
+  (define values (pointer->array values-pointer num-values))
+  (displayln "Initialization is running...")
+  (for-each
+   (lambda (value)
+     (displayln (format "Value: ~a" value)))
+   values))
+
+(define onClick
+  (lambda (id)
+    (displayln "Initialization is running...")))
+
+(init
+    "./assets"
+    font-defs
+    theme
+    onInit
+    onTextValueChanged
+    onComboValueChanged
+    onNumericValueChanged
+    onBooleanValueChanged
+    onMultipleNumericValuesChanged
+    onClick
+)
+```
+
+The `#:async-apply` keyword indicates that the function being defined should be applied asynchronously. This means that instead of blocking the calling thread, the function can return immediately and perform its operation in the background or on a different thread, allowing the program to continue executing. Without this, this demo Racket application hangs as soon as we call `init`.
+
+Resources:
+
+- [The Racket foreign interface](https://download.racket-lang.org/releases/8.15/doc/foreign/index.html)
 
 #### Fortran
 
