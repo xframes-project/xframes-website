@@ -821,6 +821,7 @@ Resources:
 #### Fortran
 
 Fortran is one of the oldest high-level programming languages and is primarily used for scientific, mathematical, and engineering applications.
+This code requires [Fortran 2008](https://fortranwiki.org/fortran/show/Fortran+2008) or later.
 
 ```fortran showLineNumbers
 module c_interface
@@ -954,7 +955,13 @@ end program main
 
 ```
 
-Some extra work for the string conversion was necessary, as we had to manually append the NULL character. `AssetsBasePath` is pre-allocated as 40 bytes, whereas the raw JSON definitions are 'allocatable' at run time. Notice also the use of `deallocate`.
+We mapped C strings (`const char*`) to [c_ptr](https://gcc.gnu.org/onlinedocs/gfortran/Working-with-C-Pointers.html) and the callbacks to `c_funptr`.
+
+Some extra work for the string conversion was necessary, as we had to manually append the NULL character. `AssetsBasePath` is pre-allocated as 40 bytes, whereas the raw JSON definitions are 'allocatable' at run time.
+
+Additionally, we have had to wrap strings with calls to [c_loc](https://gcc.gnu.org/onlinedocs/gfortran/C_005fLOC.html) and subroutines with [c_funloc](https://gcc.gnu.org/onlinedocs/gfortran/C_005fFUNLOC.html) to obtain the C address of a objects and procedures respectively.
+
+Also, notice the use of [deallocate](https://www.intel.com/content/www/us/en/docs/fortran-compiler/developer-guide-reference/2023-1/deallocate.html).
 
 Resources:
 
