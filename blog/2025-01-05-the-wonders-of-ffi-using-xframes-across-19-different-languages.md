@@ -1247,6 +1247,97 @@ Resources:
 
 ### Ruby
 
+When you're writing Ruby code you usually don't think about memory management. However, when you're leveraging FFI, even though you're still developing in Ruby, you have to begin thinking more about these low-level issues.
+
+Ruby has the concept of object references and garbage collection. In contrast C libraries have pointers and manual allocation and deallocation of memory. So you have to take care, that objects which provide memory referenced by a pointer, stays valid until the pointer is no longer used by the library. Therefore you have to keep references to these objects, even when they are no longer used by your ruby code.
+
+A pointer on C level to a Ruby object is not considered an object reference by the Ruby runtime and is therefore not sufficient to protect the object from being garbage collected.
+
+```ruby showLineNumbers
+require 'ffi'
+
+module XFrames
+  extend FFI::Library
+  if RUBY_PLATFORM =~ /win32|mingw|cygwin/
+    ffi_lib './xframesshared.dll'
+  else
+    ffi_lib './libxframesshared.so'
+  end
+
+  callback :OnInitCb, [:pointer], :void
+  callback :OnTextChangedCb, [:int, :string], :void
+  callback :OnComboChangedCb, [:int, :int], :void
+  callback :OnNumericValueChangedCb, [:int, :float], :void
+  callback :OnBooleanValueChangedCb, [:int, :int], :void
+  callback :OnMultipleNumericValuesChangedCb, [:int, :pointer, :int], :void
+  callback :OnClickCb, [:int], :void
+
+  attach_function :init, [
+    :string,
+    :string,
+    :string,
+    :OnInitCb,
+    :OnTextChangedCb,
+    :OnComboChangedCb,
+    :OnNumericValueChangedCb,
+    :OnBooleanValueChangedCb,
+    :OnMultipleNumericValuesChangedCb,
+    :OnClickCb
+  ], :void
+end
+
+on_init = FFI::Function.new(:void, []) do
+  puts "initialized"
+end
+
+on_text_changed = FFI::Function.new(:void, [:int, :string]) do |id, text|
+  puts "Text changed: ID=#{id}, Text=#{text}"
+end
+
+on_combo_changed = FFI::Function.new(:void, [:int, :int]) do |id, selected_index|
+  puts "Combo changed: ID=#{id}, Selected=#{selected_index}"
+end
+
+on_numeric_value_changed = FFI::Function.new(:void, [:int, :float]) do |id, value|
+  puts "Numeric value changed: ID=#{id}, Value=#{value}"
+end
+
+on_boolean_value_changed = FFI::Function.new(:void, [:int, :int]) do |id, state|
+  puts "Boolean value changed: ID=#{id}, State=#{state}"
+end
+
+on_multiple_numeric_values_changed = FFI::Function.new(:void, [:int, :pointer, :int]) do |id, values_ptr, num_values|
+  float_array = values_ptr.read_array_of_float(num_values)
+
+  puts "Multiple numeric values changed: ID=#{id}, Values=#{float_array.inspect}"
+end
+
+on_click = FFI::Function.new(:void, [:int]) do |id|
+  puts "Button clicked: ID=#{id}"
+end
+
+assets_base_path = './assets'
+
+XFrames.init(
+  assets_base_path,
+  font_defs_json,
+  theme_json,
+  on_init,
+  on_text_changed,
+  on_combo_changed,
+  on_numeric_value_changed,
+  on_boolean_value_changed,
+  on_multiple_numeric_values_changed,
+  on_click
+)
+```
+
+Resources:
+
+- [Source code](https://github.com/xframes-project/xframes-ruby)
+- [Ruby FFI Wiki](https://github.com/ffi/ffi/wiki)
+- [Ruby FFI core concepts](https://github.com/ffi/ffi/wiki/Core-Concepts)
+
 ### Crystal
 
 ### D
