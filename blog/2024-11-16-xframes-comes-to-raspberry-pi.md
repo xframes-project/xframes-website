@@ -5,7 +5,7 @@ authors: [andreamancuso]
 tags: [raspberrypi]
 ---
 
-Bring your Raspberry Pi projects to life with XFrames! You can now wreate sleek, high-performance GUIs using your favourite programming language even on arm-x64.
+Bring your Raspberry Pi projects to life with XFrames! You can now create sleek, high-performance GUIs using your favourite programming language even on arm-x64.
 
 <!-- truncate -->
 

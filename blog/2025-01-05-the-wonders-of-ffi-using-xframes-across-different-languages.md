@@ -1,6 +1,6 @@
 ---
-slug: the-wonders-of-ffi-using-xframes-across-different-languages
-title: "The Wonders of FFI: Using XFrames Across Different Languages"
+slug: using-xframes-across-different-languages-through-ffi
+title: "Using XFrames across different Languages through FFI"
 authors: [andreamancuso]
 tags: [ffi]
 toc_min_heading_level: 2
