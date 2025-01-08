@@ -192,7 +192,7 @@ EXPORT_API void init(
 );
 ```
 
-#### A brief but important note on threading
+#### A brief yet important note on threading
 
 As you may have guessed, `init()` initialises XFrames. There's something important about the this function: this function gets invoked in a **separate thread**. This means that the programming language must be able to define thread-safe callback functions. Neither Perl nor PHP support this, resulting in a segmentation fault as soon as the `onInit` callback is called.
 
@@ -1677,3 +1677,19 @@ Sources
 - [Foreign Function Interface](https://wiki.haskell.org/Foreign_Function_Interface)
 
 ## Conclusions
+
+FFI represents a powerful technique for bridging programming languages, allowing developers to leverage high-performance libraries across diverse language ecosystems. The XFrames project demonstrates both the **tremendous potential** and **inherent challenges** of cross-language development.
+
+### Key Insights
+
+- FFI enables seamless integration of C and C++ libraries into multiple programming languages.
+- Developers must carefully navigate complex interoperability challenges.
+- JSON serialization can provide a pragmatic approach to managing data exchange.
+- Careful design of interface layers can mitigate potential performance overhead.
+
+### Future Considerations
+
+- Expanding FFI support across more languages and platforms.
+- Developing more robust techniques for handling memory and type translations.
+
+The journey of implementing XFrames across languages underscores that while FFI is not a magical solution, it offers a compelling pathway for creating flexible, high-performance cross-language applications.
