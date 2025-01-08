@@ -29,10 +29,10 @@ import HaskellLogoUrl from "@site/static/img/haskell.png";
 import FreePascalLogoUrl from "@site/static/img/freepascal.png";
 import DelphiLogoUrl from "@site/static/img/delphi.png";
 
-await import("prismjs/components/prism-lua");
-await import("prismjs/components/prism-scheme");
-await import("prismjs/components/prism-racket");
-await import("prismjs/components/prism-crystal");
+import("prismjs/components/prism-lua");
+import("prismjs/components/prism-scheme");
+import("prismjs/components/prism-racket");
+import("prismjs/components/prism-crystal");
 
 import styles from "./index.module.css";
 
