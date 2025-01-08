@@ -5,23 +5,30 @@ authors: [andreamancuso]
 tags: [ffi]
 ---
 
-Discover the power of [Foreign Function Interface (FFI)](https://en.wikipedia.org/wiki/Foreign_function_interface) and how it unlocks the potential to use XFrames, a high-performance, GPU-accelerated GUI library, in 19 different languages. Whether you're a Python developer, a Java enthusiast, or a fan of lesser-known languages like Crystal or Nim, this post will show you how FFI enables seamless cross-language functionality. I'll share the challenges, solutions, and key lessons I learned while making XFrames work across this diverse ecosystem of programming languages.
+Discover the power of [Foreign Function Interface (FFI)](https://en.wikipedia.org/wiki/Foreign_function_interface) and how it unlocks the potential to use XFrames, a high-performance, GPU-accelerated GUI library, in several different languages. This post will show you how FFI enables seamless cross-language functionality without resorting to building custom modules or libraries for your favourite language. I'll share the challenges, solutions, and key lessons I learned while making XFrames work across this diverse ecosystem of programming languages.
 
 <!-- truncate -->
 
 ## Why FFI is a game-changer for XFrames
 
-By utilizing FFI, XFrames can interact seamlessly with a wide array of languages, including Ruby, Ada, Fortran, Haskell, and more. For JVM-based languages, such as Java, Kotlin, Scala, JNI provides a similar integration, while native modules for Node.js and Python ensure smooth functionality in those ecosystems. This interoperability allows developers to integrate high-performance, GPU-accelerated GUI features into their applications, regardless of the programming language they use, without needing to rewrite code for each one. While the overhead of FFI can vary, the core performance of XFrames—particularly in its C++/OpenGL layer—remains intact, with any potential overhead specific to the FFI layer itself.
+By utilizing FFI, XFrames can interact seamlessly with a wide array of languages, including Ruby, Ada, Fortran, Haskell, Crystal, and more.
+For JVM-based languages, such as Java, Kotlin, Scala, JNI provides a similar integration, while native modules for Node.js and Python ensure smooth functionality in those ecosystems. This interoperability allows developers to integrate high-performance, GPU-accelerated GUI features into their applications, regardless of the programming language they use, without needing to rewrite code for each one. While the overhead of FFI can vary, the core performance of XFrames—particularly in its C++/OpenGL layer—remains intact, with any potential overhead specific to the FFI layer itself.
 
 While FFI enables flexibility, it's currently best suited for desktop applications, with future enhancements to expand its versatility across more languages and use cases.
 
 ---
 
-### A note on WebAssembly
+#### A note on WebAssembly
 
 I am aware that some of the languages mentioned below support WebAssembly. Whilst still somewhat rough around the edges, [emscripten](https://emscripten.org/) has improved substantially in terms of stability and performance. That said, I am also aware that many developers these days have the option to use their favourite language to build browser-based applications. Notable examples include [Fable](https://fable.io/), [Scala.js](https://www.scala-js.org/), [Nim's JavaScript backend](https://nim-lang.org/docs/backends.html#backends-the-javascript-target).
 
-Here goes the question: wouldn't it be nice to be able to also target WebAssembly using such solutions? Should developers using XFrames have the ability to target both the desktop and the browser? What I can say at this point is: let's improve the developer experience as far as targeting the desktop is concerned and I'll get back to you on this topic.
+I will cover WebAssembly in a separate post.
+
+---
+
+#### A note on Node.js and Python
+
+I created native modules for both Node.js and Python, which will be covered in a separate post.
 
 ---
 
@@ -968,6 +975,8 @@ Resources:
 
 ### Delphi
 
+[Delphi](https://www.embarcadero.com/products/delphi) uses explicit memory allocation (new, dispose), not garbage collection. Objects passed to C must remain valid throughout the FFI call. Delphi won't deallocate memory passed to C unless explicitly managed.
+
 ```pascal showLineNumbers
 program XFrames;
 
@@ -1068,6 +1077,8 @@ Resources:
 
 ### (Free) Pascal
 
+[Free Pascal](https://www.freepascal.org/) uses manual memory management, similar to C, and does not have garbage collection. Objects passed to C must remain valid throughout the FFI call. Free Pascal won't deallocate memory passed to C unless explicitly managed. [GetMem](https://www.freepascal.org/docs-html/rtl/system/getmem.html) can be used for dynamic memory allocation whereas [FreeMem](https://www.freepascal.org/docs-html/rtl/system/freemem.html) can be used for deallocation when dealing with FFI.
+
 ```pascal showLineNumbers
 program XFrames;
 
@@ -1163,6 +1174,8 @@ Resources:
 - [Source code](https://github.com/xframes-project/xframes-freepascal)
 
 ### Nim
+
+[Nim](https://nim-lang.org/) uses garbage collection for most objects but requires manual memory management when working with FFI and external libraries. Objects passed to C functions via pointers must remain valid for the entire FFI call. Memory must be manually freed when working with C. `alloc` can be used for dynamic memory allocation whereas `dealloc` can be used for deallocation when dealing with FFI.
 
 ```nim showLineNumbers
 import dynlib
@@ -1426,11 +1439,11 @@ Resources:
 
 ### D
 
-When using FFI in [D](https://dlang.org/), it’s important to:
+When using FFI in [D](https://dlang.org/), it's important to:
 
 - Manually manage the memory for any D objects that are passed as pointers to external C libraries to avoid premature garbage collection.
-- Be aware that D's garbage collection system won’t track memory that’s allocated outside of the D runtime (e.g., memory allocated via C functions).
-- Explicitly mark objects as scope or retain references where necessary to ensure they aren’t collected while still in use by C code.
+- Be aware that D's garbage collection system won't track memory that's allocated outside of the D runtime (e.g., memory allocated via C functions).
+- Explicitly mark objects as scope or retain references where necessary to ensure they aren't collected while still in use by C code.
 
 ```d showLineNumbers
 import std.stdio;
@@ -1529,12 +1542,122 @@ Resources:
 
 ### Haskell
 
-## JNI support
+[Haskell](https://www.haskell.org/) uses garbage collection for most objects but requires explicit management for FFI and foreign pointers. Foreign pointers passed to C functions must remain valid throughout the FFI call. The garbage collector does not manage memory allocated via C functions, so memory must be deallocated when no longer needed. `mallocForeignPtr` can be used to allocate memory whereas `freeHaskellFunctionPtr` can be used to release it.
 
-### Java
+```haskell showLineNumbers
+{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE ForeignFunctionInterface #-}
 
-### Kotlin
+module Main where
 
-### Scala
+import qualified Data.ByteString.Lazy.Char8 as BS
+import Foreign
+import Foreign.C
+import Foreign.Ptr ()
+
+foreign import ccall "wrapper"
+  wrapOnInitCb :: (IO ()) -> IO (FunPtr (IO ()))
+foreign import ccall "wrapper"
+  wrapOnTextChangedCb :: (CInt -> CString -> IO ()) -> IO (FunPtr (CInt -> CString -> IO ()))
+foreign import ccall "wrapper"
+  wrapOnComboChangedCb :: (CInt -> CInt -> IO ()) -> IO (FunPtr (CInt -> CInt -> IO ()))
+foreign import ccall "wrapper"
+  wrapOnNumericValueChangedCb :: (CInt -> CFloat -> IO ()) -> IO (FunPtr (CInt -> CFloat -> IO ()))
+foreign import ccall "wrapper"
+  wrapOnBooleanValueChangedCb :: (CInt -> CBool -> IO ()) -> IO (FunPtr (CInt -> CBool -> IO ()))
+foreign import ccall "wrapper"
+  wrapOnMultipleNumericValuesChangedCb :: (CInt -> Ptr CFloat -> CInt -> IO ()) -> IO (FunPtr (CInt -> Ptr CFloat -> CInt -> IO ()))
+foreign import ccall "wrapper"
+  wrapOnClickCb :: (CInt -> IO ()) -> IO (FunPtr (CInt -> IO ()))
+
+
+type OnInitCb = FunPtr (IO ())
+type OnTextChangedCb = FunPtr (CInt -> CString -> IO ())
+type OnComboChangedCb = FunPtr (CInt -> CInt -> IO ())
+type OnNumericValueChangedCb = FunPtr (CInt -> CFloat -> IO ())
+type OnBooleanValueChangedCb = FunPtr (CInt -> CBool -> IO ())
+type OnMultipleNumericValuesChangedCb = FunPtr (CInt -> Ptr CFloat -> CInt -> IO ())
+type OnClickCb = FunPtr (CInt -> IO ())
+
+foreign import ccall "init"
+    c_init :: CString
+           -> CString
+           -> CString
+           -> OnInitCb
+           -> OnTextChangedCb
+           -> OnComboChangedCb
+           -> OnNumericValueChangedCb
+           -> OnBooleanValueChangedCb
+           -> OnMultipleNumericValuesChangedCb
+           -> OnClickCb
+           -> IO ()
+
+onInit :: IO ()
+onInit = putStrLn "Initialized"
+
+onTextChanged :: CInt -> CString -> IO ()
+onTextChanged _ _ = putStrLn "Text Changed"
+
+onComboChanged :: CInt -> CInt -> IO ()
+onComboChanged _ _ = putStrLn "Combo Changed"
+
+onNumericValueChanged :: CInt -> CFloat -> IO ()
+onNumericValueChanged _ _ = putStrLn "Numeric Value Changed"
+
+onBooleanValueChanged :: CInt -> CBool -> IO ()
+onBooleanValueChanged _ _ = putStrLn "Boolean Value Changed"
+
+onMultipleNumericValuesChanged :: CInt -> Ptr CFloat -> CInt -> IO ()
+onMultipleNumericValuesChanged _ _ _ = putStrLn "Multiple Numeric Values Changed"
+
+onClick :: CInt -> IO ()
+onClick _ = putStrLn "Clicked"
+
+main :: IO ()
+main = runInBoundThread $ do
+    assetsBasePath <- newCString "./assets"
+    rawFontDefs <- newCString fontDefsJson
+    rawStyleDefs <- newCString theme2Json
+
+    onInitPtr <- wrapOnInitCb onInit
+    onTextChangedPtr <- wrapOnTextChangedCb onTextChanged
+    onComboChangedPtr <- wrapOnComboChangedCb onComboChanged
+    onNumericValueChangedPtr <- wrapOnNumericValueChangedCb onNumericValueChanged
+    onBooleanValueChangedPtr <- wrapOnBooleanValueChangedCb onBooleanValueChanged
+    onMultipleNumericValuesChangedPtr <- wrapOnMultipleNumericValuesChangedCb onMultipleNumericValuesChanged
+    onClickPtr <- wrapOnClickCb onClick
+
+    c_init assetsBasePath rawFontDefs rawStyleDefs
+                  onInitPtr
+                  onTextChangedPtr
+                  onComboChangedPtr
+                  onNumericValueChangedPtr
+                  onBooleanValueChangedPtr
+                  onMultipleNumericValuesChangedPtr
+                  onClickPtr
+
+    putStrLn "Press enter to exit application"
+    _ <- getLine
+    putStrLn $ "Exiting..."
+
+    freeHaskellFunPtr onInitPtr
+    freeHaskellFunPtr onTextChangedPtr
+    freeHaskellFunPtr onComboChangedPtr
+    freeHaskellFunPtr onNumericValueChangedPtr
+    freeHaskellFunPtr onBooleanValueChangedPtr
+    freeHaskellFunPtr onMultipleNumericValuesChangedPtr
+    freeHaskellFunPtr onClickPtr
+```
+
+Function pointers are created using special `"wrapper"` functions (see lines 12-25). Such pointers must be freed using `freeHaskellFunPtr` (see lines 97-103). It is paramount to use `runInBoundThread` to guarantee thread-safety of the callbacks. `newCString` is used to convert strings as required.
+
+Sources
+
+- [Source code](https://github.com/xframes-project/xframes-haskell)
+- [Exposing Haskell functions](https://www.haskell.org/definition/ffi/sec-entry.html)
+- [Using the FFI](https://wiki.haskell.org/GHC/Using_the_FFI)
+- [Foreign function interface (FFI)](https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/ffi.html)
+- [Foreign Function Interface](https://wiki.haskell.org/Foreign_Function_Interface)
 
 ## Conclusions
