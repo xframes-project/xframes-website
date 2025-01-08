@@ -4,7 +4,8 @@ import type * as Preset from "@docusaurus/preset-classic";
 
 const config: Config = {
   title: "XFrames",
-  tagline: "Build GPU-accelerated, cross-platform desktop apps with your favorite tools — without CSS",
+  tagline:
+    "Build GPU-accelerated, cross-platform desktop apps with your favorite tools — without CSS",
   favicon: "img/favicon.ico",
 
   // Set the production url of your site here
@@ -128,6 +129,39 @@ const config: Config = {
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
+      additionalLanguages: [
+        "ada",
+        "c",
+        "csharp",
+        "clojure",
+        "cmake",
+        "cobol",
+        "d",
+        "fsharp",
+        "fortran",
+        "haskell",
+        "java",
+        "json",
+        "julia",
+        "kotlin",
+        "lisp",
+        "lua",
+        "nim",
+        "ocaml",
+        "pascal",
+        "python",
+        "scheme",
+        "racket", // racket extends scheme, so has to come after it
+        "ruby",
+        "crystal", // crystal extends ruby, so has to come after it
+        "rust",
+        "scala",
+        "smalltalk",
+        "swift",
+        "tcl",
+        "typescript",
+        "wasm",
+      ],
     },
   } satisfies Preset.ThemeConfig,
 };

@@ -2,7 +2,7 @@
 slug: alternative-to-compose-multiplatform
 title: "XFrames for Kotlin: the lightweight alternative to Compose Multiplatform"
 authors: [andreamancuso]
-tags: [kotlin]
+tags: [kotlin,ffi]
 ---
 
 If you find **Compose Multiplatform** too heavy for your needs, [XFrames for Kotlin](https://github.com/xframes-project/xframes-kotlin) offers a **leaner**, more **flexible** approach to building native applications. By combining the **Compose Runtime** with **XFrames JNI**, you get native performance with a minimalist design. With **Yoga layouts** and easy integration of **native code**, XFrames is perfect for developers who want a **powerful** yet **lightweight** framework without unnecessary bloat.

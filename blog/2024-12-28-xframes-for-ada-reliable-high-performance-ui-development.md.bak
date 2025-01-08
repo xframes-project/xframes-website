@@ -2,7 +2,7 @@
 slug: xframes-for-ada-reliable-high-performance-ui-development
 title: "XFrames for Ada: Reliable, High-Performance UI Development"
 authors: [andreamancuso]
-tags: [ada]
+tags: [ada,ffi]
 ---
 
 At XFrames, we strive to create lightweight, high-performance tools for modern UI development. Today, we’re proud to introduce (basic, for now) [Ada support](https://github.com/xframes-project/xframes-ada), bringing the power of XFrames to one of the most robust and reliable languages for mission-critical applications.  

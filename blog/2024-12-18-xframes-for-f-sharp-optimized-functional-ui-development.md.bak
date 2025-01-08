@@ -2,7 +2,7 @@
 slug: xframes-for-f-sharp-optimized-functional-ui-development
 title: "XFrames for F#: Functional UI Development, Optimized"
 authors: [andreamancuso]
-tags: [f-sharp]
+tags: [f-sharp,ffi]
 ---
 
 At XFrames, we’ve always prioritized lightweight, high-performance UI development. Now, we’re bringing that power to [F#](https://github.com/xframes-project/xframes-fsharp), enabling functional programmers to craft expressive and reactive UIs with unprecedented efficiency. 
