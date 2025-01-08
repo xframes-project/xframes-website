@@ -63,21 +63,19 @@ A function has a return type, name, optional parameters, and a body. Functions c
 
 In C, `typedef` is a keyword used to define aliases for existing types. It allows to create a new name (a type alias) for a type, making the code easier to read, more maintainable, and often more expressive. `typedef` can be used to alias primitive types, pointers, structs, function pointers.
 
-## The 19 Languages Supported by XFrames
-
-### Native modules
+## Native modules
 
 I admit that, up until a couple of months ago, I had never got my hands dirty with FFI - I just knew of its benefits on paper. Hence I initially started investing time and effort into writing native modules for the programming language I am most proficient with: JavaScript (and TypeScript).
 
-#### Node.js
+### Node.js
 
 When I started working on XFrames I originally targeted WebAssembly only. Eventually I realized that with a little of conditional compilation in the C++ source code I could also target native npm modules using [N-API](https://nodejs.org/api/n-api.html). I naturally had to drop WebGPU and decided to use OpenGL 3. To make the build process more intuitive and flexible, I chose the [cmake-js toolchain](https://github.com/cmake-js/cmake-js) over [node-gyp](https://github.com/nodejs/node-gyp), as (at least in my opiniong) it offers a more streamlined and customizable approach to building native modules. This integration allows Node.js developers to easily access XFrames' GPU-accelerated UI features without needing to interact with C++ directly, while maintaining high performance and efficient memory management.
 
-#### Python
+### Python
 
 For Python, I used [Pybind11](https://github.com/pybind/pybind11) to create native bindings that enable seamless integration between XFrames and Python. This allows Python developers to directly access XFrames' powerful GPU-accelerated UI features without needing to deal with the complexities of C++. The module is designed to be easy to use, ensuring smooth integration and efficient memory management.
 
-### FFI support
+## FFI support
 
 FFI sounds great on paper (taken from Wikipedia): "A foreign function interface is a mechanism by which a program written in one programming language can call routines or make use of services written or compiled in another one". So far so good, right? So why isn't everyone taking advantage of this amazing, almost magical, mechanism?
 
@@ -90,11 +88,11 @@ Wheher we like it or not, C is still the lingua franca of programming: almost ev
 
 ---
 
-#### C library interface
+### C library interface
 
 The following assumes that you are familiar with the basic C concepts described above.
 
-##### How to avoid name mangling issues
+#### How to avoid name mangling issues
 
 Let's have a look at the first part of the C library interface definition:
 
@@ -221,11 +219,11 @@ If you are coming coming from interpreted languages you'll likely find both appr
 
 ---
 
-#### .NET (so far C# and F#)
+### .NET (so far C# and F#)
 
 .NET is a cross-platform, open-source runtime and framework that allows you to build applications for web, desktop, mobile, cloud, IoT, and even gaming. .NET provides a runtime for multiple languages, primarily C#, F#, and VB.NET. I have only written a basic demo application for [C#](https://learn.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/overview) and [F#](https://learn.microsoft.com/en-us/dotnet/fsharp/what-is-fsharp), however. I tested both the C# and F# demo applications with .NET 9.
 
-##### C#
+### C#
 
 In general I have found C#'s FFI support very intuitive and convenient through [DllImportClass](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.dllimportattribute?view=net-9.0) and [Delegates](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/using-delegates):
 
@@ -285,7 +283,7 @@ Resources:
 - [DllImportClass](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.dllimportattribute?view=net-9.0)
 - [Delegates](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/using-delegates)
 
-##### F#
+### F#
 
 F#'s FFI support is very similar to C#'s.
 
@@ -351,7 +349,7 @@ Resources:
 
 ---
 
-#### Ada
+### Ada
 
 [Ada](https://www.adacore.com/about-ada) is a high-level, strongly-typed, and safety-oriented programming language primarily used in systems where reliability, maintainability, and real-time performance are crucial — think aerospace, defense, transportation, and high-integrity systems. As such, it is also notoriously verbose.
 
@@ -374,18 +372,18 @@ pragma Import (C, Init, "init");
 
 As you can see, most of the parameters of `Init` are either C-style character arrays (`Interfaces.C.char_array`) or addresses (`System.Address`), which are typical when interfacing with C functions.
 
-##### Parameter Types
+#### Parameter Types
 
 - `Interfaces.C.char_array`:
   This is a type provided by the `Interfaces.C` package to represent C-style arrays of characters (similar to C strings).
 - `System.Address`:
   This type represents a generic memory address, commonly used to pass function pointers or callback addresses when interfacing with C.
 
-##### `pragma Import` Directive
+#### `pragma Import` Directive
 
 This tells the Ada compiler that the Init procedure corresponds to an external C function. The first argument C specifies that the external function is written in C. The second argument `Init` is the name of the Ada procedure being mapped. The third argument `"init"` is the name of the C function to which the Ada procedure Init is bound.
 
-##### Full solution
+#### Full solution
 
 I tested this code with Ada [2022](https://learn.adacore.com/courses/whats-new-in-ada-2022/index.html), [Alire](https://alire.ada.dev/) 2.0.2.
 
@@ -563,7 +561,7 @@ Resources:
 
 ---
 
-#### Lua
+### Lua
 
 [Lua](https://www.lua.org/) is a lightweight, fast, dynamically typed, and embeddable scripting language, perfect for use cases where one needs extensibility or want to add scripting capabilities to an application. It's popular in game development, embedded systems, and tools like Nginx and Redis.
 
@@ -650,7 +648,7 @@ Resources:
 - [Source code](https://github.com/xframes-project/xframes-ada)
 - [LuaJIT's FFI semantics](https://luajit.org/ext_ffi_semantics.html).
 
-#### OCaml
+### OCaml
 
 [OCaml](https://ocaml.org/) is a functional programming language, but it also supports imperative and object-oriented programming paradigms. It has a strong static type system and focuses on higher-order functions, immutable data, [pattern matching](https://ocaml.org/manual/5.2/patterns.html), and on recursion over loops.
 
@@ -722,7 +720,7 @@ Resources:
 - [Source code](https://github.com/xframes-project/xframes-ocaml)
 - [Interfacing C with OCaml](https://ocaml.org/manual/4.14/intfc.html)
 
-#### Racket
+### Racket
 
 [Racket](https://download.racket-lang.org/releases/8.15/doc/quick/index.html) is a Lisp dialect—meaning its syntax is based on parentheses and prefix notation. It uses lots of parentheses to denote function calls. One of Racket's most powerful features is its ability to manipulate code as data. This is made possible through macros, which allow you to extend the language itself by creating new syntax and abstractions.
 
@@ -818,7 +816,7 @@ Resources:
 - [Source code](https://github.com/xframes-project/xframes-racket)
 - [The Racket foreign interface](https://download.racket-lang.org/releases/8.15/doc/foreign/index.html)
 
-#### Fortran
+### Fortran
 
 Fortran is one of the oldest high-level programming languages and is primarily used for scientific, mathematical, and engineering applications.
 This code requires [Fortran 2008](https://fortranwiki.org/fortran/show/Fortran+2008) or later.
@@ -961,49 +959,217 @@ Some extra work for the string conversion was necessary, as we had to manually a
 
 Additionally, we have had to wrap strings with calls to [c_loc](https://gcc.gnu.org/onlinedocs/gfortran/C_005fLOC.html) and subroutines with [c_funloc](https://gcc.gnu.org/onlinedocs/gfortran/C_005fFUNLOC.html) to obtain the C address of a objects and procedures respectively.
 
-Also, notice the use of [deallocate](https://www.intel.com/content/www/us/en/docs/fortran-compiler/developer-guide-reference/2023-1/deallocate.html).
+Finally, we [deallocate](https://www.intel.com/content/www/us/en/docs/fortran-compiler/developer-guide-reference/2023-1/deallocate.html) the strings.
 
 Resources:
 
 - [Source code](https://github.com/xframes-project/xframes-fortran)
 - [Interoperability with C](https://gcc.gnu.org/onlinedocs/gfortran/Interoperability-with-C.html)
 
-#### Delphi
+### Delphi
 
-#### (Free) Pascal
+```pascal showLineNumbers
+program XFrames;
 
-#### Nim
+uses
+  System.SysUtils,
+  System.AnsiStrings;
 
-#### Ruby
+type
+  TOnInitCb = procedure; cdecl;
+  TOnTextChangedCb = procedure(ID: Integer; Text: PAnsiChar); cdecl;
+  TOnComboChangedCb = procedure(ID: Integer; Index: Integer); cdecl;
+  TOnNumericValueChangedCb = procedure(ID: Integer; Value: Single); cdecl;
+  TOnBooleanValueChangedCb = procedure(ID: Integer; Value: Boolean); cdecl;
+  TOnMultipleNumericValuesChangedCb = procedure(ID: Integer; Values: PSingle; NumValues: Integer); cdecl;
+  TOnClickCb = procedure(ID: Integer); cdecl;
 
-#### Crystal
+procedure init(
+  AssetsBasePath: PAnsiChar;
+  RawFontDefinitions: PAnsiChar;
+  RawStyleOverrideDefinitions: PAnsiChar;
+  OnInit: TOnInitCb;
+  OnTextChanged: TOnTextChangedCb;
+  OnComboChanged: TOnComboChangedCb;
+  OnNumericValueChanged: TOnNumericValueChangedCb;
+  OnBooleanValueChanged: TOnBooleanValueChangedCb;
+  OnMultipleNumericValuesChanged: TOnMultipleNumericValuesChangedCb;
+  OnClick: TOnClickCb
+); cdecl; external 'xframesshared.dll';
 
-#### D
+procedure MyOnInit; cdecl;
+begin
+  Writeln('Initialized');
+end;
 
-#### Haskell
+procedure MyOnTextChanged(ID: Integer; Text: PAnsiChar); cdecl;
+begin
+  Writeln('Text changed: ID = ', ID, ', Text = ', Text);
+end;
 
-### JNI support
+procedure MyOnComboChanged(ID: Integer; Index: Integer); cdecl;
+begin
+  Writeln('Combo changed: ID = ', ID, ', Index = ', Index);
+end;
 
-#### Java
+procedure MyOnNumericValueChanged(ID: Integer; Value: Single); cdecl;
+begin
+  Writeln('Numeric value changed: ID = ', ID, ', Value = ', Value:0:2);
+end;
 
-#### Kotlin
+procedure MyOnBooleanValueChanged(ID: Integer; Value: Boolean); cdecl;
+begin
+  Writeln('Boolean value changed: ID = ', ID, ', Value = ', Value);
+end;
 
-#### Scala
+procedure MyOnMultipleNumericValuesChanged(ID: Integer; Values: PSingle; NumValues: Integer); cdecl;
+var
+  I: Integer;
+begin
+  Write('Multiple numeric values changed: ID = ', ID, ', Values = [');
+  for I := 0 to NumValues - 1 do
+  begin
+    if I > 0 then
+      Write(', ');
+    Write(Values^);
+    Inc(Values);  // Move the pointer to the next float
+  end;
+  WriteLn(']');
+end;
 
-#### **Challenges and Solutions**
+procedure MyOnClick(ID: Integer); cdecl;
+begin
+  Writeln('Click event: ID = ', ID);
+end;
 
-- Discuss some of the roadblocks you encountered with FFI/JNI and how you overcame them. You can break it down by language or toolset.
+begin
+    init(
+      PAnsiChar(AnsiString('./assets')),
+      PAnsiChar(AnsiString(FontDefs.ToJSON)),
+      PAnsiChar(AnsiString(ThemeDef.ToJSON)),
+      @MyOnInit,
+      @MyOnTextChanged,
+      @MyOnComboChanged,
+      @MyOnNumericValueChanged,
+      @MyOnBooleanValueChanged,
+      @MyOnMultipleNumericValuesChanged,
+      @MyOnClick
+    );
+end.
+```
 
-#### **The Bigger Picture: Cross-Language Collaboration**
+We mapped C strings (`const char*`) to [PAnsiChar](https://docwiki.embarcadero.com/Libraries/Sydney/en/System.PAnsiChar) and added the [cdecl](https://docwiki.embarcadero.com/RADStudio/Sydney/en/Cdecl,_cdecl,_cdecl) modifier to the callback types.
 
-- Explain how FFI helps developers work with their language of choice while leveraging powerful tools like XFrames.
-- Reflect on how this fits into modern polyglot development.
+The callbacks are passed as [pointers](https://www.freepascal.org/docs-html/ref/refse15.html) using the `@` symbol.
 
-#### **Future Directions and Improvements**
+### (Free) Pascal
 
-- Discuss upcoming plans for additional language support or enhancements to the integration process.
+```pascal showLineNumbers
+program XFrames;
 
-#### **Conclusion**
+{$mode objfpc}{$H+}
 
-- Sum up the benefits of FFI and how it empowers developers to use XFrames across multiple languages.
-- Encourage readers to experiment with FFI in their own projects and provide feedback or contribute to the ecosystem.
+uses
+  sysutils;
+
+type
+  TOnInitCb = procedure; cdecl;
+  TOnTextChangedCb = procedure(id: Integer; text: PChar); cdecl;
+  TOnComboChangedCb = procedure(id: Integer; index: Integer); cdecl;
+  TOnNumericValueChangedCb = procedure(id: Integer; value: Single); cdecl;
+  TOnBooleanValueChangedCb = procedure(id: Integer; value: Boolean); cdecl;
+  TOnMultipleNumericValuesChangedCb = procedure(id: Integer; values: PSingle; numValues: Integer); cdecl;
+  TOnClickCb = procedure(id: Integer); cdecl;
+
+procedure init(
+  assetsBasePath: PChar;
+  rawFontDefinitions: PChar;
+  rawStyleOverrideDefinitions: PChar;
+  onInit: TOnInitCb;
+  onTextChanged: TOnTextChangedCb;
+  onComboChanged: TOnComboChangedCb;
+  onNumericValueChanged: TOnNumericValueChangedCb;
+  onBooleanValueChanged: TOnBooleanValueChangedCb;
+  onMultipleNumericValuesChanged: TOnMultipleNumericValuesChangedCb;
+  onClick: TOnClickCb
+); cdecl; external 'xframesshared.dll';
+
+procedure MyOnInit; cdecl;
+begin
+  WriteLn('Initialized');
+end;
+
+procedure MyOnTextChanged(id: Integer; text: PChar); cdecl;
+begin
+  WriteLn('Text changed: ID = ', id, ', Text = ', text);
+end;
+
+procedure MyOnComboChanged(id: Integer; index: Integer); cdecl;
+begin
+  WriteLn('Combo changed: ID = ', id, ', Index = ', index);
+end;
+
+procedure MyOnNumericValueChanged(id: Integer; value: Single); cdecl;
+begin
+  WriteLn('Numeric value changed: ID = ', id, ', Value = ', value:0:2);
+end;
+
+procedure MyOnBooleanValueChanged(id: Integer; value: Boolean); cdecl;
+begin
+  WriteLn('Boolean value changed: ID = ', id, ', Value = ', value);
+end;
+
+procedure MyOnMultipleNumericValuesChanged(id: Integer; values: PSingle; numValues: Integer); cdecl;
+var
+  i: Integer;
+begin
+  Write('Multiple numeric values changed: ID = ', id, ', Values = ');
+  for i := 0 to numValues - 1 do
+    Write(values[i]:0:2, ' ');
+  WriteLn;
+end;
+
+procedure MyOnClick(id: Integer); cdecl;
+begin
+  WriteLn('Click event: ID = ', id);
+end;
+
+begin
+    init(
+      './assets',
+      PChar(fontDefs.AsJSON),
+      PChar(themeDef.AsJSON),
+      @MyOnInit,
+      @MyOnTextChanged,
+      @MyOnComboChanged,
+      @MyOnNumericValueChanged,
+      @MyOnBooleanValueChanged,
+      @MyOnMultipleNumericValuesChanged,
+      @MyOnClick
+    );
+end.
+```
+
+We mapped C strings (`const char*`) to [PChar](https://wiki.freepascal.org/PChar) and added the [cdecl](https://www.freepascal.org/docs-html/ref/refsu73.html) modifier to the callback types.
+
+The callbacks are passed as [pointers](https://www.freepascal.org/docs-html/ref/refse15.html) using the `@` symbol.
+
+### Nim
+
+### Ruby
+
+### Crystal
+
+### D
+
+### Haskell
+
+## JNI support
+
+### Java
+
+### Kotlin
+
+### Scala
+
+## Conclusions
