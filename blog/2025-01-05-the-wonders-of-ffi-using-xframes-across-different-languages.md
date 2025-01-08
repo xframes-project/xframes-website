@@ -3,9 +3,13 @@ slug: the-wonders-of-ffi-using-xframes-across-different-languages
 title: "The Wonders of FFI: Using XFrames Across Different Languages"
 authors: [andreamancuso]
 tags: [ffi]
+toc_min_heading_level: 2
+toc_max_heading_level: 5
 ---
 
-Discover the power of [Foreign Function Interface (FFI)](https://en.wikipedia.org/wiki/Foreign_function_interface) and how it unlocks the potential to use XFrames, a high-performance, GPU-accelerated GUI library, in several different languages. This post will show you how FFI enables seamless cross-language functionality without resorting to building custom modules or libraries for your favourite language. I'll share the challenges, solutions, and key lessons I learned while making XFrames work across this diverse ecosystem of programming languages.
+Imagine being able to use a powerful C++ GUI library in over a dozen different programming languages without rewriting a single line of code. This is possible thanks to the [Foreign Function Interface (FFI)](https://en.wikipedia.org/wiki/Foreign_function_interface) — a bridge that allows programs written in one language to call functions written in another. In this post, I'll walk you through how I leveraged FFI to make XFrames, a high-performance, GPU-accelerated GUI library, work seamlessly across a diverse ecosystem of languages.
+
+We'll explore how FFI can unlock cross-language functionality, discuss the specific challenges I encountered, and share key lessons learned. Whether you're a developer curious about cross-language interoperability or someone tackling real-world FFI issues, this guide has something for you.
 
 <!-- truncate -->
 
@@ -16,11 +20,17 @@ This interoperability allows developers to integrate high-performance, GPU-accel
 
 While FFI enables flexibility, it's currently best suited for desktop applications, with future enhancements to expand its versatility across more languages and use cases.
 
+**Key takeaway**: FFI provides a powerful way to integrate C++ libraries like XFrames into many languages, avoiding duplication of effort. However, developers need to be mindful of the potential performance overhead and current limitations when using it for real-time applications.
+
 ## The challenges of FFI
 
 FFI sounds great on paper (taken from Wikipedia): "A foreign function interface is a mechanism by which a program written in one programming language can call routines or make use of services written or compiled in another one". So far so good, right? So why isn't everyone taking advantage of this amazing, almost magical, mechanism?
 
-If you have used JSON (or XML) API HTTP-based endpoints (or even gRPC), you already know that the interoperability overhead between the client and the server is handled through marshalling and unmarshalling of input and (where applicable) output. When it comes to two different programming languages, the interoperability between two different ways of handling memory, data types and routines can be quite challenging. One such challenge is of course the bridging of a programming language that supports garbage collection with one that doesn't. And of course some complex data structures may be impossible to replicate in another language.
+If you have used JSON (or XML) API HTTP-based endpoints (or even gRPC), you already know that the interoperability overhead between the client and the server is handled through marshalling and unmarshalling of input and (where applicable) output. When it comes to two different programming languages, the interoperability between two different ways of handling memory, data types and routines can be quite challenging.
+
+One such challenge is, of course, the bridging of a programming language that supports garbage collection with one that doesn't. And of course, some complex data structures may be impossible to replicate in another language.
+
+**Key takeaway**: FFI isn’t magic—it comes with significant challenges, such as handling memory across languages with different models and dealing with complex data structures that don’t translate well. Understanding these challenges is essential before adopting FFI for large-scale projects.
 
 ---
 
