@@ -99,7 +99,7 @@ Due to the multiple challenges that FFI introduces, I decided to 'go [KISS](http
 As I started working on XFrames, I originally targeted WebAssembly. To avoid juggling pointers and whatnot between JS and C++, I thought I would send JSON-serialized data to the C++ (and vice versa). Whilst the marshalling and unmarshalling does have a performance cost, it does mean we don't need to do any mapping of complex data types (particularly structs and classes). Moreover, it refrains us from directly manipulating the inner state of objects and other data structures - rather we can do so by invoking functions. What this also means is that the public interface is relatively compact and straightforward.
 
 All that being said, unfortunately C++ and FFI do not always get on well, notably due to the notoriously aggressive [name mangling](https://en.wikipedia.org/wiki/Name_mangling).
-Whether we like it or not, C is still the lingua franca of programming: almost every single respectable programming language has FFI support for C libraries. This prompted me to write a thin C wrapper library to make it as straightforward as possible to interact with XFrames.
+Whether we like it or not, C is still the lingua franca of programming: almost every single respectable programming language has FFI support for C libraries. This prompted me to write a [thin C wrapper library](https://github.com/xframes-project/xframes-shared-c-library) to make it as straightforward as possible to interact with XFrames.
 
 ---
 
@@ -167,7 +167,7 @@ On Linux you can run `nm -D libxframesshared.so`:
 # [...]
 ```
 
-Now that we have explained what `EXPORT_API` is, we can have a look at the first function:
+Now that we have explained what `EXPORT_API` is, we can have a look at the `init` function:
 
 ```c showLineNumbers
 typedef void (*OnInitCb)();
@@ -191,6 +191,8 @@ EXPORT_API void init(
     OnClickCb onClick
 );
 ```
+
+The [full source code for the C library](https://github.com/xframes-project/xframes-shared-c-library) is available on GitHub.
 
 #### A brief yet important note on threading
 
