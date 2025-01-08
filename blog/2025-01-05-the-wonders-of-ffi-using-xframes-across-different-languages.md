@@ -70,7 +70,7 @@ Unfortunately, in C it's very possible to accidentally access **undefined elemen
 
 #### Strings
 
-**Strings** are represented as arrays of characters, with they key distinction that they are **null-terminated**. This means a C string is a sequence of characters followed by a special character '\0' (null character), which indicates the end of the string.
+**Strings** are represented as arrays of characters, with the key distinction that they are **null-terminated**. This means a C string is a sequence of characters followed by a special character '\0' (null character), which indicates the end of the string.
 
 When you want to pass a string without modifying it, you normally use `const char*` as the parameter type. This ensures the function doesn't accidentally modify the string. If you want the function to modify the string, simply use `char*` as the parameter type.
 
@@ -89,7 +89,7 @@ Due to the multiple challenges that FFI introduces, I decided to 'go [KISS](http
 As I started working on XFrames, I originally targeted WebAssembly. To avoid juggling pointers and whatnot between JS and C++, I thought I would send JSON-serialized data to the C++ (and vice versa). Whilst the marshalling and unmarshalling does have a performance cost, it does mean we don't need to do any mapping of complex data types (particularly structs and classes). Moreover, it refrains us from directly manipulating the inner state of objects and other data structures - rather we can do so by invoking functions. What this also means is that the public interface is relatively compact and straightforward.
 
 All that being said, unfortunately C++ and FFI do not always get on well, notably due to the notoriously aggressive [name mangling](https://en.wikipedia.org/wiki/Name_mangling).
-Wheher we like it or not, C is still the lingua franca of programming: almost every single respectable programming language has FFI support for C libraries. This prompted me to write a thin C wrapper library to make it as straightforward as possible to interact with XFrames.
+Whether we like it or not, C is still the lingua franca of programming: almost every single respectable programming language has FFI support for C libraries. This prompted me to write a thin C wrapper library to make it as straightforward as possible to interact with XFrames.
 
 ---
 
@@ -220,7 +220,7 @@ EXPORT_API void setChildren(int id, const char* childrenIds);
 EXPORT_API void setChildren(int id, const int* childrenIds, int num_children);
 ```
 
-If you are coming coming from interpreted languages you'll likely find both approaches somewhat cumbersome.
+If you are coming from interpreted languages you'll likely find both approaches somewhat cumbersome.
 
 ---
 
@@ -1595,22 +1595,30 @@ onInit :: IO ()
 onInit = putStrLn "Initialized"
 
 onTextChanged :: CInt -> CString -> IO ()
-onTextChanged _ _ = putStrLn "Text Changed"
+onTextChanged index cstr = do
+    text <- peekCString cstr
+    putStrLn $ "Text Changed at index " ++ show index ++ ": " ++ text
 
 onComboChanged :: CInt -> CInt -> IO ()
-onComboChanged _ _ = putStrLn "Combo Changed"
+onComboChanged index value =
+    putStrLn $ "Combo Changed at index " ++ show index ++ " with value " ++ show value
 
 onNumericValueChanged :: CInt -> CFloat -> IO ()
-onNumericValueChanged _ _ = putStrLn "Numeric Value Changed"
+onNumericValueChanged index value =
+    putStrLn $ "Numeric Value Changed at index " ++ show index ++ " with value " ++ show (realToFrac value :: Float)
 
 onBooleanValueChanged :: CInt -> CBool -> IO ()
-onBooleanValueChanged _ _ = putStrLn "Boolean Value Changed"
+onBooleanValueChanged index value =
+    putStrLn $ "Boolean Value Changed at index " ++ show index ++ " with value " ++ show (fromCBool value)
 
 onMultipleNumericValuesChanged :: CInt -> Ptr CFloat -> CInt -> IO ()
-onMultipleNumericValuesChanged _ _ _ = putStrLn "Multiple Numeric Values Changed"
+onMultipleNumericValuesChanged index ptr count = do
+    values <- peekArray (fromIntegral count) ptr
+    putStrLn $ "Multiple Numeric Values Changed at index " ++ show index ++
+               " with values " ++ show (map realToFrac values :: [Float])
 
 onClick :: CInt -> IO ()
-onClick _ = putStrLn "Clicked"
+onClick index = putStrLn $ "Clicked at index " ++ show index
 
 main :: IO ()
 main = runInBoundThread $ do
