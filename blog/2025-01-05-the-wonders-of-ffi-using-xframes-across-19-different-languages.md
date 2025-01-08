@@ -1062,6 +1062,10 @@ We mapped C strings (`const char*`) to [PAnsiChar](https://docwiki.embarcadero.c
 
 The callbacks are passed as [pointers](https://www.freepascal.org/docs-html/ref/refse15.html) using the `@` symbol.
 
+Resources:
+
+- [Source code](https://github.com/xframes-project/xframes-delphi)
+
 ### (Free) Pascal
 
 ```pascal showLineNumbers
@@ -1154,7 +1158,92 @@ We mapped C strings (`const char*`) to [PChar](https://wiki.freepascal.org/PChar
 
 The callbacks are passed as [pointers](https://www.freepascal.org/docs-html/ref/refse15.html) using the `@` symbol.
 
+Resources:
+
+- [Source code](https://github.com/xframes-project/xframes-freepascal)
+
 ### Nim
+
+```nim showLineNumbers
+import dynlib
+
+when defined(windows):
+  const ffiLib = "./xframesshared.dll"
+elif defined(linux):
+  const ffiLib = "./libxframesshared.so"
+elif defined(macosx):
+  const ffiLib = "./libxframesshared.dylib"
+elif defined(bsd):
+  const ffiLib = "./libxframesshared.so"
+else:
+  echo "Unsupported platform"
+  quit(1)
+
+proc init(
+    assetsBasePath: cstring,
+    rawFontDefinitions: cstring,
+    rawStyleOverrideDefinitions: cstring,
+    onInit: proc(): void {.cdecl.},
+    onTextChanged: proc(id: cint, value: cstring): void {.cdecl.},
+    onComboChanged: proc(id: cint, selected_index: cint): void {.cdecl.} ,
+    onNumericValueChanged: proc(id: cint, value: cfloat): void {.cdecl.},
+    onBooleanValueChanged: proc(id: cint, value: bool): void {.cdecl.},
+    onMultipleNumericValuesChanged: proc(id: cint, values: pointer, num_values: cint): void {.cdecl.},
+    onClick: proc(id: cint): void {.cdecl.}
+    ) {.importc, dynlib: ffiLib.}
+
+proc onInit(): void {.cdecl.} =
+    echo "Callback: Initialized"
+
+proc onTextChanged(id: cint, value: cstring): void {.cdecl.} =
+    if value != nil:
+        echo "Callback: onTextChanged (id: ", id, ", value: '", value, "')"
+    else:
+        echo "Callback: onTextChanged received a nil value"
+
+proc onComboChanged(id: cint, selected_index: cint): void {.cdecl.} =
+    echo "Callback: onComboChanged (id: ", id, ", selected_index: ", selected_index, ")"
+
+proc onNumericValueChanged(id: cint, value: cfloat): void {.cdecl.} =
+    echo "Callback: onNumericValueChanged (id: ", id, ", value: ", value, ")"
+
+proc onBooleanValueChanged(id: cint, value: bool): void {.cdecl.} =
+    echo "Callback: onBooleanValueChanged (id: ", id, ", value: ", value, ")"
+
+proc onMultipleNumericValuesChanged(id: cint, values: pointer, num_values: cint): void {.cdecl.} =
+    if values == nil or num_values <= 0:
+        echo "Callback: onMultipleNumericValuesChanged received invalid values (nil or empty)"
+        return
+    let floatValues = cast[ptr array[0..num_values-1, cfloat]](values)
+    echo "Callback: onMultipleNumericValuesChanged (id: ", id, ", num_values: ", num_values, ", values: ["
+    for i in 0 ..< num_values:
+        echo "  ", floatValues[i]
+    echo "])"
+
+proc onClick(id: cint): void {.cdecl.} =
+    echo "Callback: onClick (id: ", id, ")"
+
+init(
+    baseAssetsPath.cstring(),
+    fontDefsJson.cstring(),
+    theme2Json.cstring(),
+    onInit,
+    onTextChanged,
+    onComboChanged,
+    onNumericValueChanged,
+    onBooleanValueChanged,
+    onMultipleNumericValuesChanged,
+    onClick
+)
+
+```
+
+We mapped C strings (`const char*`) to [cstring](https://nim-lang.org/docs/system.html#cstring) and used the `{.cdecl.}` pragma to specify that the procedures should use the C calling convention.
+
+Resources:
+
+- [Source code](https://github.com/xframes-project/xframes-nim)
+- [Foreign function interface](https://nim-lang.org/docs/manual.html#foreign-function-interface)
 
 ### Ruby
 
