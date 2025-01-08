@@ -225,7 +225,7 @@ If you are coming coming from interpreted languages you'll likely find both appr
 
 ### C#
 
-In general I have found C#'s FFI support very intuitive and convenient through [DllImportClass](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.dllimportattribute?view=net-9.0) and [Delegates](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/using-delegates):
+In general I have found [C#](https://learn.microsoft.com/en-us/dotnet/csharp/)'s FFI support very intuitive and convenient through [DllImportClass](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.dllimportattribute?view=net-9.0) and [Delegates](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/using-delegates):
 
 ```csharp showLineNumbers
 public delegate void OnInitCb();
@@ -285,7 +285,7 @@ Resources:
 
 ### F#
 
-F#'s FFI support is very similar to C#'s.
+[F#](https://learn.microsoft.com/en-us/dotnet/fsharp/)'s FFI support is very similar to C#'s.
 
 ```fsharp showLineNumbers
 type OnInitCb = unit -> unit
@@ -1340,10 +1340,10 @@ Resources:
 
 ### Crystal
 
-When using FFI in Crystal, it’s important to:
+When using FFI in Crystal, it's important to:
 
 - Keep track of objects that are referenced by pointers passed to C code to prevent them from being garbage collected too early.
-- Be aware that Crystal’s GC doesn’t automatically manage memory outside of its runtime.
+- Be aware that Crystal's GC doesn't automatically manage memory outside of its runtime.
 - Use appropriate memory management techniques to ensure stability when working with external libraries.
 
 ```crystal showLineNumbers
@@ -1425,6 +1425,12 @@ Resources:
 - [C bindings](https://crystal-lang.org/reference/1.14/syntax_and_semantics/c_bindings/index.html)
 
 ### D
+
+When using FFI in [D](https://dlang.org/), it’s important to:
+
+- Manually manage the memory for any D objects that are passed as pointers to external C libraries to avoid premature garbage collection.
+- Be aware that D's garbage collection system won’t track memory that’s allocated outside of the D runtime (e.g., memory allocated via C functions).
+- Explicitly mark objects as scope or retain references where necessary to ensure they aren’t collected while still in use by C code.
 
 ```d showLineNumbers
 import std.stdio;
