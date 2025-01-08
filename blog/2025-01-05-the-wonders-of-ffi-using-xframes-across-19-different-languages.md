@@ -1340,7 +1340,186 @@ Resources:
 
 ### Crystal
 
+When using FFI in Crystal, it’s important to:
+
+- Keep track of objects that are referenced by pointers passed to C code to prevent them from being garbage collected too early.
+- Be aware that Crystal’s GC doesn’t automatically manage memory outside of its runtime.
+- Use appropriate memory management techniques to ensure stability when working with external libraries.
+
+```crystal showLineNumbers
+alias OnInitCb = Proc(Void)
+alias OnTextChangedCb = Proc(Int32, Pointer(LibC::Char), Void)
+alias OnComboChangedCb = Proc(Int32, Int32, Nil)
+alias OnNumericValueChangedCb = Proc(Int32, Float32, Void)
+alias OnBooleanValueChangedCb = Proc(Int32, Bool, Void)
+alias OnMultipleNumericValuesChangedCb = Proc(Int32, Pointer(Float32), Int32, Void)
+alias OnClickCb = Proc(Int32, Void)
+
+@[Link("xframesshared")]
+lib XFrames
+    fun init(
+        assetsBasePath : Pointer(LibC::Char),
+        rawFontDefinitions : Pointer(LibC::Char),
+        rawStyleOverrideDefinitions : Pointer(LibC::Char),
+        onInit : OnInitCb,
+        onTextChanged : OnTextChangedCb,
+        onComboChanged : OnComboChangedCb,
+        onNumericValueChanged : OnNumericValueChangedCb,
+        onBooleanValueChanged : OnBooleanValueChangedCb,
+        onMultipleNumericValuesChanged : OnMultipleNumericValuesChangedCb,
+        onClick : OnClickCb
+    ) : Nil
+end
+
+onInit = ->() {
+    puts "Initialized"
+}
+# double-check this logic
+onTextChanged = ->(id : Int32, value : Pointer(LibC::Char)) do
+  if value.null?
+    puts "Text changed: ID=#{id}, Value is null"
+  else
+    crystal_string = value.to_s
+    puts "Text changed: ID=#{id}, Value=#{crystal_string}"
+  end
+end
+onComboChanged = ->(id : Int32, selected_index : Int32) {  }
+onNumericValueChanged = ->(id : Int32, value : Float32) {  }
+onBooleanValueChanged = ->(id : Int32, value : Bool) {  }
+# double-check this logic
+onMultipleNumericValuesChanged = ->(id : Int32, values: Pointer(Float32), num_values : Int32) do
+  # Check if the pointer is null before accessing it
+  if values.null?
+    puts "Text changed: ID=#{id}, Values pointer is null"
+  else
+    (does this actually work?)
+    slice = values.to_slice(num_values)
+
+    # Convert the Slice to an Array
+    float_array = slice.to_a
+
+    # Output the array
+    puts "Text changed: ID=#{id}, Values=#{float_array.inspect}"
+  end
+end
+onClick = ->(id : Int32) { puts "Clicked" }
+
+XFrames.init(
+  "./assets",
+  font_defs_json,
+  theme2_json,
+  onInit,
+  onTextChanged,
+  onComboChanged,
+  onNumericValueChanged,
+  onBooleanValueChanged,
+  onMultipleNumericValuesChanged,
+  onClick
+)
+
+```
+
+Resources:
+
+- [Source code](https://github.com/xframes-project/xframes-crystal)
+- [C bindings](https://crystal-lang.org/reference/1.14/syntax_and_semantics/c_bindings/index.html)
+
 ### D
+
+```d showLineNumbers
+import std.stdio;
+import std.string : toStringz;
+import std.conv;
+
+extern(C) {
+	alias OnInitCb = void function();
+	alias OnTextChangedCb = void function(int, const(char)*);
+	alias OnComboChangedCb = void function(int, int);
+	alias OnNumericValueChangedCb = void function(int, float);
+	alias OnBooleanValueChangedCb = void function(int, bool);
+	alias OnMultipleNumericValuesChangedCb = void function(int, const(float)*, int);
+	alias OnClickCb = void function(int);
+
+	void init(
+        const(char)* assetsBasePath,
+        const(char)* rawFontDefinitions,
+        const(char)* rawStyleOverrideDefinitions,
+        OnInitCb onInit,
+        OnTextChangedCb onTextChanged,
+        OnComboChangedCb onComboChanged,
+        OnNumericValueChangedCb onNumericValueChanged,
+        OnBooleanValueChangedCb onBooleanValueChanged,
+        OnMultipleNumericValuesChangedCb onMultipleNumericValuesChanged,
+        OnClickCb onClick
+    );
+}
+
+version(Linux) {
+    pragma(lib, "xframesshared.so");
+}
+
+version(Windows) {
+    pragma(lib, "xframesshared.lib");
+}
+
+extern(C) void onInitCallback() {
+    writeln("Initialization complete!");
+}
+
+extern(C) void onTextChangedCallback(int id, const(char)* value) {
+    writeln("Text changed: ", value);
+}
+
+extern(C) void onComboChangedCallback(int id, int value) {
+    writeln("Combo changed: ", value);
+}
+
+extern(C) void onNumericValueChangedCallback(int id, float value) {
+    writeln("Numeric value changed: ", value);
+}
+
+extern(C) void onBooleanValueChangedCallback(int id, bool value) {
+    writeln("Boolean value changed: ", value);
+}
+
+extern(C) void onMultipleNumericValuesChangedCallback(int id, const(float)* values, int numValues) {
+    writeln("Multiple numeric values changed: ");
+    foreach (i; 0 .. numValues) {
+        writeln(values[i]);
+    }
+}
+
+extern(C) void onClickCallback(int id) {
+    writeln("Button clicked: ", id);
+}
+
+void main()
+{
+    string assetsBasePath = "./assets";
+    string rawFontDefinitions = fontDefsJson;
+    string rawStyleOverrideDefinitions = themeJson;
+
+	init(
+        assetsBasePath.toStringz,
+        rawFontDefinitions.toStringz,
+        rawStyleOverrideDefinitions.toStringz,
+        &onInitCallback,
+        &onTextChangedCallback,
+        &onComboChangedCallback,
+        &onNumericValueChangedCallback,
+        &onBooleanValueChangedCallback,
+        &onMultipleNumericValuesChangedCallback,
+        &onClickCallback
+    );
+}
+```
+
+We are passing C strings using [std.string.toStringz](https://dlang.org/library/std/string/to_stringz.html) and we are passing function pointers using the `&` symbol.
+
+Resources:
+
+- [Source code](https://github.com/xframes-project/xframes-dlang)
+- [Interfacing to C](https://dlang.org/spec/interfaceToC.html)
 
 ### Haskell
 

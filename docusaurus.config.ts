@@ -151,8 +151,9 @@ const config: Config = {
         "pascal",
         "python",
         "scheme",
-        "racket", // racket extends scheme, so has to come after scheme
+        "racket", // racket extends scheme, so has to come after it
         "ruby",
+        "crystal", // crystal extends ruby, so has to come after it
         "rust",
         "scala",
         "smalltalk",

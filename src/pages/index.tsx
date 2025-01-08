@@ -32,6 +32,7 @@ import DelphiLogoUrl from "@site/static/img/delphi.png";
 await import("prismjs/components/prism-lua");
 await import("prismjs/components/prism-scheme");
 await import("prismjs/components/prism-racket");
+await import("prismjs/components/prism-crystal");
 
 import styles from "./index.module.css";
 
