@@ -96,7 +96,7 @@ In C, `typedef` is a keyword used to define aliases for existing types. It allow
 
 Due to the multiple challenges that FFI introduces, I decided to 'go [KISS](https://en.wikipedia.org/wiki/KISS_principle)'.
 
-As I started working on XFrames, I originally targeted WebAssembly. To avoid juggling pointers and whatnot between JS and C++, I thought I would send JSON-serialized data to the C++ (and vice versa). Whilst the marshalling and unmarshalling does have a performance cost, it does mean we don't need to do any mapping of complex data types (particularly structs and classes). Moreover, it refrains us from directly manipulating the inner state of objects and other data structures - rather we can do so by invoking functions. What this also means is that the public interface is relatively compact and straightforward.
+As I started working on XFrames, I originally targeted WebAssembly. To avoid juggling pointers and whatnot between JS and C++, I thought I would send JSON-serialized data to the C++ layer (and vice versa). Whilst the marshalling and unmarshalling does have a performance cost, it does mean we don't need to do any mapping of complex data types (particularly structs and classes). Moreover, it refrains us from directly manipulating the inner state of objects and other data structures - rather we can do so by invoking functions. What this also means is that the public interface is relatively compact and straightforward.
 
 All that being said, unfortunately C++ and FFI do not always get on well, notably due to the notoriously aggressive [name mangling](https://en.wikipedia.org/wiki/Name_mangling).
 Whether we like it or not, C is still the lingua franca of programming: almost every single respectable programming language has FFI support for C libraries. This prompted me to write a [thin C wrapper library](https://github.com/xframes-project/xframes-shared-c-library) to make it as straightforward as possible to interact with XFrames.
@@ -196,7 +196,7 @@ The [full source code for the C library](https://github.com/xframes-project/xfra
 
 #### A brief yet important note on threading
 
-As you may have guessed, `init()` initialises XFrames. There's something important about the this function: this function gets invoked in a **separate thread**. This means that the programming language must be able to define thread-safe callback functions. Neither Perl nor PHP support this, resulting in a segmentation fault as soon as the `onInit` callback is called.
+As you may have guessed, `init()` initialises XFrames. There's something important about this function: this function gets invoked in a **separate thread**. This means that the programming language must be able to define thread-safe callback functions. Neither Perl nor PHP support this, resulting in a segmentation fault as soon as the `onInit` callback is called.
 
 A brief description of each parameter:
 
@@ -212,29 +212,9 @@ A brief description of each parameter:
 | onMultipleNumericValuesChanged | function pointer               | invoked whenever any of the values of a multi-value widget changes (the first `int` identifies the widget ID, `float*` points at the float array, the second `int` indicates the size of the array) |
 | onClick                        | function pointer               | invoked whenever the 'clicked' event for a widget is triggered (`int` identifies the widget ID)                                                                                                     |
 
-Time to look at the second function:
-
-```c showLineNumbers
-EXPORT_API void setElement(const char* elementJson);
-```
-
-`elementJson`, as the name of the parameter implies, is a JSON-serialized representation of the UI element being created.
-
-Finally, here is our third function:
-
-```c
-EXPORT_API void setChildren(int id, const char* childrenIds);
-```
-
-`id` represents the ID of the parent widget, whereas `childrenIds` is a JSON-serialized array of child widget ID. Truth be told, `childrenIds` _could_ be replaced like so:
-
-```c showLineNumbers
-EXPORT_API void setChildren(int id, const int* childrenIds, int num_children);
-```
-
-If you are coming from interpreted languages you'll likely find both approaches somewhat cumbersome.
-
 ---
+
+Let's begin!
 
 ### .NET (so far C# and F#)
 
