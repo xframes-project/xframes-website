@@ -26,6 +26,7 @@ So far, XFrames has been tested with the following languages/platforms:
 - Crystal
 - Ruby
 - Nim
+- Zig
 - Haskell
 - Racket
 - Java
@@ -59,6 +60,14 @@ Detailed instructions are coming soon! Meanwhile, please refer to [this example]
 ### Python
 
 Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-python).
+
+### Zig
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-zig).
+
+### Nim
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-nim).
 
 ### Lua
 
