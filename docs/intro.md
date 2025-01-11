@@ -17,6 +17,7 @@ So far, XFrames has been tested with the following languages/platforms:
 - Free Pascal
 - Delphi
 - Python
+- Julia
 - Lua
 - OCaml
 - C#
@@ -60,6 +61,10 @@ Detailed instructions are coming soon! Meanwhile, please refer to [this example]
 ### Python
 
 Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-python).
+
+### Julia
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-julia).
 
 ### Zig
 
