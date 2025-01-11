@@ -28,6 +28,9 @@ import RacketLogoUrl from "@site/static/img/racket.png";
 import HaskellLogoUrl from "@site/static/img/haskell.png";
 import FreePascalLogoUrl from "@site/static/img/freepascal.png";
 import DelphiLogoUrl from "@site/static/img/delphi.png";
+import JuliaLogoUrl from "@site/static/img/julia.png";
+import ZigLogoUrl from "@site/static/img/zig.png";
+import GnuStepLogoUrl from "@site/static/img/gnustep.png";
 
 import("prismjs/components/prism-lua");
 import("prismjs/components/prism-scheme");
@@ -110,6 +113,26 @@ const techs = [
     name: "Delphi",
     logoUrl: DelphiLogoUrl,
     githubProjectName: "xframes-delphi",
+  },
+  {
+    name: "Swift",
+    logoUrl: SwiftLogoUrl,
+    githubProjectName: "xframes-swift",
+  },
+  {
+    name: "Zig",
+    logoUrl: ZigLogoUrl,
+    githubProjectName: "xframes-zig",
+  },
+  {
+    name: "Julia",
+    logoUrl: JuliaLogoUrl,
+    githubProjectName: "xframes-julia",
+  },
+  {
+    name: "GnuStep",
+    logoUrl: GnuStepLogoUrl,
+    githubProjectName: "xframes-gnustep",
   },
 ];
 
