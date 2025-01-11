@@ -30,6 +30,8 @@ So far, XFrames has been tested with the following languages/platforms:
 - Zig
 - Haskell
 - Racket
+- Gnu Step
+- Swift
 - Java
 - Kotlin
 - Scala
@@ -69,6 +71,14 @@ Instructions coming soon! There might be details in the [project's README file](
 ### Zig
 
 Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-zig).
+
+### Swift
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-swift).
+
+### Gnu Step
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-gnustep-objective-c).
 
 ### Nim
 

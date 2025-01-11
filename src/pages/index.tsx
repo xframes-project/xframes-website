@@ -132,7 +132,7 @@ const techs = [
   {
     name: "GnuStep",
     logoUrl: GnuStepLogoUrl,
-    githubProjectName: "xframes-gnustep",
+    githubProjectName: "xframes-gnustep-objective-c",
   },
 ];
 
