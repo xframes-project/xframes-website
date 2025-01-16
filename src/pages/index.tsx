@@ -130,12 +130,12 @@ const techs = [
     githubProjectName: "xframes-julia",
   },
   {
-    name: "GnuStep",
+    name: "Gnu Step",
     logoUrl: GnuStepLogoUrl,
     githubProjectName: "xframes-gnustep-objective-c",
   },
   {
-    name: "GnuSmalltalk",
+    name: "Gnu Smalltalk",
     logoUrl: GnuSmalltalkLogoUrl,
     githubProjectName: "xframes-gnu-smalltalk",
   },
