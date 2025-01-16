@@ -31,6 +31,7 @@ import DelphiLogoUrl from "@site/static/img/delphi.png";
 import JuliaLogoUrl from "@site/static/img/julia.png";
 import ZigLogoUrl from "@site/static/img/zig.png";
 import GnuStepLogoUrl from "@site/static/img/gnustep.png";
+import GnuSmalltalkLogoUrl from "@site/static/img/gnusmalltalk.png";
 
 import("prismjs/components/prism-lua");
 import("prismjs/components/prism-scheme");
@@ -64,12 +65,12 @@ function HomepageHeader() {
 const techs = [
   { name: "WASM", logoUrl: WebAssemblyLogoUrl },
   // {name: 'C', logoUrl: CLogoUrl},
-  { name: "C++", logoUrl: CPPLogoUrl },
+  // { name: "C++", logoUrl: CPPLogoUrl },
   // {name: 'Node.js', logoUrl: NodejsLogoUrl},
+  // {name: 'Rust', logoUrl: RustLogoUrl},
   { name: "TypeScript", logoUrl: TSLogoUrl },
   { name: "F#", logoUrl: FSharpLogoUrl, githubProjectName: "xframes-fsharp" },
   { name: "C#", logoUrl: CSharpLogoUrl, githubProjectName: "xframes-csharp" },
-  // {name: 'Rust', logoUrl: RustLogoUrl},
   {
     name: "Kotlin",
     logoUrl: KotlinLogoUrl,
@@ -82,7 +83,6 @@ const techs = [
     logoUrl: PythonLogoUrl,
     githubProjectName: "xframes-python",
   },
-  // {name: 'Swift', logoUrl: SwiftLogoUrl},
   { name: "Lua", logoUrl: LuaLogoUrl, githubProjectName: "xframes-lua" },
   { name: "Ada", logoUrl: AdaLogoUrl, githubProjectName: "xframes-ada" },
   { name: "OCaml", logoUrl: OCamlLogoUrl, githubProjectName: "xframes-ocaml" },
@@ -133,6 +133,11 @@ const techs = [
     name: "GnuStep",
     logoUrl: GnuStepLogoUrl,
     githubProjectName: "xframes-gnustep-objective-c",
+  },
+  {
+    name: "GnuSmalltalk",
+    logoUrl: GnuSmalltalkLogoUrl,
+    githubProjectName: "xframes-gnu-smalltalk",
   },
 ];
 

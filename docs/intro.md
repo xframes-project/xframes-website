@@ -31,6 +31,7 @@ So far, XFrames has been tested with the following languages/platforms:
 - Haskell
 - Racket
 - Gnu Step
+- Gnu Smalltalk
 - Swift
 - Java
 - Kotlin
@@ -79,6 +80,10 @@ Instructions coming soon! There might be details in the [project's README file](
 ### Gnu Step
 
 Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-gnustep-objective-c).
+
+### Gnu Smalltalk
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-gnu-smalltalk).
 
 ### Nim
 
