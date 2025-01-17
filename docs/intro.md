@@ -22,6 +22,7 @@ So far, XFrames has been tested with the following languages/platforms:
 - OCaml
 - C#
 - F#
+- Rust
 - Ada
 - D
 - Crystal
@@ -64,6 +65,10 @@ Detailed instructions are coming soon! Meanwhile, please refer to [this example]
 ### Python
 
 Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-python).
+
+### Rust
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-rust).
 
 ### Julia
 

@@ -64,10 +64,10 @@ function HomepageHeader() {
 
 const techs = [
   { name: "WASM", logoUrl: WebAssemblyLogoUrl },
-  // {name: 'C', logoUrl: CLogoUrl},
-  // { name: "C++", logoUrl: CPPLogoUrl },
-  // {name: 'Node.js', logoUrl: NodejsLogoUrl},
-  // {name: 'Rust', logoUrl: RustLogoUrl},
+  {name: 'C', logoUrl: CLogoUrl},
+  { name: "C++", logoUrl: CPPLogoUrl },
+  {name: 'Rust', logoUrl: RustLogoUrl, githubProjectName: "xframes-rust" },
+  {name: 'Node.js', logoUrl: NodejsLogoUrl},
   { name: "TypeScript", logoUrl: TSLogoUrl },
   { name: "F#", logoUrl: FSharpLogoUrl, githubProjectName: "xframes-fsharp" },
   { name: "C#", logoUrl: CSharpLogoUrl, githubProjectName: "xframes-csharp" },
