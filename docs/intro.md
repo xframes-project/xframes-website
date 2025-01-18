@@ -16,6 +16,7 @@ So far, XFrames has been tested with the following languages/platforms:
 - WebAssembly
 - Fortran
 - Free Pascal
+- Fortran
 - Delphi
 - Python
 - Julia
