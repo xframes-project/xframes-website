@@ -12,33 +12,35 @@ The requirements will depend on which programming language you wish to use with 
 
 So far, XFrames has been tested with the following languages/platforms:
 
-- [JavaScript/TypeScript](/docs/category/typescript)
-- WebAssembly
-- Free Pascal
-- Fortran
-- Delphi
 - Python
-- Julia
-- Lua
-- OCaml
-- C#
-- F#
-- Rust
-- Ada
-- D
-- Crystal
-- Ruby
-- Nim
-- Zig
-- Haskell
-- Racket
-- Gnu Step
-- Gnu Smalltalk
-- Swift
+- C++
 - Java
+- C
+- C#
+- [JavaScript/TypeScript](/docs/category/typescript)
+- Fortran
+- Free Pascal
+- Delphi
+- Rust
+- Ruby
+- Swift
 - Kotlin
+- Ada
+- Lua
 - Scala
+- Julia
+- Haskell
+- Gnu Step
+- D
+- F#
+- Nim
+- OCaml
+- Gnu Smalltalk
+- Zig
+- Crystal
+- Racket
 - Factor
+- WebAssembly
 
 ### JavaScript / TypeScript (Node.js)
 
@@ -58,51 +60,21 @@ Enter a project name, cd into the newly created project folder then run
 npm start
 ```
 
-### WebAssembly
-
-#### Generate a new WASM-enabled, Webpack-based web application
-
-Detailed instructions are coming soon! Meanwhile, please refer to [this example](https://github.com/andreamancuso/xframes/tree/main/packages/dear-imgui/examples/cra-example).
-
 ### Python
 
 Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-python).
 
+### Java
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-java).
+
+### C#
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-csharp).
+
 ### Fortran
 
 Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-fortran).
-
-### Rust
-
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-rust).
-
-### Julia
-
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-julia).
-
-### Zig
-
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-zig).
-
-### Swift
-
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-swift).
-
-### Gnu Step
-
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-gnustep-objective-c).
-
-### Gnu Smalltalk
-
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-gnu-smalltalk).
-
-### Nim
-
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-nim).
-
-### Lua
-
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-lua).
 
 ### Free Pascal
 
@@ -112,51 +84,84 @@ Instructions coming soon! There might be details in the [project's README file](
 
 Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-delphi).
 
-### OCaml
+### Rust
 
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-ocaml).
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-rust).
 
-### C#
+### Ruby
 
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-csharp).
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-ruby).
 
-### F#
+### Swift
 
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-fsharp).
-
-### Ada
-
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-ada).
-
-### D
-
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-dlang).
-
-### Racket
-
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-racket).
-
-### Haskell
-
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-haskell).
-
-### Crystal
-
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-crystal).
-
-### Java
-
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-java).
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-swift).
 
 ### Kotlin
 
 Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-kotlin).
 
+### Ada
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-ada).
+
+### Lua
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-lua).
+
 ### Scala
 
 Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-scala).
+
+### Julia
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-julia).
+
+### Haskell
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-haskell).
+
+### Gnu Step (Objective C)
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-gnustep-objective-c).
+
+### D
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-dlang).
+
+### F#
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-fsharp).
+
+### Nim
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-nim).
+
+### OCaml
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-ocaml).
+
+### Zig
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-zig).
+
+### Gnu Smalltalk
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-gnu-smalltalk).
+
+### Crystal
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-crystal).
+
+### Racket
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-racket).
 
 ### Factor
 
 Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-factor).
 
+### WebAssembly
+
+#### Generate a new WASM-enabled, Webpack-based web application
+
+Detailed instructions are coming soon! Meanwhile, please refer to [this example](https://github.com/andreamancuso/xframes/tree/main/packages/dear-imgui/examples/cra-example).
