@@ -15,6 +15,7 @@ So far, XFrames has been tested with the following languages/platforms:
 - [JavaScript/TypeScript](/docs/category/typescript)
 - WebAssembly
 - Free Pascal
+- Fortran
 - Delphi
 - Python
 - Julia
