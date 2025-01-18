@@ -32,6 +32,7 @@ import JuliaLogoUrl from "@site/static/img/julia.png";
 import ZigLogoUrl from "@site/static/img/zig.png";
 import GnuStepLogoUrl from "@site/static/img/gnustep.png";
 import GnuSmalltalkLogoUrl from "@site/static/img/gnusmalltalk.png";
+import FortranLogoUrl from "@site/static/img/fortran.png";
 
 import("prismjs/components/prism-lua");
 import("prismjs/components/prism-scheme");
@@ -62,48 +63,21 @@ function HomepageHeader() {
   );
 }
 
+// {name: 'Node.js', logoUrl: NodejsLogoUrl},
+
 const techs = [
   { name: "WASM", logoUrl: WebAssemblyLogoUrl },
-  {name: 'C', logoUrl: CLogoUrl},
-  { name: "C++", logoUrl: CPPLogoUrl },
-  {name: 'Rust', logoUrl: RustLogoUrl, githubProjectName: "xframes-rust" },
-  {name: 'Node.js', logoUrl: NodejsLogoUrl},
-  { name: "TypeScript", logoUrl: TSLogoUrl },
-  { name: "F#", logoUrl: FSharpLogoUrl, githubProjectName: "xframes-fsharp" },
-  { name: "C#", logoUrl: CSharpLogoUrl, githubProjectName: "xframes-csharp" },
-  {
-    name: "Kotlin",
-    logoUrl: KotlinLogoUrl,
-    githubProjectName: "xframes-kotlin",
-  },
-  { name: "Java", logoUrl: JavaLogoUrl, githubProjectName: "xframes-java" },
-  { name: "Scala", logoUrl: ScalaLogoUrl, githubProjectName: "xframes-scala" },
   {
     name: "Python",
     logoUrl: PythonLogoUrl,
     githubProjectName: "xframes-python",
   },
-  { name: "Lua", logoUrl: LuaLogoUrl, githubProjectName: "xframes-lua" },
-  { name: "Ada", logoUrl: AdaLogoUrl, githubProjectName: "xframes-ada" },
-  { name: "OCaml", logoUrl: OCamlLogoUrl, githubProjectName: "xframes-ocaml" },
-  {
-    name: "Crystal",
-    logoUrl: CrystalLogoUrl,
-    githubProjectName: "xframes-crystal",
-  },
-  { name: "D", logoUrl: DLangLogoUrl, githubProjectName: "xframes-dlang" },
-  { name: "Nim", logoUrl: NimLogoUrl, githubProjectName: "xframes-nim" },
-  { name: "Ruby", logoUrl: RubyLogoUrl, githubProjectName: "xframes-ruby" },
-  {
-    name: "Racket",
-    logoUrl: RacketLogoUrl,
-    githubProjectName: "xframes-racket",
-  },
-  {
-    name: "Haskell",
-    logoUrl: HaskellLogoUrl,
-    githubProjectName: "xframes-haskell",
-  },
+  { name: "C++", logoUrl: CPPLogoUrl },
+  { name: "Java", logoUrl: JavaLogoUrl, githubProjectName: "xframes-java" },
+  { name: 'C', logoUrl: CLogoUrl },
+  { name: "C#", logoUrl: CSharpLogoUrl, githubProjectName: "xframes-csharp" },
+  { name: "TypeScript", logoUrl: TSLogoUrl },
+  { name: "Fortran", logoUrl: FortranLogoUrl, githubProjectName: "xframes-fortran" },
   {
     name: "Free Pascal",
     logoUrl: FreePascalLogoUrl,
@@ -114,10 +88,44 @@ const techs = [
     logoUrl: DelphiLogoUrl,
     githubProjectName: "xframes-delphi",
   },
+  { name: 'Rust', logoUrl: RustLogoUrl, githubProjectName: "xframes-rust" },
+  { name: "Ruby", logoUrl: RubyLogoUrl, githubProjectName: "xframes-ruby" },
   {
     name: "Swift",
     logoUrl: SwiftLogoUrl,
     githubProjectName: "xframes-swift",
+  },
+  {
+    name: "Kotlin",
+    logoUrl: KotlinLogoUrl,
+    githubProjectName: "xframes-kotlin",
+  },
+  { name: "Ada", logoUrl: AdaLogoUrl, githubProjectName: "xframes-ada" },
+  { name: "Lua", logoUrl: LuaLogoUrl, githubProjectName: "xframes-lua" },
+  { name: "Scala", logoUrl: ScalaLogoUrl, githubProjectName: "xframes-scala" },
+  {
+    name: "Julia",
+    logoUrl: JuliaLogoUrl,
+    githubProjectName: "xframes-julia",
+  },
+  {
+    name: "Haskell",
+    logoUrl: HaskellLogoUrl,
+    githubProjectName: "xframes-haskell",
+  },
+  {
+    name: "Gnu Step",
+    logoUrl: GnuStepLogoUrl,
+    githubProjectName: "xframes-gnustep-objective-c",
+  },
+  { name: "D", logoUrl: DLangLogoUrl, githubProjectName: "xframes-dlang" },
+  { name: "F#", logoUrl: FSharpLogoUrl, githubProjectName: "xframes-fsharp" },
+  { name: "Nim", logoUrl: NimLogoUrl, githubProjectName: "xframes-nim" },
+  { name: "OCaml", logoUrl: OCamlLogoUrl, githubProjectName: "xframes-ocaml" },
+  {
+    name: "Gnu Smalltalk",
+    logoUrl: GnuSmalltalkLogoUrl,
+    githubProjectName: "xframes-gnu-smalltalk",
   },
   {
     name: "Zig",
@@ -125,19 +133,14 @@ const techs = [
     githubProjectName: "xframes-zig",
   },
   {
-    name: "Julia",
-    logoUrl: JuliaLogoUrl,
-    githubProjectName: "xframes-julia",
+    name: "Crystal",
+    logoUrl: CrystalLogoUrl,
+    githubProjectName: "xframes-crystal",
   },
   {
-    name: "Gnu Step",
-    logoUrl: GnuStepLogoUrl,
-    githubProjectName: "xframes-gnustep-objective-c",
-  },
-  {
-    name: "Gnu Smalltalk",
-    logoUrl: GnuSmalltalkLogoUrl,
-    githubProjectName: "xframes-gnu-smalltalk",
+    name: "Racket",
+    logoUrl: RacketLogoUrl,
+    githubProjectName: "xframes-racket",
   },
 ];
 

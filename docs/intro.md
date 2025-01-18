@@ -14,6 +14,7 @@ So far, XFrames has been tested with the following languages/platforms:
 
 - [JavaScript/TypeScript](/docs/category/typescript)
 - WebAssembly
+- Fortran
 - Free Pascal
 - Delphi
 - Python
@@ -65,6 +66,10 @@ Detailed instructions are coming soon! Meanwhile, please refer to [this example]
 ### Python
 
 Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-python).
+
+### Fortran
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-fortran).
 
 ### Rust
 
