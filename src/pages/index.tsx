@@ -33,6 +33,7 @@ import ZigLogoUrl from "@site/static/img/zig.png";
 import GnuStepLogoUrl from "@site/static/img/gnustep.png";
 import GnuSmalltalkLogoUrl from "@site/static/img/gnusmalltalk.png";
 import FortranLogoUrl from "@site/static/img/fortran.png";
+import FactorLogoUrl from "@site/static/img/factor.png";
 
 import("prismjs/components/prism-lua");
 import("prismjs/components/prism-scheme");
@@ -66,7 +67,7 @@ function HomepageHeader() {
 // {name: 'Node.js', logoUrl: NodejsLogoUrl},
 
 const techs = [
-  { name: "WASM", logoUrl: WebAssemblyLogoUrl },
+  // { name: "WASM", logoUrl: WebAssemblyLogoUrl },
   {
     name: "Python",
     logoUrl: PythonLogoUrl,
@@ -141,6 +142,11 @@ const techs = [
     name: "Racket",
     logoUrl: RacketLogoUrl,
     githubProjectName: "xframes-racket",
+  },
+  {
+    name: "Factor",
+    logoUrl: FactorLogoUrl,
+    githubProjectName: "xframes-factor",
   },
 ];
 

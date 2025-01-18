@@ -38,6 +38,7 @@ So far, XFrames has been tested with the following languages/platforms:
 - Java
 - Kotlin
 - Scala
+- Factor
 
 ### JavaScript / TypeScript (Node.js)
 
@@ -154,4 +155,8 @@ Instructions coming soon! There might be details in the [project's README file](
 ### Scala
 
 Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-scala).
+
+### Factor
+
+Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-factor).
 
