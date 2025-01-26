@@ -1,9 +1,12 @@
 andreamancuso:
   name: Andrea Mancuso
   title: Software Engineer, creator of XFrames
-  url: https://github.com/andreamancuso
+  url: https://andreamancuso.dev
   image_url: https://github.com/andreamancuso.png
   page: true
   socials:
+    homepage: https://andreamancuso.dev
+    linkedin: andrea-m-95ba44185
     github: andreamancuso
+    stackoverflow: 14999322
 
