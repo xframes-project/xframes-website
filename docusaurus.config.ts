@@ -102,15 +102,6 @@ const config: Config = {
           ],
         },
         {
-          title: "Community",
-          items: [
-            {
-              label: "Discord",
-              href: "https://discord.gg/Cbgcajdq",
-            },
-          ],
-        },
-        {
           title: "More",
           items: [
             {
