@@ -4,164 +4,201 @@ sidebar_position: 1
 
 # What is XFrames?
 
-XFrames is a high-performance framework for building native desktop applications with minimal overhead. Designed for developers who want to leverage the power of languages like JavaScript, Python, Lua, OCaml, and more, XFrames allows you to create applications without the usual resource-intensive web technologies like DOM, CSS, or Electron. By utilizing OpenGL and GLFW3 on native platforms or WebAssembly and WebGPU in the browser, XFrames provides fine-grained control over performance and memory usage.
+XFrames is a framework for building GPU-accelerated desktop applications using React and TypeScript — without DOM, CSS, or Electron. You write standard React components, and XFrames renders them as native Dear ImGui widgets via OpenGL (desktop) or WebGPU (browser).
 
-## Getting Started
+The result is lightweight, fast desktop apps with real-time data visualization, built with the same React patterns you already know.
 
-The requirements will depend on which programming language you wish to use with XFrames.
-
-So far, XFrames has been tested with the following languages/platforms:
-
-- Python
-- C++
-- Java
-- C
-- C#
-- [JavaScript/TypeScript](/docs/category/typescript)
-- Fortran
-- Free Pascal
-- Delphi
-- Rust
-- Ruby
-- Swift
-- Kotlin
-- Ada
-- Lua
-- Scala
-- Julia
-- Haskell
-- Gnu Step
-- D
-- F#
-- Nim
-- OCaml
-- Gnu Smalltalk
-- Zig
-- Crystal
-- Racket
-- Factor
-- WebAssembly
-
-### JavaScript / TypeScript (Node.js)
-
-#### Generate a new Node.js desktop application
+## Quick Start
 
 ```bash
 npx create-xframes-node-app
 ```
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
-
-The command also installs all necessary dependencies you need to run your XFrames app.
-
-Enter a project name, cd into the newly created project folder then run
+Enter a project name, then:
 
 ```bash
+cd my-app
 npm start
 ```
 
-### Python
+A native desktop window will appear with "Hello, world" rendered via Dear ImGui.
 
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-python).
+## Understanding the Scaffolded App
 
-### Java
+The generated `src/index.tsx` is the entry point:
 
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-java).
+```tsx
+import { resolve } from "path";
+import * as React from "react";
+import { theme2 } from "./themes";
+import { render, XFrames } from "@xframes/node";
 
-### C#
+const fontDefs = {
+  defs: [{ name: "roboto-regular", sizes: [16, 18, 20, 24] }]
+    .map(({ name, sizes }) => sizes.map((size) => ({ name, size })))
+    .flat(),
+};
 
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-csharp).
+const assetsBasePath = resolve("./assets");
 
-### Fortran
+const App = () => (
+  <XFrames.Node root style={{ height: "100%" }}>
+    <XFrames.UnformattedText text="Hello, world" />
+  </XFrames.Node>
+);
 
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-fortran).
+render(App, assetsBasePath, fontDefs, theme2);
+```
 
-### Free Pascal
+### The `render()` function
 
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-freepascal).
+`render()` takes four arguments:
 
-### Delphi
+| Argument | Description |
+|----------|-------------|
+| `App` | Your root React component |
+| `assetsBasePath` | Path to the `assets/` directory containing font files |
+| `fontDefs` | Font definitions — which `.ttf` fonts and sizes to load |
+| `theme` | A theme object that sets all ImGui colors |
 
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-delphi).
+### Font definitions
 
-### Rust
+The `fontDefs` object tells XFrames which font sizes to pre-render into the GPU texture atlas. Each entry must match a `.ttf` file in `assets/fonts/`:
 
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-rust).
+```tsx
+const fontDefs = {
+  defs: [
+    { name: "roboto-regular", sizes: [16, 18, 20, 24, 32] },
+  ]
+    .map(({ name, sizes }) => sizes.map((size) => ({ name, size })))
+    .flat(),
+};
+```
 
-### Ruby
+The `name` field maps to `assets/fonts/roboto-regular.ttf`. Only the sizes you list here are available at runtime.
 
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-ruby).
+### The root Node
 
-### Swift
+Every XFrames app needs a root `<XFrames.Node>` with the `root` prop. Set `height: "100%"` so it fills the window:
 
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-swift).
+```tsx
+<XFrames.Node root style={{ height: "100%" }}>
+  {/* your app goes here */}
+</XFrames.Node>
+```
 
-### Kotlin
+## Your First Layout
 
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-kotlin).
+XFrames uses [Yoga](https://www.yogalayout.dev/) for flexbox layout — the same layout engine as React Native. Here's a two-column layout:
 
-### Ada
+```tsx
+import { RWStyleSheet } from "@xframes/common";
 
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-ada).
+const styles = RWStyleSheet.create({
+  row: {
+    flexDirection: "row",
+    width: "100%",
+    height: 200,
+  },
+  column: {
+    flex: 1,
+    padding: { all: 8 },
+  },
+});
 
-### Lua
+const App = () => (
+  <XFrames.Node root style={{ height: "100%" }}>
+    <XFrames.Node style={styles.row}>
+      <XFrames.Node style={styles.column}>
+        <XFrames.UnformattedText text="Left column" />
+      </XFrames.Node>
+      <XFrames.Node style={styles.column}>
+        <XFrames.UnformattedText text="Right column" />
+      </XFrames.Node>
+    </XFrames.Node>
+  </XFrames.Node>
+);
+```
 
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-lua).
+:::note
+`padding` and `margin` are objects with edge keys — `{ all: 8 }`, `{ left: 8, right: 8 }`, `{ top: 4, bottom: 4 }` — not plain numbers.
+:::
 
-### Scala
+## Adding Interactivity
 
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-scala).
+XFrames components use the same React patterns you're used to:
 
-### Julia
+```tsx
+import { useState, useCallback } from "react";
 
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-julia).
+const App = () => {
+  const [count, setCount] = useState(0);
 
-### Haskell
+  const handleClick = useCallback(() => {
+    setCount((prev) => prev + 1);
+  }, []);
 
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-haskell).
+  return (
+    <XFrames.Node root style={{ height: "100%" }}>
+      <XFrames.UnformattedText text={`Clicked ${count} times`} />
+      <XFrames.Button label="Click me" onClick={handleClick} />
+    </XFrames.Node>
+  );
+};
+```
 
-### Gnu Step (Objective C)
+## Applying Styles
 
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-gnustep-objective-c).
+Use `RWStyleSheet.create()` to define reusable style objects. Font size is set via the `font` property:
 
-### D
+```tsx
+const styles = RWStyleSheet.create({
+  title: {
+    padding: { all: 8 },
+    font: { name: "roboto-regular", size: 24 },
+  },
+  container: {
+    flexDirection: "row",
+    gap: { column: 8 },
+    padding: { all: 8 },
+  },
+});
+```
 
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-dlang).
+:::note
+The font `name` must match one of the fonts in your `fontDefs`, and the `size` must be one of the sizes you listed there.
+:::
 
-### F#
+Every widget supports four style variants for different interaction states:
 
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-fsharp).
+- `style` — default appearance
+- `hoverStyle` — applied when the mouse hovers over the widget
+- `activeStyle` — applied when the widget is being clicked/pressed
+- `disabledStyle` — applied when the widget is disabled
 
-### Nim
+## Built-in Themes
 
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-nim).
+XFrames ships with three themes, each with a distinct accent color:
 
-### OCaml
+| Theme | Import | Background | Accent |
+|-------|--------|------------|--------|
+| Dark | `theme2` | Near-black | Green |
+| Light | `theme1` | White | Coral |
+| Ocean | `theme3` | Deep navy | Teal |
 
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-ocaml).
+Pass your chosen theme to `render()`:
 
-### Zig
+```tsx
+import { theme1, theme2, theme3 } from "./themes";
 
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-zig).
+// Start with the dark theme
+render(App, assetsBasePath, fontDefs, theme2);
+```
 
-### Gnu Smalltalk
+You can switch themes at runtime using `patchStyle` — see the [Theming guide](/docs/typescript/style/general-styling-concepts) for details.
 
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-gnu-smalltalk).
+## Next Steps
 
-### Crystal
-
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-crystal).
-
-### Racket
-
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-racket).
-
-### Factor
-
-Instructions coming soon! There might be details in the [project's README file](https://github.com/xframes-project/xframes-factor).
-
-### WebAssembly
-
-#### Generate a new WASM-enabled, Webpack-based web application
-
-Detailed instructions are coming soon! Meanwhile, please refer to [this example](https://github.com/andreamancuso/xframes/tree/main/packages/dear-imgui/examples/cra-example).
+- [Widget catalog](/docs/category/components) — all available components with props and code examples
+- [Styling guide](/docs/typescript/style/general-styling-concepts) — layout, colors, and interaction states
+- [Yoga layout properties](/docs/typescript/style/yoga-layout-properties) — full flexbox reference
