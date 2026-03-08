@@ -270,5 +270,6 @@ const App = () => (
 
 ## Next steps
 
+- [Fonts guide](/docs/fonts-guide) — font definitions, sizes, and Font Awesome icons
 - [Yoga layout properties](/docs/typescript/style/yoga-layout-properties) — full type reference for all layout props
 - [Styling guide](/docs/typescript/style/general-styling-concepts) — colors, backgrounds, and interaction states
