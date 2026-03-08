@@ -22,20 +22,10 @@
   justify-content: center;
 }
 
-.techsWrapper {
-  display: flex;
-  flex-wrap: wrap;
-  max-width: 800px;
-  margin: 0 auto 32px auto;
+.quickStart {
+  margin-bottom: 2rem;
 }
 
-.techAvatar {
-  flex: 25%;
-  text-align: center;
-  margin-bottom: 16px;
-}
-
-.techAvatarImg {
-  display: inline-block;
-  border-radius: 0;
+.languageBindings {
+  margin-bottom: 3rem;
 }

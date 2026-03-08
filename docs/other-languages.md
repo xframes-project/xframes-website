@@ -1,10 +1,11 @@
 ---
 sidebar_position: 99
+title: Language Bindings
 ---
 
-# Other Language Bindings
+# Language Bindings
 
-XFrames is built on a C++ core exposed via a C API, making it usable from any language with C interop or FFI capabilities. The bindings below are **experimental** — they demonstrate that XFrames can work across many languages, but TypeScript/Node.js is the primary supported stack.
+XFrames is built on a C++ core exposed via a C API, making it usable from any language with C interop or FFI capabilities. The bindings below are **experimental** — they demonstrate that XFrames can work across many languages, but **TypeScript/Node.js is the primary supported stack** with full documentation, npm packages, and active development.
 
 For the main getting-started guide, see [What is XFrames?](/docs/intro).
 

@@ -10,30 +10,35 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Based on Dear ImGui',
+    title: 'React Components',
     Svg: require('@site/static/img/dear-imgui.svg').default,
     description: (
       <>
-        <a href="https://github.com/ocornut/imgui" target="_blank">Dear ImGui</a>, trusted by <a href="https://github.com/ocornut/imgui/wiki/Software-using-dear-imgui#games" target="_blank">countless AAA game developers</a> (<a href="https://montreal.ubisoft.com/en/ubisoft-sponsors-user-interface-library-for-c-dear-imgui/" target="_blank">including Ubisoft</a>), enhances XFrames with ultra-responsive, lightweight UIs built for speed. Its immediate-mode rendering delivers smooth, high-performance interfaces without the bulk, perfect for XFrames' GPU-accelerated, cross-platform needs.
+        Write standard React components with hooks, state, and refs. XFrames renders them as native{' '}
+        <a href="https://github.com/ocornut/imgui" target="_blank">Dear ImGui</a> widgets via a custom React Fabric renderer — no DOM, no browser engine.
       </>
     ),
   },
   {
-    title: 'GPU-Accelerated',
+    title: 'GPU-Accelerated Rendering',
     Svg: require('@site/static/img/webgpu-opengl.svg').default,
     description: (
       <>
-        Unlock the full potential of XFrames for building fast, GPU-accelerated interfaces.
-        Leverage <a href="https://en.wikipedia.org/wiki/WebGPU" target="_blank">WebGPU</a> for stunning browser performance or use <a href="https://www.glfw.org" target="_blank">GLFW3</a> and <a href="https://www.opengl.org" target="_blank">OpenGL</a> in Node.js to create native-like applications—without the need for Electron.
+        <a href="https://www.glfw.org" target="_blank">GLFW</a> +{' '}
+        <a href="https://www.opengl.org" target="_blank">OpenGL</a> on desktop,{' '}
+        <a href="https://en.wikipedia.org/wiki/WebGPU" target="_blank">WebGPU</a> in the browser.
+        Render data-heavy UIs at native speed with no Electron overhead.
       </>
     ),
   },
   {
-    title: 'No CSS Required',
+    title: 'Yoga Flexbox Layout',
     Svg: require('@site/static/img/yoga-layouts.svg').default,
     description: (
       <>
-        XFrames empowers you to create high-performance UIs based on the flexibility and scalability of <a href="https://www.yogalayout.dev" target="_blank">Yoga Layout</a>, without the complexity of the DOM or CSS. Focus on building sleek, efficient applications with a clean and simple development experience.
+        Use familiar flexbox properties — <code>flexDirection</code>, <code>padding</code>,{' '}
+        <code>gap</code>, percentage widths — powered by{' '}
+        <a href="https://www.yogalayout.dev" target="_blank">Yoga Layout</a>. No CSS files, no class names.
       </>
     ),
   },
