@@ -199,6 +199,7 @@ You can switch themes at runtime using `patchStyle` — see the [Theming guide](
 
 ## Next Steps
 
+- [Layout guide](/docs/layout-guide) — flexbox basics, scroll containers, and nested layouts
 - [Widget catalog](/docs/category/components) — all available components with props and code examples
-- [Styling guide](/docs/typescript/style/general-styling-concepts) — layout, colors, and interaction states
-- [Yoga layout properties](/docs/typescript/style/yoga-layout-properties) — full flexbox reference
+- [Styling guide](/docs/typescript/style/general-styling-concepts) — colors, backgrounds, and interaction states
+- [Yoga layout properties](/docs/typescript/style/yoga-layout-properties) — full flexbox property reference
