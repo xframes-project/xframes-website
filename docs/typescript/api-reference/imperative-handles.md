@@ -279,16 +279,36 @@ ref.current?.appendTextToClippedMultiLineTextRenderer("Log line 1\n");
 
 | Method | Parameters | Description |
 |--------|-----------|-------------|
-| `render` | `centerX: number, centerY: number, zoom: number` | Render map at given center coordinates and zoom level |
+| `render` | `centerX: number, centerY: number, zoom: number` | Position the map. `centerX` = longitude, `centerY` = latitude. Must be called once to initialize |
+| `setMarkers` | `markers: MapMarker[]` | Display pin markers (replaces all existing) |
+| `clearMarkers` | — | Remove all markers |
+| `setPolylines` | `polylines: MapPolyline[]` | Display line overlays (replaces all existing) |
+| `clearPolylines` | — | Remove all polylines |
+| `appendPolylinePoint` | `polylineIndex: number, lat: number, lon: number` | Append a point to an existing polyline by index |
+| `setOverlays` | `overlays: MapOverlay[]` | Display circle/ellipse overlays (replaces all existing) |
+| `clearOverlays` | — | Remove all overlays |
+| `prefetchTiles` | `minLon, minLat, maxLon, maxLat, minZoom, maxZoom` | Bulk-download tiles to disk cache (desktop only) |
 
 ```tsx
 const ref = useRef<MapImperativeHandle>(null);
 
 <XFrames.MapView ref={ref} />
 
-// Center on New York at zoom 12
-ref.current?.render(40.7128, -74.006, 12);
+// centerX = longitude, centerY = latitude
+ref.current?.render(-74.006, 40.7128, 12); // New York, zoom 12
+
+ref.current?.setMarkers([
+    { lat: 40.7128, lon: -74.006, color: "#FF3333", label: "NYC", radius: 10 },
+]);
+
+ref.current?.setPolylines([{
+    points: [{ lat: 40.7128, lon: -74.006 }, { lat: 40.7580, lon: -73.9855 }],
+    color: "#FF8800",
+    thickness: 3,
+}]);
 ```
+
+See [MapView](/docs/typescript/components/mapview) for full documentation including data types and usage examples.
 
 ---
 
