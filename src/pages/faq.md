@@ -2,106 +2,153 @@
 title: Frequently Asked Questions
 ---
 
-Welcome to the XFrames FAQ! Here, you'll find answers to common questions about XFrames, its features, and how to get started. If you don't find the answer you're looking for, feel free to reach out.
+Answers to common questions about XFrames, its capabilities, and how to get started.
 
 ## What is XFrames?
 
-XFrames is an open-source library designed to build GPU-accelerated, native-like desktop applications using a variety of programming languages, including JavaScript (Node.js), Kotlin, and F#. Unlike traditional frameworks like Electron, XFrames enables DOM-free development offering fast, cross-platform performance. Over 20 programming languages are supported on the desktop, thanks to custom JNI and C libraries. The WASM version requires JavaScript and currently React as well. XFrames is ideal for performance-driven projects, supporting both native desktop environments and cross-platform execution.
+XFrames is an open-source framework for building GPU-accelerated desktop and browser applications using React and TypeScript. You write standard React components, and XFrames renders them as native [Dear ImGui](https://github.com/ocornut/imgui) widgets via OpenGL (desktop) or WebGPU (browser) — no DOM, no CSS, no Electron.
+
+Get started in seconds with `npx create-xframes-node-app`. Experimental bindings also exist for [25+ other programming languages](/docs/other-languages). See the [Getting Started guide](/docs/intro) for a full walkthrough.
+
+---
+
+## What is Dear ImGui?
+
+[Dear ImGui](https://github.com/ocornut/imgui) is a widely-used C++ immediate-mode GUI library with 60k+ GitHub stars, commonly found in game engines, profiling tools, and internal development tools. "Immediate mode" means the UI is redrawn every frame from code rather than maintaining a persistent widget tree in the DOM.
+
+XFrames abstracts this away — you write declarative React components with hooks and JSX, and the framework translates them into ImGui draw calls. [ImPlot](https://github.com/epezent/implot), a charting library built on Dear ImGui, is also included for data visualization. See the [Technologies](/technologies-used) page for the full tech stack.
 
 ---
 
 ## What problem does XFrames solve?
 
-XFrames addresses the performance and resource efficiency challenges commonly associated with desktop application frameworks like Electron. While Electron enables rapid development and easy access to the npm ecosystem, it does so at the cost of significant overhead due to bundling a full browser runtime. XFrames offers a lightweight alternative, allowing developers to build cross-platform, GPU-accelerated applications without the need for a web browser. By focusing on native-like performance and eliminating the DOM, XFrames delivers faster, more resource-efficient applications.
+Desktop frameworks like Electron bundle a full Chromium browser, resulting in large binaries (100MB+), high memory usage, and slow startup times. XFrames renders directly through the GPU via Dear ImGui, bypassing the browser engine entirely.
+
+The result: binaries in the 10-50MB range (depending on language), lower memory footprint, faster startup, and 60fps rendering. Developers keep the React component model and familiar patterns — hooks, state, JSX — without the overhead of a bundled browser.
 
 ---
 
-## How come removing the DOM out of the equation makes GUI applications so much faster?
+## How do I get started?
 
-By removing the DOM (Document Object Model), XFrames avoids the overhead associated with HTML, CSS, and JavaScript rendering, which is typically required in web-based frameworks like Electron. The DOM involves a complex process of layout calculation, event handling, and rendering to the screen, all of which consume CPU and memory resources. In contrast, XFrames directly renders graphics using GPU-accelerated technologies like **GLFW** and **OpenGL**, bypassing the need for the browser’s rendering engine. This results in significantly lower latency and higher frame rates, making it ideal for applications that require fast, smooth, and efficient rendering—especially those that need to handle real-time updates or complex graphical content.
+Prerequisites: Node.js 18+.
 
----
+```bash
+npx create-xframes-node-app my-app
+cd my-app
+npm start
+```
 
-## Can you list a few disadvantages?
-
-The verbosity of the code can vary depending on the programming language you choose. Languages with domain-specific language (DSL) support, such as Kotlin and F#, provide a more streamlined and developer-friendly experience.
-
-Since XFrames doesn't rely on the DOM, developers are unable to take advantage of the vast ecosystem of JavaScript libraries.
-
-Additionally, debugging tools for rendering are currently still limited, making it more challenging to troubleshoot and optimize certain aspects of the application.
+A native desktop window will open with a working demo application. For running XFrames in the browser instead, see the [WASM / Browser Guide](/docs/wasm-guide). The [Getting Started guide](/docs/intro) has a full walkthrough of the scaffolded app.
 
 ---
 
-## Why can't I use Material-UI (MUI) in my XFrames application?
+## Does XFrames work in the browser?
 
-The reason you can't use **Material-UI (MUI)** in XFrames, despite React being a dependency, is because **XFrames does not use the DOM**. MUI relies heavily on the DOM for its layout, event handling, and styling, since it is built on top of React DOM and CSS. XFrames, on the other hand, uses **GLFW** and **OpenGL** for rendering, which does not support the typical HTML-based layout and styling systems required by MUI.
+Yes. The C++ core compiles to WebAssembly via Emscripten and renders into an HTML `<canvas>` element using the WebGPU graphics API. The same React components and styling from `@xframes/common` work on both desktop and browser — your code is portable between targets.
 
----
-
-## What types of fonts are supported in XFrames?
-
-At the moment, **XFrames only supports TTF (TrueType Fonts)**. You can include TTF fonts in your XFrames applications to render text in your custom layouts. Support for other font formats may be added in future releases, but for now, TTF remains the only supported font format.
+Browser requirements: Chrome, Edge, or Firefox Nightly (WebGPU is required; there is no WebGL or Canvas 2D fallback). See the [WASM / Browser Guide](/docs/wasm-guide) for build instructions and a complete example.
 
 ---
 
-## I am an Electron user and I cannot afford to do a full switch - can I use XFrames alongside an Electron application?
+## What widgets are available?
 
-Yes, **XFrames can be integrated with Electron applications**. This hybrid approach allows you to use XFrames for high-performance, GPU-accelerated tasks while retaining Electron's Chromium-based windows for web-focused functionality. This setup is ideal for incrementally adopting XFrames without requiring a full rewrite.
+XFrames provides a comprehensive widget set:
 
----
+- **Layout:** Node (flexbox container), Window, CollapsingHeader, Group, ItemTooltip, TextWrap
+- **Navigation:** TabBar (reorderable), TabItem (closeable), TreeNode, TreeView
+- **Text:** UnformattedText, BulletText, DisabledText, SeparatorText, Separator, ClippedMultiLineTextRenderer
+- **Form controls:** Button, Checkbox, Combo, InputText (multiline, password, read-only, numeric-only), Slider, MultiSlider, ColorPicker
+- **Data display:** Table (sorting, filtering, column reorder/visibility, context menus, row selection), ProgressBar, ColorIndicator, Image
+- **Charts:** PlotLine (multi-series, streaming), PlotBar, PlotScatter, PlotCandlestick, PlotHeatmap, PlotHistogram, PlotPieChart
+- **Maps:** MapView (OpenStreetMap tiles, markers, polylines, overlays)
 
-## Can XFrames replace Electron entirely?
-
-XFrames can replace Electron in scenarios where high performance, low resource usage, or GPU-accelerated rendering is required, and web technologies (e.g., DOM, CSS) are unnecessary. However, for applications relying heavily on web-based workflows, such as HTML and CSS for UI, Electron remains a powerful option.
-
-XFrames is a better fit when any of the following applies:
-
-- For whatever reason JavaScript (or any other language that compiles to JavaScript) cannot be used
-- Performance is critical (e.g., rendering, simulations, real-time GUIs).
-- You want smaller application binaries without bundling a browser engine.
+All components support interaction-state styling (default, hover, active, disabled). See the [widget catalog](/docs/category/components) for props, events, imperative handles, and code examples.
 
 ---
 
-## Is XFrames truly cross-platform?
+## How does layout work?
 
-Yes, XFrames supports cross-platform development - we have tested it across various operating systems and platforms. It allows you to build applications for Windows, macOS, and Linux across various architectures. However, the platforms supported may vary depending on the programming language you choose to work with.
+XFrames uses [Yoga](https://www.yogalayout.dev/), the same flexbox layout engine used by React Native. `<XFrames.Node>` is the layout container, equivalent to `<div>` or `<View>`.
 
----
+Standard flexbox properties are supported: `flexDirection`, `flex`, `padding`, `margin`, `gap`, `alignItems`, `justifyContent`, `width`, `height`, and percentage values. Scroll containers are created with `overflow: "scroll"`.
 
-## How can different programming languages work with XFrames?
-
-XFrames provides support for [Foreign Function Interfaces](https://en.m.wikipedia.org/wiki/Foreign_function_interface) to enable seamless integration with various programming languages. We've focused on making it as straightforward as possible for developers to interoperate with XFrames, whether using C#, Java, Ada, or other languages with FFI capabilities. We're continually seeking feedback to enhance the developer experience, so please reach out with suggestions or issues you encounter.
-
-Would you like any revisions or additions? 
+Note that `padding` and `margin` use object syntax — `{ all: 8 }` or `{ left: 8, right: 8 }` — not plain numbers. See the [Layout guide](/docs/layout-guide) and [Yoga layout properties](/docs/typescript/style/yoga-layout-properties) for details.
 
 ---
 
-## Can I distribute XFrames applications as standalone applications?
+## How does styling and theming work?
 
-The short answer is yes! This is especially true if you are using compiled languages, because you would just need to include the executable and the library files (.dll, .so or .dynlab).
-For interpreted languages you may need to also distribute the interpreter, or embed your application into it (this is the case with Node.js and Python).
-That said, it is best to refer to the docs and/or README file for the corresponding programming language you intend to use. Go ahead and file an issue in the corresponding repo if details are missing.
+Styles are defined with `RWStyleSheet.create()` and applied via the `style` prop, similar to React Native's `StyleSheet`. There are three styling layers: Yoga layout properties, base drawing properties (background color, border, rounding), and ImGui-specific properties (font, colors, style vars).
 
-## How large are the standalone applications?
+Each widget supports four interaction states: `style`, `hoverStyle`, `activeStyle`, and `disabledStyle`. Three built-in themes are included (Dark, Light, Ocean), and themes can be switched at runtime via `patchStyle`.
 
-The size of the distributable package (the executable, its dependencies, and assets) can vary wildly:
+See the [Styling guide](/docs/typescript/style/general-styling-concepts) and [Theming guide](/docs/typescript/style/theming-guide) for full details.
 
-- 50 MB+ for Node.js (using [Nexe](https://github.com/nexe/nexe) and embedding the native npm module);
-- 25-30 MB for .NET languages (this includes all the .NET dependencies and the XFrames DLL);
-- 40 MB for Kotlin (using Gradle's distZip, includes Compose Runtime and the JNI library);
-- 20-25 MB for Python (using [Briefcase](https://github.com/beeware/briefcase) or [PyInstaller](https://pyinstaller.org/en/stable/) and embedding the native Python module)
-- 10-15 MB for compiled languages such as Nim, OCaml, Racket, Haskell, Ada, Crystal, D.
+---
 
-Please note, this list is not comprehensive, we've yet to try out Go, Rust, Swift - among others.
+## Can I use existing React and npm libraries?
 
-In comparison, Electron applications often exceed 100MB once you factor in Node.js, Chromium and various assets.
+React logic libraries work normally — XFrames uses real React with a custom renderer, so state management, hooks, data fetching, and utility libraries all function as expected.
 
-You should use the release version of the JNI or C wrapper libraries as they are substantially smaller.
+However, React UI libraries that render to the DOM (Material UI, Chakra UI, Ant Design, etc.) will not work. XFrames does not use the DOM or CSS, so any library that generates HTML elements or relies on CSS stylesheets is incompatible. XFrames provides its own [widget set](/docs/category/components) and [styling system](/docs/typescript/style/general-styling-concepts) as replacements.
 
-## What about signing my application?
+---
 
-On Windows, you can sign your EXE files using a Code Signing Certificate, typically obtained from a trusted Certificate Authority (CA) like DigiCert or Sectigo. Once you have the certificate, you can use tools like SignTool (available with the Windows SDK) to sign your EXE files, which helps to verify the publisher and assures users that the file has not been tampered with.
+## How does XFrames compare to Electron?
 
-On Linux, signing is commonly done using tools like GPG (GNU Privacy Guard) to generate and apply a signature to your binaries. Many Linux distributions also support AppImage signing, allowing you to sign packaged applications for distribution.
+XFrames has no browser engine, no DOM, and no CSS. This means smaller binaries, lower memory usage, faster startup, and GPU-accelerated rendering at 60fps. It's a strong fit for performance-critical dashboards, real-time data visualization, internal tools, and developer utilities.
 
-On macOS, code signing is mandatory for applications that are distributed outside the App Store. You can sign your application using Apple's codesign utility and an appropriate Apple Developer certificate. This ensures that your app is recognized as trusted by macOS, which is important for smooth installation and execution, particularly for apps distributed via the internet. Additionally, on macOS, you may also need to notarize your application with Apple to prevent warnings during installation.
+Electron is a better fit when your application needs full web content rendering (rich text editors, embedded web views), relies heavily on the npm UI component ecosystem, or requires pixel-perfect CSS-based styling.
+
+A hybrid approach is also possible — XFrames can handle GPU-intensive panels within an Electron application while Electron manages web-based UI. XFrames is not a drop-in Electron replacement; it's a different rendering paradigm that trades DOM flexibility for GPU performance.
+
+---
+
+## Is XFrames cross-platform?
+
+Yes. The desktop target (Node.js native addon, OpenGL 3) supports Windows, macOS, and Linux. The browser target (WebAssembly, WebGPU) runs in Chrome, Edge, and Firefox Nightly.
+
+The same React components and styles work across all targets. Note that WSL2 on Windows requires setting `export GALLIUM_DRIVER=d3d12` for OpenGL compatibility.
+
+---
+
+## Can I distribute XFrames apps as standalone executables?
+
+Yes. For Node.js, tools like [Nexe](https://github.com/nexe/nexe) can bundle Node.js, the native addon, and assets into a single executable. For compiled language bindings, you need only the executable and shared library files (.dll, .so, .dylib).
+
+Approximate distribution sizes by stack:
+
+| Stack | Size |
+|-------|------|
+| Node.js (via Nexe) | ~50 MB |
+| .NET languages (C#, F#) | 25-30 MB |
+| Kotlin (via Gradle distZip) | ~40 MB |
+| Python (via PyInstaller) | 20-25 MB |
+| Compiled languages (Nim, Rust, Ada, etc.) | 10-15 MB |
+| Electron (for comparison) | 100+ MB |
+
+The WASM target produces a standard web bundle suitable for any static hosting provider.
+
+---
+
+## Is XFrames production-ready?
+
+XFrames is actively developed. The API is stabilizing but may still have breaking changes between releases. Dear ImGui itself is mature and battle-tested, used in game engines, profiling tools, and many production applications worldwide.
+
+Recommended for: internal tools, dashboards, data visualization, developer utilities, and prototyping. Not yet recommended for consumer-facing applications where pixel-perfect brand styling is critical. Check the [GitHub repository](https://github.com/xframes-project/xframes) for the latest release status.
+
+---
+
+## What font formats are supported?
+
+XFrames supports TTF (TrueType) fonts only. Fonts are pre-rendered into a GPU texture atlas at startup — you declare which fonts and sizes to load in your `fontDefs` configuration.
+
+[Font Awesome 6 Solid](https://fontawesome.com/) icons are automatically merged into every loaded font, so icon glyphs are available without additional setup. See the [Fonts guide](/docs/fonts-guide) for configuration details and usage examples.
+
+---
+
+## Are there bindings for other programming languages?
+
+TypeScript with React and Node.js is the primary supported stack, with full documentation, npm packages, and active development.
+
+Experimental bindings exist for 25+ additional languages — including Python, Rust, Java, Kotlin, C#, F#, Go, and many more — via C API, FFI, and JNI. These bindings are functional but have limited documentation and are not the primary development focus. See the [Language Bindings](/docs/other-languages) page for the complete list and repository links.
