@@ -41,4 +41,4 @@ For the main getting-started guide, see [What is XFrames?](/docs/intro).
 
 ### WebAssembly
 
-XFrames also runs in the browser via WebAssembly and WebGPU. See the [WASM example](https://github.com/andreamancuso/xframes/tree/main/packages/dear-imgui/examples/cra-example) for details.
+XFrames also runs in the browser via WebAssembly and WebGPU. See the [WASM / Browser Guide](/docs/wasm-guide) for build instructions and a complete walkthrough.
